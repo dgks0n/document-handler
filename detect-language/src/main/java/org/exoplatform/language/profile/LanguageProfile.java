@@ -41,9 +41,9 @@ public class LanguageProfile {
 	private static final int MINIMUM_FREQ = 2;
     private static final int LESS_FREQ_RATIO = 100000;
     
-    private String _name = null;
-    private HashMap<String, Integer> _frequency = new HashMap<String, Integer>();
-    private int[] _nWords = new int[NGram.N_GRAM];
+    public String name = null;
+    public HashMap<String, Integer> frequency = new HashMap<String, Integer>();
+    public int[] nWords = new int[NGram.N_GRAM];
 
     /**
      * Constructor for JSONIC 
@@ -55,27 +55,27 @@ public class LanguageProfile {
     /**
      * Normal Constructor
      * 
-     * @param _name language _name
+     * @param name language name
      */
     @Deprecated
     public LanguageProfile(String name) {
-        this._name = name;
+        this.name = name;
     }
     
     public void addLanguageProfile(String name) {
-    	this._name = name;
+    	this.name = name;
     }
     
     public String getLanguageProfile() {
-		return _name;
+		return name;
 	}
 
 	public HashMap<String, Integer> getFrequency() {
-		return _frequency;
+		return frequency;
 	}
 
 	public int[] getNWords() {
-		return _nWords;
+		return nWords;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class LanguageProfile {
      * @param gram
      */
 	public void addNGramToProfile(String nGram) {
-		if (StringUtils.isEmpty(_name) || StringUtils.isEmpty(nGram)) {
+		if (StringUtils.isEmpty(name) || StringUtils.isEmpty(nGram)) {
 			return;
 		}
 		
@@ -95,19 +95,19 @@ public class LanguageProfile {
 		if (len < 1 || len > NGram.N_GRAM) {
 			return;
 		}
-		++_nWords[len - 1];
-		if (_frequency.containsKey(nGram)) {
-			_frequency.put(nGram, _frequency.get(nGram) + 1);
+		++nWords[len - 1];
+		if (frequency.containsKey(nGram)) {
+			frequency.put(nGram, frequency.get(nGram) + 1);
 		} else {
-			_frequency.put(nGram, 1);
+			frequency.put(nGram, 1);
 		}
 	}
 
     /**
-     * Eliminate below less _frequency n-grams and noise Latin alphabets
+     * Eliminate below less frequency n-grams and noise Latin alphabets
      */
 	public void omitLessFrequency() {
-		if (StringUtils.isEmpty(_name)) {
+		if (StringUtils.isEmpty(name)) {
 			return;
 		}
 		
@@ -115,18 +115,18 @@ public class LanguageProfile {
 			logger.info("Eliminate below less frequency n-grams and noise Latin alphabets");
 		}
 		
-		int threshold = _nWords[0] / LESS_FREQ_RATIO;
+		int threshold = nWords[0] / LESS_FREQ_RATIO;
 		if (threshold < MINIMUM_FREQ) {
 			threshold = MINIMUM_FREQ;
 		}
 
-		Set<String> keys = _frequency.keySet();
+		Set<String> keys = frequency.keySet();
 		int roman = 0;
 		for (Iterator<String> iterator = keys.iterator(); iterator.hasNext();) {
 			String key = iterator.next();
-			int count = _frequency.get(key);
+			int count = frequency.get(key);
 			if (count <= threshold) {
-				_nWords[key.length() - 1] -= count;
+				nWords[key.length() - 1] -= count;
 				iterator.remove();
 			} else {
 				if (key.matches("^[A-Za-z]$")) {
@@ -135,12 +135,12 @@ public class LanguageProfile {
 			}
 		}
 
-		if (roman < _nWords[0] / 3) {
-			Set<String> keys2 = _frequency.keySet();
+		if (roman < nWords[0] / 3) {
+			Set<String> keys2 = frequency.keySet();
 			for (Iterator<String> iterator = keys2.iterator(); iterator.hasNext();) {
 				String key = iterator.next();
 				if (key.matches(".*[A-Za-z].*")) {
-					_nWords[key.length() - 1] -= _frequency.get(key);
+					nWords[key.length() - 1] -= frequency.get(key);
 					iterator.remove();
 				}
 			}

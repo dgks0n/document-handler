@@ -119,7 +119,9 @@ public class DetectorFactory {
 		
         String language = profile.getLanguageProfile();
         if (_instance.languages.contains(language)) {
-            throw new LanguageDetectException("duplicate the same language profile", ErrorCode.DUPLICATELANGERROR);
+        	// show the name is duplicate the same language profile
+        	logger.info("Duplicate language profile name " + language + ".");
+            throw new LanguageDetectException("Duplicate the same language profile", ErrorCode.DUPLICATELANGERROR);
         }
         _instance.languages.add(language);
         for (String word: profile.getFrequency().keySet()) {

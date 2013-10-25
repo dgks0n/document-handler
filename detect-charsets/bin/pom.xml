@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.exoplatform.charsets</groupId>
 	<artifactId>detect-charsets</artifactId>
-	<version>1.0.0</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>Document :: Detect Charsets Of Document</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>

@@ -7,10 +7,10 @@
 		<artifactId>document-handler</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>org.exoplatform.charsets</groupId>
-	<artifactId>detect-charsets</artifactId>
+	<groupId>org.exoplatform.language</groupId>
+	<artifactId>detect-language</artifactId>
 	<version>1.0.0</version>
-	<name>Document :: Detect Charsets Of Document</name>
+	<name>Document :: Detect Language Of Contents</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
