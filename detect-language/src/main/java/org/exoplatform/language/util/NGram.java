@@ -34,16 +34,16 @@ public class NGram {
 	
 	private static final String LATIN1_EXCLUDED = Message.getMessage("NGram.LATIN1_EXCLUDE");
 	
-	private StringBuffer _grams;
-	private boolean _capitalWord;
+	public static HashMap<Character, Character> cjkKanjiNormalizationMapping;
+	public static final int N_GRAM = 3;
 	
-	public final static int N_GRAM = 3;
-	public static HashMap<Character, Character> cjkHashMap;
+	private StringBuffer _ngrams;
+	private boolean _capitalWord;
 	
 	/**
      * CJK Kanji Normalization Mapping
      */
-    static final String[] CJK_CLASS = {
+    static final String[] CJK_KANJI_NORMALIZATION = {
         Message.getMessage("NGram.KANJI_1_0"),
         Message.getMessage("NGram.KANJI_1_2"),
         Message.getMessage("NGram.KANJI_1_4"),
@@ -173,40 +173,40 @@ public class NGram {
     };
     
 	static {
-		cjkHashMap = new HashMap<Character, Character>();
-		for (String cjk_list : CJK_CLASS) {
-			char representative = cjk_list.charAt(0);
-			for (int i = 0; i < cjk_list.length(); ++i) {
-				cjkHashMap.put(cjk_list.charAt(i), representative);
+		cjkKanjiNormalizationMapping = new HashMap<Character, Character>();
+		for (String cjkKanjis : CJK_KANJI_NORMALIZATION) {
+			char representative = cjkKanjis.charAt(0);
+			for (int i = 0; i < cjkKanjis.length(); ++i) {
+				cjkKanjiNormalizationMapping.put(cjkKanjis.charAt(i), representative);
 			}
 		}
 	}
 	
 	public NGram() {
-        _grams = new StringBuffer(" ");
+        _ngrams = new StringBuffer(" ");
         _capitalWord = false;
         
         logger.info("Initialize N-Gram");
     }
 
     /**
-     * @param ch
+     * @param character
      */
-	public void addChar(char ch) {
-		ch = normalize(ch);
-		char lastchar = _grams.charAt(_grams.length() - 1);
+	public void addChar(char character) {
+		character = normalize(character);
+		char lastchar = _ngrams.charAt(_ngrams.length() - 1);
 		if (lastchar == ' ') {
-			_grams = new StringBuffer(" ");
+			_ngrams = new StringBuffer(" ");
 			_capitalWord = false;
-			if (ch == ' ') {
+			if (character == ' ') {
 				return;
 			}
-		} else if (_grams.length() >= N_GRAM) {
-			_grams.deleteCharAt(0);
+		} else if (_ngrams.length() >= N_GRAM) {
+			_ngrams.deleteCharAt(0);
 		}
-		_grams.append(ch);
+		_ngrams.append(character);
 
-		if (Character.isUpperCase(ch)) {
+		if (Character.isUpperCase(character)) {
 			if (Character.isUpperCase(lastchar)) {
 				_capitalWord = true;
 			}
@@ -220,63 +220,63 @@ public class NGram {
      * @param n length of n-gram
      * @return n-Gram String (null if it is invalid)
      */
-	public String get(int n) {
+	public String get(int length) {
 		if (_capitalWord) {
 			return null;
 		}
-		int len = _grams.length();
-		if (n < 1 || n > 3 || len < n) {
+		int nLength = _ngrams.length();
+		if (length < 1 || length > 3 || nLength < length) {
 			return null;
 		}
-		if (n == 1) {
-			char ch = _grams.charAt(len - 1);
-			if (ch == ' ') {
+		if (length == 1) {
+			char character = _ngrams.charAt(nLength - 1);
+			if (character == ' ') {
 				return null;
 			}
-			return Character.toString(ch);
+			return Character.toString(character);
 		} else {
-			return _grams.substring(len - n, len);
+			return _ngrams.substring(nLength - length, nLength);
 		}
 	}
     
     /**
      * Character Normalization
-     * @param ch
+     * @param character
      * @return Normalized character
      */
-	public static char normalize(char ch) {
-		Character.UnicodeBlock block = Character.UnicodeBlock.of(ch);
+	public static char normalize(char character) {
+		Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
 		if (block == UnicodeBlock.BASIC_LATIN) {
-			if (ch < 'A' || (ch < 'a' && ch > 'Z') || ch > 'z') {
-				ch = ' ';
+			if (character < 'A' || (character < 'a' && character > 'Z') || character > 'z') {
+				character = ' ';
 			}
 		} else if (block == UnicodeBlock.LATIN_1_SUPPLEMENT) {
-			if (LATIN1_EXCLUDED.indexOf(ch) >= 0) {
-				ch = ' ';
+			if (LATIN1_EXCLUDED.indexOf(character) >= 0) {
+				character = ' ';
 			}
 		} else if (block == UnicodeBlock.GENERAL_PUNCTUATION) {
-			ch = ' ';
+			character = ' ';
 		} else if (block == UnicodeBlock.ARABIC) {
-			if (ch == '\u06cc') {
-				ch = '\u064a';
+			if (character == '\u06cc') {
+				character = '\u064a';
 			}
 		} else if (block == UnicodeBlock.LATIN_EXTENDED_ADDITIONAL) {
-			if (ch >= '\u1ea0') {
-				ch = '\u1ec3';
+			if (character >= '\u1ea0') {
+				character = '\u1ec3';
 			}
 		} else if (block == UnicodeBlock.HIRAGANA) {
-			ch = '\u3042';
+			character = '\u3042';
 		} else if (block == UnicodeBlock.KATAKANA) {
-			ch = '\u30a2';
+			character = '\u30a2';
 		} else if (block == UnicodeBlock.BOPOMOFO || block == UnicodeBlock.BOPOMOFO_EXTENDED) {
-			ch = '\u3105';
+			character = '\u3105';
 		} else if (block == UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) {
-			if (cjkHashMap.containsKey(ch)) {
-				ch = cjkHashMap.get(ch);
+			if (cjkKanjiNormalizationMapping.containsKey(character)) {
+				character = cjkKanjiNormalizationMapping.get(character);
 			}
 		} else if (block == UnicodeBlock.HANGUL_SYLLABLES) {
-			ch = '\uac00';
+			character = '\uac00';
 		}
-		return ch;
+		return character;
 	}
 }

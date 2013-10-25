@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.exoplatform.language.util.NGram;
+import org.exoplatform.language.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +41,9 @@ public class LanguageProfile {
 	private static final int MINIMUM_FREQ = 2;
     private static final int LESS_FREQ_RATIO = 100000;
     
-    public String name = null;
-    public HashMap<String, Integer> freq = new HashMap<String, Integer>();
-    public int[] nWords = new int[NGram.N_GRAM];
+    private String _name = null;
+    private HashMap<String, Integer> _frequency = new HashMap<String, Integer>();
+    private int[] _nWords = new int[NGram.N_GRAM];
 
     /**
      * Constructor for JSONIC 
@@ -54,23 +55,35 @@ public class LanguageProfile {
     /**
      * Normal Constructor
      * 
-     * @param name language name
+     * @param _name language _name
      */
     @Deprecated
     public LanguageProfile(String name) {
-        this.name = name;
+        this._name = name;
     }
     
     public void addLanguageProfile(String name) {
-    	this.name = name;
+    	this._name = name;
     }
     
-    /**
+    public String getLanguageProfile() {
+		return _name;
+	}
+
+	public HashMap<String, Integer> getFrequency() {
+		return _frequency;
+	}
+
+	public int[] getNWords() {
+		return _nWords;
+	}
+
+	/**
      * Add n-gram to profile
      * @param gram
      */
 	public void addNGramToProfile(String nGram) {
-		if (name == null || nGram == null) {
+		if (StringUtils.isEmpty(_name) || StringUtils.isEmpty(nGram)) {
 			return;
 		}
 		
@@ -82,19 +95,19 @@ public class LanguageProfile {
 		if (len < 1 || len > NGram.N_GRAM) {
 			return;
 		}
-		++nWords[len - 1];
-		if (freq.containsKey(nGram)) {
-			freq.put(nGram, freq.get(nGram) + 1);
+		++_nWords[len - 1];
+		if (_frequency.containsKey(nGram)) {
+			_frequency.put(nGram, _frequency.get(nGram) + 1);
 		} else {
-			freq.put(nGram, 1);
+			_frequency.put(nGram, 1);
 		}
 	}
 
     /**
-     * Eliminate below less frequency n-grams and noise Latin alphabets
+     * Eliminate below less _frequency n-grams and noise Latin alphabets
      */
 	public void omitLessFrequency() {
-		if (name == null) {
+		if (StringUtils.isEmpty(_name)) {
 			return;
 		}
 		
@@ -102,18 +115,18 @@ public class LanguageProfile {
 			logger.info("Eliminate below less frequency n-grams and noise Latin alphabets");
 		}
 		
-		int threshold = nWords[0] / LESS_FREQ_RATIO;
+		int threshold = _nWords[0] / LESS_FREQ_RATIO;
 		if (threshold < MINIMUM_FREQ) {
 			threshold = MINIMUM_FREQ;
 		}
 
-		Set<String> keys = freq.keySet();
+		Set<String> keys = _frequency.keySet();
 		int roman = 0;
 		for (Iterator<String> iterator = keys.iterator(); iterator.hasNext();) {
 			String key = iterator.next();
-			int count = freq.get(key);
+			int count = _frequency.get(key);
 			if (count <= threshold) {
-				nWords[key.length() - 1] -= count;
+				_nWords[key.length() - 1] -= count;
 				iterator.remove();
 			} else {
 				if (key.matches("^[A-Za-z]$")) {
@@ -122,12 +135,12 @@ public class LanguageProfile {
 			}
 		}
 
-		if (roman < nWords[0] / 3) {
-			Set<String> keys2 = freq.keySet();
+		if (roman < _nWords[0] / 3) {
+			Set<String> keys2 = _frequency.keySet();
 			for (Iterator<String> iterator = keys2.iterator(); iterator.hasNext();) {
 				String key = iterator.next();
 				if (key.matches(".*[A-Za-z].*")) {
-					nWords[key.length() - 1] -= freq.get(key);
+					_nWords[key.length() - 1] -= _frequency.get(key);
 					iterator.remove();
 				}
 			}

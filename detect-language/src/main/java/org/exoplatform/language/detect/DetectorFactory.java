@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * See also {@link Detector}'s sample code.
  * 
  * <ul>
- * <li>4x faster improvement based on Elmer Garduno's code. Thanks!</li>
+ * 		<li>4x faster improvement based on Elmer Garduno's code. Thanks!</li>
  * </ul>
  * 
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
@@ -56,12 +56,14 @@ public class DetectorFactory {
 	private static final Logger logger = LoggerFactory.getLogger(DetectorFactory.class);
 	
 	private static DetectorFactory _instance = new DetectorFactory();
-	
-	public HashMap<String, double[]> wordLangProbMap;
-    public ArrayList<String> languages;
+	private HashMap<String, double[]> wordLangProbability;
+	private ArrayList<String> languages;
+    
     
     public DetectorFactory() {
-        wordLangProbMap = new HashMap<String, double[]>();
+    	logger.info("This class manages an initialization and constructions of Detector.");
+        // Initialization
+    	wordLangProbability = new HashMap<String, double[]>();
         languages = new ArrayList<String>();
     }
 
@@ -74,53 +76,64 @@ public class DetectorFactory {
      *                              or profile's format inputStream wrong (error code = {@link ErrorCode#FormatError})
      * @throws IOException
      */
-	public static void loadLanguageProfiles(String... langs) throws LanguageDetectException {
-
-		for (int i = 0; i < langs.length; i++) {
-			InputStream inputStream = LanguageProfile.class.getClassLoader().getResourceAsStream("org/exoplatform/language/detect/" + langs[i]);
+	public static void loadLanguageProfiles(String... profiles) throws LanguageDetectException {
+		if (logger.isDebugEnabled()) {
+			logger.info("Load profiles from specified directory.");
+		}
+		
+		for (int i = 0; i < profiles.length; i++) {
+			InputStream inputStream = LanguageProfile.class.getClassLoader().getResourceAsStream("org/exoplatform/language/detect/" + profiles[i]);
 			try {
 				LanguageProfile profile = JSON.decode(inputStream, LanguageProfile.class);
-				addLanguageProfile(profile, langs.length);
+				
+				// Add profile to detector instance
+				addLanguageProfile(profile, profiles.length);
 			} catch (JSONException e) {
-				throw new LanguageDetectException("profile format error in for: " + langs[i], ErrorCode.FORMATERROR);
+				throw new LanguageDetectException("profile format error in for: " + profiles[i], ErrorCode.FORMATERROR);
 			} catch (IOException e) {
-				throw new LanguageDetectException("profile format error in for: " + langs[i], ErrorCode.FORMATERROR);
+				throw new LanguageDetectException("profile format error in for: " + profiles[i], ErrorCode.FORMATERROR);
 			} finally {
 				try {
 					if (inputStream != null) {
 						inputStream.close();
 					}
 				} catch (IOException e) {
-					logger.warn("profile format error in for: " + langs[i]);
+					logger.warn("profile format error in for: " + profiles[i]);
 				}
 			}
 		}
 	}
 
     /**
+     * Add profile from specified Language Profile
+     * 
      * @param profile
      * @param langsize
      * @param index
      * @throws LanguageDetectException
      */
 	protected static void addLanguageProfile(LanguageProfile profile, int langsize) throws LanguageDetectException {
-        String language = profile.name;
+		if (logger.isDebugEnabled()) {
+			logger.info("Add profile from specified Language Profile");
+		}
+		
+        String language = profile.getLanguageProfile();
         if (_instance.languages.contains(language)) {
             throw new LanguageDetectException("duplicate the same language profile", ErrorCode.DUPLICATELANGERROR);
         }
         _instance.languages.add(language);
-        for (String word: profile.freq.keySet()) {
-            if (!_instance.wordLangProbMap.containsKey(word)) {
-                _instance.wordLangProbMap.put(word, new double[langsize]);
+        for (String word: profile.getFrequency().keySet()) {
+            if (!_instance.wordLangProbability.containsKey(word)) {
+                _instance.wordLangProbability.put(word, new double[langsize]);
             }
-            double prob = profile.freq.get(word).doubleValue() / profile.nWords[word.length()-1];
-            _instance.wordLangProbMap.get(word)[_instance.languages.indexOf(profile.name)] = prob;
+            double prob = profile.getFrequency().get(word).doubleValue() / profile.getNWords()[word.length()-1];
+            _instance.wordLangProbability.get(word)[_instance.languages.indexOf(profile.getLanguageProfile())] = prob;
         }
     }
 
     protected static void clearDetector() {
         _instance.languages.clear();
-        _instance.wordLangProbMap.clear();
+        _instance.wordLangProbability.clear();
     }
 
     /**
@@ -153,5 +166,19 @@ public class DetectorFactory {
 		}
 		Detector detector = new Detector(_instance);
 		return detector;
+	}
+
+	/**
+	 * @return the wordLangProbability
+	 */
+	public HashMap<String, double[]> getWordLangProbability() {
+		return wordLangProbability;
+	}
+
+	/**
+	 * @return the languages
+	 */
+	public ArrayList<String> getLanguages() {
+		return languages;
 	}
 }

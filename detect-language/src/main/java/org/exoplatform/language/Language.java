@@ -18,9 +18,11 @@ package org.exoplatform.language;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
- * {@link Language} is to store the detected language.
+ * {@link Language} is to store the detected _language.
  * {@link Detector#getProbabilities()} returns an {@link ArrayList} of {@link Language}s.
  * 
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
@@ -29,49 +31,49 @@ import java.util.ArrayList;
  */
 public class Language {
 
-	public String language;
+	public String _language;
 	
-	public double probability;
+	public double _probability;
 
 	public Language(String language, double probability) {
-		this.language = language;
-		this.probability = probability;
+		this._language = language;
+		this._probability = probability;
 	}
 	
 	/**
-	 * @return the language
+	 * @return the _language
 	 */
 	public String getLanguage() {
-		return language;
+		return _language;
 	}
 
 	/**
-	 * @param language
-	 *            the language to set
+	 * @param _language
+	 *            the _language to set
 	 */
 	public void setLanguage(String language) {
-		this.language = language;
+		this._language = language;
 	}
 
 	/**
-	 * @return the probability
+	 * @return the _probability
 	 */
 	public double getProbability() {
-		return probability;
+		return _probability;
 	}
 
 	/**
-	 * @param probability
-	 *            the probability to set
+	 * @param _probability
+	 *            the _probability to set
 	 */
 	public void setProbability(double probability) {
-		this.probability = probability;
+		this._probability = probability;
 	}
 
 	public String toString() {
-		if (language == null) {
+		if (StringUtils.isEmpty(_language)) {
 			return "";
 		}
-		return  "{" + language + ":" + probability + "}";
+		return  "{" + _language + ":" + _probability + "}";
 	}
 }

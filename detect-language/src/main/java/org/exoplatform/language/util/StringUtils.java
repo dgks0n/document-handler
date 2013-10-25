@@ -14,22 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.language.define;
+package org.exoplatform.language.util;
 
 /**
- * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version ErrorCode.java Oct 18, 2013
- *
+ * Created by The eXo Platform SAS
+ * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
+ *          
+ * @version StringUtils.java Oct 25, 2013
  */
-public enum ErrorCode {
-	
-	NOTEXTERROR, 
-	FORMATERROR, 
-	FILELOADERROR, 
-	DUPLICATELANGERROR, 
-	NEEDLOADPROFILEERROR, 
-	CANTDETECTERROR, 
-	CANTOPENTRAINDATA, 
-	TRAINDATAFORMATERROR, 
-	INITPARAMERROR
+public class StringUtils extends org.apache.commons.lang.StringUtils {
+
 }

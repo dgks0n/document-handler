@@ -43,7 +43,7 @@ public class Message {
 		try {
 			return ResourceBundle.getBundle(BUNDLE_NAME).getString(key);
 		} catch (MissingResourceException mre) {
-			logger.error("Can't find any messages matches with " + key + ".");
+			logger.error("Can't find any messages matches with " + key + ".", mre);
 			return "[" + key + "]";
 		}
 	}

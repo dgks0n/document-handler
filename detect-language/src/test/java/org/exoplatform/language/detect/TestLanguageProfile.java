@@ -70,7 +70,7 @@ public class TestLanguageProfile {
     @Test
     public final void testLangProfile() {
     	profile = new LanguageProfile();
-        assertEquals(profile.name, null);
+        assertEquals(profile.getLanguageProfile(), null);
     }
 
     /**
@@ -79,7 +79,7 @@ public class TestLanguageProfile {
     @Test
     public final void testLangProfileStringInt() {
 		profile = new LanguageProfile("en");
-        assertEquals(profile.name, "en");
+        assertEquals(profile.getLanguageProfile(), "en");
     }
 
     /**
@@ -89,9 +89,9 @@ public class TestLanguageProfile {
     public final void testAdd() {
     	profile = new LanguageProfile("en");
         profile.addNGramToProfile("a");
-        assertEquals((int)profile.freq.get("a"), 1);
+        assertEquals((int)profile.getFrequency().get("a"), 1);
         profile.addNGramToProfile("a");
-        assertEquals((int)profile.freq.get("a"), 2);
+        assertEquals((int)profile.getFrequency().get("a"), 2);
         profile.omitLessFrequency();
     }
 
@@ -103,7 +103,7 @@ public class TestLanguageProfile {
     public final void testAddIllegally1() {
         profile = new LanguageProfile(); // Illegal ( available for only JSONIC ) but ignore  
         profile.addNGramToProfile("a"); // ignore
-        assertEquals(profile.freq.get("a"), null); // ignored
+        assertEquals(profile.getFrequency().get("a"), null); // ignored
     }
 
     /**
@@ -115,9 +115,9 @@ public class TestLanguageProfile {
         profile.addNGramToProfile("a");
         profile.addNGramToProfile("");  // Illegal (string's length of parameter must be between 1 and 3) but ignore
         profile.addNGramToProfile("abcd");  // as well
-        assertEquals((int)profile.freq.get("a"), 1);
-        assertEquals(profile.freq.get(""), null);     // ignored
-        assertEquals(profile.freq.get("abcd"), null); // ignored
+        assertEquals((int)profile.getFrequency().get("a"), 1);
+        assertEquals(profile.getFrequency().get(""), null);     // ignored
+        assertEquals(profile.getFrequency().get("abcd"), null); // ignored
         
     }
     
@@ -133,13 +133,13 @@ public class TestLanguageProfile {
         }
         profile.addNGramToProfile("\u3050");
 
-        assertEquals((int)profile.freq.get("a"), 5);
-        assertEquals((int)profile.freq.get("\u3042"), 5);
-        assertEquals((int)profile.freq.get("\u3050"), 1);
+        assertEquals((int)profile.getFrequency().get("a"), 5);
+        assertEquals((int)profile.getFrequency().get("\u3042"), 5);
+        assertEquals((int)profile.getFrequency().get("\u3050"), 1);
         profile.omitLessFrequency();
-        assertEquals(profile.freq.get("a"), null); // omitted
-        assertEquals((int)profile.freq.get("\u3042"), 5);
-        assertEquals(profile.freq.get("\u3050"), null); // omitted
+        assertEquals(profile.getFrequency().get("a"), null); // omitted
+        assertEquals((int)profile.getFrequency().get("\u3042"), 5);
+        assertEquals(profile.getFrequency().get("\u3050"), null); // omitted
     }
 
     /**

@@ -51,14 +51,13 @@ public class TestLanguage {
     @Test
     public final void testLanguage() {
         Language lang = new Language(null, 0);
-        assertEquals(lang.language, null);
-        assertEquals(lang.probability, 0.0, 0.0001);
+        assertEquals(lang.getLanguage(), null);
+        assertEquals(lang.getProbability(), 0.0, 0.0001);
         assertEquals(lang.toString(), "");
         
         Language lang2 = new Language("en", 1.0);
-        assertEquals(lang2.language, "en");
-        assertEquals(lang2.probability, 1.0, 0.0001);
+        assertEquals(lang2.getLanguage(), "en");
+        assertEquals(lang2.getProbability(), 1.0, 0.0001);
         assertEquals(lang2.toString(), "{en:1.0}");
-        
     }
 }
