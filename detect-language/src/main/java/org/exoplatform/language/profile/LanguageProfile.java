@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.exoplatform.document.util.StringUtils;
 import org.exoplatform.language.util.NGram;
-import org.exoplatform.language.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +38,8 @@ public class LanguageProfile {
 
 	private static final Logger logger = LoggerFactory.getLogger(LanguageProfile.class);
 	
-	private static final int MINIMUM_FREQ = 2;
-    private static final int LESS_FREQ_RATIO = 100000;
+	static final int MINIMUM_FREQ = 2;
+    static final int LESS_FREQ_RATIO = 100000;
     
     public String name = null;
     public HashMap<String, Integer> frequency = new HashMap<String, Integer>();

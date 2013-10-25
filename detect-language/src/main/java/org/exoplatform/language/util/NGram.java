@@ -32,13 +32,16 @@ public class NGram {
 
 	private static final Logger logger = LoggerFactory.getLogger(NGram.class);
 	
-	private static final String LATIN1_EXCLUDED = Message.getMessage("NGram.LATIN1_EXCLUDE");
+	static final String LATIN1_EXCLUDED = Message.getMessage("NGram.LATIN1_EXCLUDE");
 	
-	public static HashMap<Character, Character> cjkKanjiNormalizationMapping;
+	StringBuffer _ngrams;
+	
+	boolean _capitalWord;
+	
+	static HashMap<Character, Character> cjkKanjiNormalizationMapping;
+	
 	public static final int N_GRAM = 3;
 	
-	private StringBuffer _ngrams;
-	private boolean _capitalWord;
 	
 	/**
      * CJK Kanji Normalization Mapping

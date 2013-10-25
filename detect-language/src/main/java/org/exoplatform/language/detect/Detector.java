@@ -24,11 +24,11 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import org.exoplatform.document.util.StringUtils;
 import org.exoplatform.language.Language;
 import org.exoplatform.language.define.ErrorCode;
 import org.exoplatform.language.exception.LanguageDetectException;
 import org.exoplatform.language.util.NGram;
-import org.exoplatform.language.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

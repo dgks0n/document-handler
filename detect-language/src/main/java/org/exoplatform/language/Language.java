@@ -31,9 +31,9 @@ import org.apache.commons.lang.StringUtils;
  */
 public class Language {
 
-	public String _language;
+	String _language;
 	
-	public double _probability;
+	double _probability;
 
 	public Language(String language, double probability) {
 		this._language = language;

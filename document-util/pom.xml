@@ -7,27 +7,12 @@
 		<artifactId>document-handler</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>org.exoplatform.charsets</groupId>
-	<artifactId>detect-charsets</artifactId>
+	<groupId>org.exoplatform.document</groupId>
+	<artifactId>document-util</artifactId>
 	<version>1.0.0</version>
-	<name>Document :: Detect Charsets Of Document</name>
+	<name>Document :: Document Util Tools</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-		<dependency>
-			<groupId>antlr</groupId>
-			<artifactId>antlrall</artifactId>
-			<version>2.7.4</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.jchardet</groupId>
-			<artifactId>jchardet</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf</groupId>
-			<artifactId>jargs</artifactId>
-			<version>1.0</version>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
