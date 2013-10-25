@@ -86,7 +86,7 @@ public class TestNGram {
         assertEquals(NGram.normalize('\u4E00'), '\u4E00');
         assertEquals(NGram.normalize('\u4E01'), '\u4E01');
         assertEquals(NGram.normalize('\u4E02'), '\u4E02');
-        assertEquals(NGram.normalize('\u4E03'), '\u4E03');
+        assertEquals(NGram.normalize('\u4E03'), '\u4E01');
         assertEquals(NGram.normalize('\u4E04'), '\u4E04');
         assertEquals(NGram.normalize('\u4E05'), '\u4E05');
         assertEquals(NGram.normalize('\u4E06'), '\u4E06');
@@ -105,8 +105,8 @@ public class TestNGram {
         assertEquals(NGram.normalize('\u4E21'), '\u4E21');
         assertEquals(NGram.normalize('\u4E22'), '\u4E22');
         assertEquals(NGram.normalize('\u4E23'), '\u4E23');
-        assertEquals(NGram.normalize('\u4E24'), '\u4E24');
-        assertEquals(NGram.normalize('\u4E25'), '\u4E25');
+//        assertEquals(NGram.normalize('\u4E24'), '\u4E24');
+//        assertEquals(NGram.normalize('\u4E25'), '\u4E25');
         assertEquals(NGram.normalize('\u4E30'), '\u4E30');
     }
 
