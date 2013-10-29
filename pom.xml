@@ -280,6 +280,40 @@
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.3.1</version>
+					<configuration>
+						<excludes>
+							<exclude>log4j.dtd</exclude>
+							<exclude>log4j.xml</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.5</version>
+					<executions>
+						<execution>
+							<id>attach-artifacts</id>
+							<phase>package</phase>
+							<goals>
+								<goal>attach-artifact</goal>
+							</goals>
+							<configuration>
+								<artifacts>
+									<artifact>
+										<file>${project.build.outputDirectory}/log4j.xml</file>
+										<type>xml</type>
+										<classifier>log4j</classifier>
+									</artifact>
+								</artifacts>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.0-beta-8</version>
 					<configuration>

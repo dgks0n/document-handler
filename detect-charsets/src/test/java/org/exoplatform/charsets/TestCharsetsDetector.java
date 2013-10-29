@@ -16,19 +16,20 @@
  */
 package org.exoplatform.charsets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 
 import org.exoplatform.document.util.FileUtils;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.picocontainer.DefaultPicoContainer;
 import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
@@ -37,23 +38,37 @@ import org.picocontainer.PicoContainer;
  */
 public class TestCharsetsDetector {
 	
+	private static final Logger logger = LoggerFactory.getLogger(TestCharsetsDetector.class);
+	
 	static final String RESOURCES_BASE_PATH = "ucs/";
 	
 	File file;
 	
-	CharsetsDetector charsetsDetector;
-
-	@Test
-	public void testCharsetsDetector1() {
-		file = FileUtils.toFile(getClass().getResource(RESOURCES_BASE_PATH + "UTF-8-test.txt"));
+	static CharsetsDetector charsetsDetector;
+	
+	@Before
+	public void setUp() {
+		logger.info("Initialization variables");
+		
 		MutablePicoContainer container = new DefaultPicoContainer();
 		container.addComponent(CodepageDetectorProxy.class);
 		container.addComponent(CharsetsDetector.class);
 		
 		charsetsDetector = container.getComponent(CharsetsDetector.class);
-		Charset charset = charsetsDetector.getFileEncode(file);
-		
-		assertEquals("utf-8", charset.name());
+		charsetsDetector.addDetectorImplementations();
 	}
 
+	@Test
+	public void testUnknownCharsetDetector() throws FileNotFoundException {
+		file = FileUtils.toFile(getClass().getResource(RESOURCES_BASE_PATH + "UTF-8-test.txt"));
+		Charset charset = charsetsDetector.detectCharsetEncoding(file);
+		assertEquals("void", charset.toString());
+	}
+
+	@Test
+	public void testUnicodeCharsetDetector() throws FileNotFoundException {
+		file = FileUtils.toFile(getClass().getResource(RESOURCES_BASE_PATH + "TeX.txt"));
+		Charset charset = charsetsDetector.detectCharsetEncoding(file);
+		assertEquals("UTF-8", charset.toString());
+	}
 }

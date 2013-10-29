@@ -25,6 +25,7 @@ import info.monitorenter.cpdetector.io.UnicodeDetector;
 import info.monitorenter.util.StringUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
@@ -62,28 +63,28 @@ public class CharsetsDetector {
 	    detector.add(UnicodeDetector.getInstance());
 	}
 	
-	public Charset getFileEncode(String path) {
+	public Charset detectCharsetEncoding(String path) throws FileNotFoundException {
 		if (StringUtil.isEmpty(path)) {
-			logger.warn("The file's path '" + path + "' is invalid.");
-			// break out of function
-			return null;
+			throw new FileNotFoundException("The file's path '" + path + "' is invalid.");
 		}
 		
-		return getFileEncode(new File(path));
+		return detectCharsetEncoding(new File(path));
 	}
 	
-	public Charset getFileEncode(File file) {
+	public Charset detectCharsetEncoding(File file) throws FileNotFoundException {
 		if (!file.exists()) {
-			logger.warn("The file's path '" + file.getAbsolutePath() + "' is invalid.");
-		} else {
-			try {
-				return detector.detectCodepage(file.toURI().toURL());
-			} catch (MalformedURLException mue) {
-				logger.error("The file's path is malformed.", mue);
-			} catch (IOException ioe) {
-				logger.error("Cannot detect charsets encoding of file " + file.getName() + ".", ioe);
-			}
+			throw new FileNotFoundException("The file's path '" + file.getAbsolutePath() + "' is invalid.");
 		}
-		return null;
+		
+		// Default is unknown charsets encode
+		Charset charset = null;
+		try {
+			charset = detector.detectCodepage(file.toURI().toURL());
+		} catch (MalformedURLException mue) {
+			logger.error("The file's path is malformed.", mue);
+		} catch (IOException ioe) {
+			logger.error("Cannot detect charsets encoding of file " + file.getName() + ".", ioe);
+		}
+		return charset;
 	}
 }
