@@ -8,9 +8,12 @@
 	<name>Document :: Document Handler</name>
 	<url>http://maven.apache.org</url>
 	<modules>
+		<!-- Code Page Detector -->
+		<module>cpdetector</module>
+		
 		<module>detect-language</module>
-    	<module>detect-charsets</module>
     	<module>document-util</module>
+    	<module>detect-charsets</module>
   	</modules>
 	<description>
     	<![CDATA[Please refer to the <a href="http://www.picocontainer.org/web">main website</a> for documentation.]]>
@@ -141,11 +144,6 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
-		</dependency>
 		<dependency>
 			<groupId>net.arnx</groupId>
 			<artifactId>jsonic</artifactId>
