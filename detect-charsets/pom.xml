@@ -30,36 +30,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>copy</id>
-							<phase>prepare-package</phase>
-							<goals>
-								<goal>copy</goal>
-							</goals>
-							<configuration>
-								<artifactItems>
-									<artifactItem>
-										<groupId>org.exoplatform.language</groupId>
-										<artifactId>detect-language</artifactId>
-										<version>1.0.0</version>
-										<type>xml</type>
-										<classifier>log4j</classifier>
-										<outputDirectory>${project.build.outputDirectory}</outputDirectory>
-										<destFileName>log4j.xml</destFileName>
-									</artifactItem>
-								</artifactItems>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
 </project>
