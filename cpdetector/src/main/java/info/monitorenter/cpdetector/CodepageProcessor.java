@@ -99,6 +99,9 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.StringTokenizer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * An executable command line interface for batch processing files with cpdetector.
  * <p>
@@ -128,6 +131,7 @@ import java.util.StringTokenizer;
  */
 public class CodepageProcessor extends ACmdLineArgsInheritor {
 
+	private static final Logger logger = LoggerFactory.getLogger(CodepageProcessor.class);
 	/**
 	 * The root folder (directory) under which all files for the collection are
 	 * found.
@@ -196,24 +200,15 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 		super();
 		this.detector = CodepageDetectorProxy.getInstance();
 		// adding the options:
-		this.addCmdLineOption("documents",
-				new CmdLineParser.Option.StringOption('r', "documents"));
-		this.addCmdLineOption("extensions",
-				new CmdLineParser.Option.StringOption('e', "extensions"));
-		this.addCmdLineOption("outputDir",
-				new CmdLineParser.Option.StringOption('o', "outputDir"));
-		this.addCmdLineOption("moveUnknown",
-				new CmdLineParser.Option.BooleanOption('m', "moveUnknown"));
-		this.addCmdLineOption("verbose",
-				new CmdLineParser.Option.BooleanOption('v', "verbose"));
-		this.addCmdLineOption("wait", new CmdLineParser.Option.IntegerOption(
-				'w', "wait"));
-		this.addCmdLineOption("transform",
-				new CmdLineParser.Option.StringOption('t', "transform"));
-		this.addCmdLineOption("detectors",
-				new CmdLineParser.Option.StringOption('d', "detectors"));
-		this.addCmdLineOption("charsets",
-				new CmdLineParser.Option.BooleanOption('c', "charsets"));
+		this.addCmdLineOption("documents", new CmdLineParser.Option.StringOption('r', "documents"));
+		this.addCmdLineOption("extensions", new CmdLineParser.Option.StringOption('e', "extensions"));
+		this.addCmdLineOption("outputDir", new CmdLineParser.Option.StringOption('o', "outputDir"));
+		this.addCmdLineOption("moveUnknown", new CmdLineParser.Option.BooleanOption('m', "moveUnknown"));
+		this.addCmdLineOption("verbose", new CmdLineParser.Option.BooleanOption('v', "verbose"));
+		this.addCmdLineOption("wait", new CmdLineParser.Option.IntegerOption('w', "wait"));
+		this.addCmdLineOption("transform", new CmdLineParser.Option.StringOption('t', "transform"));
+		this.addCmdLineOption("detectors", new CmdLineParser.Option.StringOption('d', "detectors"));
+		this.addCmdLineOption("charsets", new CmdLineParser.Option.BooleanOption('c', "charsets"));
 	}
 
 	public void parseArgs(String[] cmdLineArgs) throws Exception {
@@ -235,21 +230,16 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 
 			if (collectionOption == null) {
 				usage();
-				throw new MissingResourceException(
-						"Parameter for collection root directory is missing.",
-						"String", "-r");
+				throw new MissingResourceException("Parameter for collection root directory is missing.", "String", "-r");
 			}
 			this.collectionRoot = new File(collectionOption.toString());
 			if (outputDirOption == null) {
 				usage();
-				throw new MissingResourceException(
-						"Parameter for output directory is missing.", "String",
-						"-o");
+				throw new MissingResourceException("Parameter for output directory is missing.", "String", "-o");
 			}
 			this.outputDir = new File(outputDirOption.toString());
 			if (extensionsOption != null) {
-				this.extensionFilter = new FileFilterExtensions(
-						this.parseCSVList(extensionsOption.toString()));
+				this.extensionFilter = new FileFilterExtensions(this.parseCSVList(extensionsOption.toString()));
 			} else {
 				// Anonymous dummy:
 				this.extensionFilter = new FileFilter() {
@@ -302,17 +292,12 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 				ICodepageDetector cpDetector = null;
 				for (int i = 0; i < detectors.length; i++) {
 					try {
-						cpDetector = (ICodepageDetector) SingletonLoader
-								.getInstance().newInstance(detectors[i]);
+						cpDetector = (ICodepageDetector) SingletonLoader.getInstance().newInstance(detectors[i]);
 						if (cpDetector != null) {
 							this.detector.add(cpDetector);
 						}
 					} catch (InstantiationException ie) {
-						System.err
-								.println("Could not instantiate custom ICodepageDetector: "
-										+ detectors[i]
-										+ " (argument \"-c\"): "
-										+ ie.getMessage());
+						logger.error("Could not instantiate custom ICodepageDetector: " + detectors[i] + " (argument \"-c\"): " + ie.getMessage(), ie);
 					}
 
 				}
@@ -333,11 +318,11 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 		Charset cs;
 		for (int i = 0; i < this.parseCodepages.length; i++) {
 			cs = this.parseCodepages[i];
-			System.out.println("  " + cs.name() + ":");
+			logger.info("  " + cs.name() + ":");
 			Set<String> aliases = cs.aliases();
 			Iterator<String> itAliases = aliases.iterator();
 			while (itAliases.hasNext()) {
-				System.out.println("    " + itAliases.next());
+				logger.info("    " + itAliases.next());
 			}
 		}
 	}
@@ -375,8 +360,7 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 			throw new IllegalArgumentException("File argument is null!");
 		}
 		if (!f.exists()) {
-			throw new IllegalArgumentException(f.getAbsolutePath()
-					+ " does not exist.");
+			throw new IllegalArgumentException(f.getAbsolutePath() + " does not exist.");
 		}
 		if (f.isDirectory()) {
 			File[] childs = f.listFiles();
@@ -396,7 +380,7 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 			this.describe();
 			this.processRecursive(this.collectionRoot);
 		}
-		System.out.println("No exceptional program flow occured!");
+		logger.info("No exceptional program flow occured!");
 	}
 
 	/**
@@ -435,7 +419,7 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 		if (msg.length() > 0) {
 			throw new IllegalArgumentException(msg.toString());
 		} else {
-			System.out.println("All parameters are valid.");
+			logger.info("All parameters are valid.");
 		}
 	}
 
@@ -454,30 +438,26 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 		String prefix; // the path between this.collectionRoot and the file.
 		File target;
 
-		filenameFinder = FileUtil.cutDirectoryInformation(document
-				.getAbsolutePath());
+		filenameFinder = FileUtil.cutDirectoryInformation(document.getAbsolutePath());
 		prefix = document.getAbsolutePath();
 		int stop = prefix.lastIndexOf(fileseparator);
 		int start = this.collectionRoot.getAbsolutePath().length();
 		if (start > stop) {
 			prefix = "";
 		} else {
-			prefix = prefix.substring(this.collectionRoot.getAbsolutePath()
-					.length(), stop + 1);
+			prefix = prefix.substring(this.collectionRoot.getAbsolutePath().length(), stop + 1);
 		}
 		if (this.verbose) {
-			System.out.println("Processing document: " + prefix + "/"
-					+ filenameFinder.getValue());
+			logger.info("Processing document: " + prefix + "/" + filenameFinder.getValue());
 		}
 		charset = this.detector.detectCodepage(document.toURL());
-
 		if ((charset == null) || (charset == UnknownCharset.getInstance())) {
 			if (this.verbose) {
-				System.out.println("  Charset not detected.");
+				logger.info("  Charset not detected.");
 			}
 			if (!this.moveUnknown) {
 				if (this.verbose) {
-					System.out.println("  Dropping document.");
+					logger.info("  Dropping document.");
 				}
 				return;
 			} else {
@@ -486,40 +466,31 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 			}
 		}
 
-		if ((this.targetCodepage != null) && (charset != null)
-				&& (UnknownCharset.getInstance() != charset)) {
+		if ((this.targetCodepage != null) && (charset != null) && (UnknownCharset.getInstance() != charset)) {
 
 			// transform it:
 			if (prefix.length() > 0) {
-				target = new File(this.outputDir.getAbsolutePath() + "/"
-						+ this.targetCodepage.name() + "/" + prefix + "/");
+				target = new File(this.outputDir.getAbsolutePath() + "/" + this.targetCodepage.name() + "/" + prefix + "/");
 			} else {
-				target = new File(this.outputDir.getAbsolutePath() + "/"
-						+ this.targetCodepage.name() + "/");
+				target = new File(this.outputDir.getAbsolutePath() + "/" + this.targetCodepage.name() + "/");
 			}
 			if (target.mkdirs()) {
 				if (this.verbose) {
-					System.out.println("  Created directory : "
-							+ target.getAbsolutePath());
+					logger.info("  Created directory : " + target.getAbsolutePath());
 				}
 			}
-			target = new File(target.getAbsolutePath() + "/"
-					+ filenameFinder.getValue());
+			target = new File(target.getAbsolutePath() + "/" + filenameFinder.getValue());
 			if (this.verbose) {
-				System.out.println("  Moving to \"" + target.getAbsolutePath()
-						+ "\".");
+				logger.info("  Moving to \"" + target.getAbsolutePath() + "\".");
 			}
 			if (target.exists() && target.length() == document.length()) {
 				if (this.verbose) {
-					System.out
-							.println("  File already exists and has same size. Skipping move.");
+					logger.info("  File already exists and has same size. Skipping move.");
 				}
 			} else {
 				target.createNewFile();
-				Reader in = new BufferedReader(new InputStreamReader(
-						new FileInputStream(document), charset));
-				Writer out = new BufferedWriter(new OutputStreamWriter(
-						new FileOutputStream(target), this.targetCodepage));
+				Reader in = new BufferedReader(new InputStreamReader(new FileInputStream(document), charset));
+				Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(target), this.targetCodepage));
 
 				// da flow
 				int toRead = transcodeBuffer.length;
@@ -532,29 +503,21 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 			}
 		} else {
 			if (this.targetCodepage != null) {
-				System.out.println("Skipping transformation of document "
-						+ document.getAbsolutePath()
-						+ " because it's charset could not be detected.");
+				logger.info("Skipping transformation of document " + document.getAbsolutePath() + " because it's charset could not be detected.");
 			}
 			if (prefix.length() > 0) {
-				target = new File(this.outputDir.getAbsolutePath() + "/"
-						+ charset.name().toLowerCase() + "/" + prefix + "/");
+				target = new File(this.outputDir.getAbsolutePath() + "/" + charset.name().toLowerCase() + "/" + prefix + "/");
 			} else {
-				target = new File(this.outputDir.getAbsolutePath() + "/"
-						+ charset.name().toLowerCase() + "/");
+				target = new File(this.outputDir.getAbsolutePath() + "/" + charset.name().toLowerCase() + "/");
 			}
 			if (target.mkdirs()) {
 				if (this.verbose) {
-					System.out.println("Created directory : "
-							+ target.getAbsolutePath());
+					logger.info("Created directory : " + target.getAbsolutePath());
 				}
 			}
-			target = new File(target.getAbsolutePath() + "/"
-					+ filenameFinder.getValue());
+			target = new File(target.getAbsolutePath() + "/" + filenameFinder.getValue());
 			if (this.verbose) {
-
-				System.out.println("  Moving to \"" + target.getAbsolutePath()
-						+ "\".");
+				logger.info("  Moving to \"" + target.getAbsolutePath() + "\".");
 			}
 			this.rawCopy(document, target);
 		}
@@ -612,7 +575,7 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 		msg.append("  detection algorithm    : ");
 		msg.append("\n");
 		msg.append(this.detector.toString());
-		System.out.println(msg.toString());
+		logger.info(msg.toString());
 	}
 
 	/**
@@ -649,19 +612,18 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 		tmp.append("  Mandatory (if no -c option given) :\n");
 		tmp.append("  -r            : Root directory containing the collection (recursive).\n");
 		tmp.append("  -o            : Output directory containing the sorted collection.\n");
-		System.out.print(tmp.toString());
+		logger.info(tmp.toString());
 	}
 
 	void loadCodepages() {
 		SortedMap<String, Charset> charSets = Charset.availableCharsets();
-		Iterator<Map.Entry<String, Charset>> csIt = charSets.entrySet()
-				.iterator();
+		Iterator<Map.Entry<String, Charset>> csIt = charSets.entrySet().iterator();
 		Map.Entry<String, Charset> entry;
 		Iterator<String> aliasIt;
 		Set<String> aliases;
 		Charset cs;
 		if (this.verbose) {
-			System.out.println("Loading system codepages...");
+			logger.info("Loading system codepages...");
 		}
 		this.parseCodepages = new Charset[charSets.size()];
 		int index = 0;
@@ -669,12 +631,12 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 			entry = csIt.next();
 			cs = (Charset) entry.getValue();
 			if (this.verbose) {
-				System.out.println("Charset: " + cs.name());
+				logger.info("Charset: " + cs.name());
 				aliases = cs.aliases();
-				System.out.println("  Aliases: ");
+				logger.info("  Aliases: ");
 				aliasIt = aliases.iterator();
 				while (aliasIt.hasNext()) {
-					System.out.println("    " + aliasIt.next().toString());
+					logger.info("    " + aliasIt.next().toString());
 				}
 			}
 			this.parseCodepages[index] = cs;

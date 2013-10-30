@@ -49,6 +49,9 @@ import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Nice static helpers for working with Strings.
  * <p>
@@ -62,6 +65,8 @@ import java.util.Map;
  */
 public final class StringUtil {
   
+	private static final Logger logger = LoggerFactory.getLogger(StringUtil.class);
+	
 	/** Singleton instance. */
 	private static StringUtil instance = null;
 
@@ -390,7 +395,7 @@ public final class StringUtil {
 		String result = s;
 		int oldlen = s.length();
 		if (oldlen > length) {
-			System.err.println("greenpeace.util.setSize(String s,int length): length (" + length + ") is smaller than s.length(" + oldlen + ") : " + s);
+			logger.error("greenpeace.util.setSize(String s,int length): length (" + length + ") is smaller than s.length(" + oldlen + ") : " + s);
 		} else {
 			int tofill = length - oldlen;
 			result = StringUtil.appendSpaces(s, tofill);

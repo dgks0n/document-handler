@@ -49,6 +49,9 @@ package info.monitorenter.cpdetector.util.collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * An {@link info.monitorenter.cpdetector.util.collections.ITreeNode} implementation, that does
  * not allow equal m_children of one common parent node. Common elements in the
@@ -63,6 +66,8 @@ import java.util.List;
  */
 public class TreeNodeUniqueChildren extends ITreeNode.DefaultTreeNode {
 
+	private static final Logger logger = LoggerFactory.getLogger(TreeNodeUniqueChildren.class);
+	
 	/**
    * 
    */
@@ -185,8 +190,8 @@ public class TreeNodeUniqueChildren extends ITreeNode.DefaultTreeNode {
 		prettyPrint.append("               /|\\ \n");
 		prettyPrint.append("              / | \\ \n");
 		prettyPrint.append("             8  9  10 \n");
-
-		System.out.println("Constructing tree:\n" + prettyPrint.toString());
+		
+		logger.info("Constructing tree:\n" + prettyPrint.toString());
 
 		prettyPrint.delete(0, prettyPrint.length());
 		prettyPrint.append("             0 \n");
@@ -202,28 +207,27 @@ public class TreeNodeUniqueChildren extends ITreeNode.DefaultTreeNode {
 		prettyPrint.append("          / | \\ \n");
 		prettyPrint.append("         8  9  10 \n");
 
-		System.out.println("Assuming tree:\n" + prettyPrint.toString());
+		logger.info("Assuming tree:\n" + prettyPrint.toString());
 
 		ITreeNode root = new TreeNodeUniqueChildren(new Integer(0),
 				new ITreeNode[] {
 						new DefaultTreeNode(new Integer(1), new ITreeNode[] {
 								new DefaultTreeNode(new Integer(4)),
-								new DefaultTreeNode(new Integer(5)) }),
+								new DefaultTreeNode(new Integer(5)) 
+						}),
 						new DefaultTreeNode(new Integer(2)),
 						new DefaultTreeNode(new Integer(1), new ITreeNode[] {
 								new DefaultTreeNode(new Integer(6),
 										new ITreeNode[] {
-												new DefaultTreeNode(
-														new Integer(8)),
-												new DefaultTreeNode(
-														new Integer(9)),
-												new DefaultTreeNode(
-														new Integer(10)) }),
-								new DefaultTreeNode(new Integer(7)) })
-
+												new DefaultTreeNode(new Integer(8)),
+												new DefaultTreeNode(new Integer(9)),
+												new DefaultTreeNode(new Integer(10)) 
+										}),
+								new DefaultTreeNode(new Integer(7))
+						})
 				});
-		System.out.println("The tree:");
-		System.out.println(root.toString());
+		logger.info("The tree:");
+		logger.info(root.toString());
 	}
 
 	/*

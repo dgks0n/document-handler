@@ -45,7 +45,6 @@
  */
 package info.monitorenter.cpdetector.io;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -79,6 +78,7 @@ import org.mozilla.intl.chardet.nsPSMDetector;
  * 
  */
 public final class JChardetFacade extends AbstractCodepageDetector implements nsICharsetDetectionObserver {
+	
 	private static JChardetFacade instance = null;
 
 	private static nsDetector det;

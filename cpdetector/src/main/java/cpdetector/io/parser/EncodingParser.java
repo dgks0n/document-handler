@@ -11,8 +11,7 @@ import antlr.TokenStream;
 import antlr.TokenStreamException;
 import antlr.collections.impl.BitSet;
 
-public class EncodingParser extends antlr.LLkParser implements
-		EncodingParserTokenTypes {
+public class EncodingParser extends antlr.LLkParser implements EncodingParserTokenTypes {
 
 	protected EncodingParser(TokenBuffer tokenBuf, int k) {
 		super(tokenBuf, k);
@@ -37,8 +36,7 @@ public class EncodingParser extends antlr.LLkParser implements
 		tokenNames = _tokenNames;
 	}
 
-	public final String htmlDocument() throws RecognitionException,
-			TokenStreamException {
+	public final String htmlDocument() throws RecognitionException, TokenStreamException {
 		String charset;
 
 		Token token1 = null;

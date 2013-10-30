@@ -131,7 +131,6 @@ public class UnsupportedCharset extends Charset {
 	 */
 	public String displayName(Locale locale) {
 		return this.m_name;
-
 	}
 
 }

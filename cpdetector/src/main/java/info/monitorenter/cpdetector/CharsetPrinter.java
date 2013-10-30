@@ -52,6 +52,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * @author demian reachable (at)\@ rootring.com
@@ -59,6 +62,9 @@ import java.nio.charset.Charset;
  * Simple class that tries to detect the encoding of files given on the command-line.
  */
 public class CharsetPrinter {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CharsetPrinter.class);
+	
 	private final CodepageDetectorProxy detector = CodepageDetectorProxy.getInstance();
 
 	public CharsetPrinter() {
@@ -70,7 +76,6 @@ public class CharsetPrinter {
 	@SuppressWarnings("deprecation")
 	public String guessEncoding(File f) throws MalformedURLException, IOException {
 		Charset charset = detector.detectCodepage(f.toURL());
-
 		if (charset == null)
 			return null;
 
@@ -81,7 +86,7 @@ public class CharsetPrinter {
 		CharsetPrinter cp = new CharsetPrinter();
 
 		if (args.length < 1) {
-			System.err.println("Please provide one or more files to examine on the command line after the command.");
+			logger.error("Please provide one or more files to examine on the command line after the command.");
 		}
 
 		try {
@@ -91,17 +96,16 @@ public class CharsetPrinter {
 				f = new File(args[walk]);
 
 				if (f.exists() && f.canRead() && f.isFile()) {
-					System.out.println(args[walk] + " appears to be " + cp.guessEncoding(f));
+					logger.info(args[walk] + " appears to be " + cp.guessEncoding(f));
 				} else {
-					System.err.println(args[walk] + " is not a file, does not exists or is not readable at this time.");
-					System.out.println(args[walk] + " appears to be UNKNOWN");
+					logger.error(args[walk] + " is not a file, does not exists or is not readable at this time.");
+					logger.info(args[walk] + " appears to be UNKNOWN");
 				}
 			}
 		} catch (MalformedURLException e) {
-			System.err.println("The filename makes no sense.");
+			logger.error("The filename makes no sense." + e.getMessage(), e);
 		} catch (IOException e) {
-			System.err.println("Problem reading from file");
-			e.printStackTrace();
+			logger.error("Problem reading from file" + e.getMessage(), e);
 		}
 	}
 }

@@ -63,10 +63,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class FitAuthoringClient extends JFrame implements ActionListener{
 
+	private static final Logger logger = LoggerFactory.getLogger(FitAuthoringClient.class);
+	
 	public FitAuthoringClient() {
-
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
@@ -100,7 +104,7 @@ public class FitAuthoringClient extends JFrame implements ActionListener{
 	 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(this.getClass().getName() + ".actionPerformed()");
+		logger.info(this.getClass().getName() + ".actionPerformed()");
 	}
 
 	/**
@@ -129,7 +133,7 @@ public class FitAuthoringClient extends JFrame implements ActionListener{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(this.getClass().getName() + ".actionPerformed()");
+			logger.info(this.getClass().getName() + ".actionPerformed()");
 			ClassFileChooser chooser = new ClassFileChooser(new URLFileSystemView());
 			ClassFileFilterIsA filter = new ClassFileFilterIsA();
 			// TODO: comment in the filter for fit client.

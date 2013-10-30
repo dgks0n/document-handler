@@ -20,6 +20,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.exoplatform.document</groupId>
+			<artifactId>document-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.exoplatform.document</groupId>
 			<artifactId>document-util</artifactId>
 			<version>1.0.0</version>
 		</dependency>

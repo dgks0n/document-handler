@@ -14,7 +14,8 @@
 		<module>detect-language</module>
     	<module>document-util</module>
     	<module>detect-charsets</module>
-  	</modules>
+    	<module>document-common</module>
+  </modules>
 	<description>
     	<![CDATA[Please refer to the <a href="http://www.picocontainer.org/web">main website</a> for documentation.]]>
   	</description>
@@ -92,6 +93,7 @@
 				<version>2.3</version>
 				<scope>provided</scope>
 			</dependency>
+			
 			<!-- Test scoped depedencies -->
 			<dependency>
 				<groupId>org.picocontainer</groupId>

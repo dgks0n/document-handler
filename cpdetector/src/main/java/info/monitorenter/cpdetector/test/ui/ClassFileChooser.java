@@ -73,12 +73,17 @@ import javax.swing.JList;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileSystemView;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
  *  
  */
 public class ClassFileChooser extends JFileChooser {
 
+	private static final Logger logger = LoggerFactory.getLogger(ClassFileChooser.class);
+	
 	private File m_selected;
 
 	private JList listHandle;
@@ -91,13 +96,11 @@ public class ClassFileChooser extends JFileChooser {
 	 * @param fsv
 	 */
 	public ClassFileChooser(FileSystemView fsv) {
-
 		super(fsv);
 		this.init();
 	}
 
 	private void init() {
-
 		this.listHandle = this.searchJList(this);
 		this.killRenameAction();
 		this.setFileSystemView(new URLFileSystemView());
@@ -112,13 +115,13 @@ public class ClassFileChooser extends JFileChooser {
 
 		if (this.listHandle != null) {
 			String listenerClassName;
-			System.out.println(System.getProperty("java.version"));
+			logger.info(System.getProperty("java.version"));
 			float version = Float.parseFloat(System.getProperty("java.version").substring(0, 3));
 			String recognize = (version < 1.5) ? "SingleClick" : "sun.swing.FilePane";
 			MouseListener[] mouseListeners = this.listHandle.getMouseListeners();
 			for (int i = 0; i < mouseListeners.length; i++) {
 				listenerClassName = mouseListeners[i].getClass().getName();
-				System.out.println("MouseListener: " + listenerClassName);
+				logger.info("MouseListener: " + listenerClassName);
 				if (listenerClassName.indexOf(recognize) != -1) {
 					this.listHandle.removeMouseListener(mouseListeners[i]);
 					if (version >= 1.5) {
@@ -140,7 +143,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
 	 */
 	private JList searchJList(Container fileChooser) {
-
 		JList ret = null;
 		// First check, wether i am a JList:
 		if (fileChooser instanceof JList) {
@@ -168,7 +170,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * @see javax.swing.JFileChooser#getCurrentDirectory()
 	 */
 	public File getCurrentDirectory() {
-
 		return super.getCurrentDirectory();
 	}
 
@@ -178,7 +179,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * @see javax.swing.JFileChooser#setCurrentDirectory(java.io.File)
 	 */
 	public void setCurrentDirectory(File dir) {
-
 		super.setCurrentDirectory(dir);
 	}
 
@@ -188,7 +188,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * @see javax.swing.JFileChooser#getSelectedFile()
 	 */
 	public File getSelectedFile() {
-
 		return this.m_selected;
 	}
 
@@ -198,7 +197,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * @see javax.swing.JFileChooser#setSelectedFile(java.io.File)
 	 */
 	public void setSelectedFile(File file) {
-
 		this.m_selected = file;
 	}
 
@@ -208,7 +206,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * @see javax.swing.JFileChooser#accept(java.io.File)
 	 */
 	public boolean accept(File f) {
-
 		boolean ret = true;
 		if (super.accept(f)) {
 			Iterator it = this.classFilters.iterator();
@@ -233,7 +230,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * @see javax.swing.JFileChooser#addChoosableFileFilter(javax.swing.filechooser.FileFilter)
 	 */
 	public void addChoosableFileFilter(FileFilter filter) {
-
 		super.addChoosableFileFilter(filter);
 	}
 
@@ -253,7 +249,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * 
 	 */
 	public void addClassFileFilter(IClassFileFilter cff) {
-
 		this.classFilters.add(cff);
 	}
 
@@ -263,7 +258,6 @@ public class ClassFileChooser extends JFileChooser {
 	 * @see javax.swing.JFileChooser#setSelectedFiles(java.io.File[])
 	 */
 	public void setSelectedFiles(File[] selectedFiles) {
-
 		super.setSelectedFiles(selectedFiles);
 	}
 
@@ -272,11 +266,11 @@ public class ClassFileChooser extends JFileChooser {
 		URLFileSystemView() {
 			URLClassLoader urlcl = (URLClassLoader) this.getClass().getClassLoader();
 			URL[] urls = urlcl.getURLs();
-			System.out.println(this.getClass().getClassLoader() + " urls: ");
+			logger.info(this.getClass().getClassLoader() + " urls: ");
 			File f;
 			List l = new LinkedList();
 			for (int i = 0; i < urls.length; i++) {
-				System.out.println(urls[i]);
+				logger.info(urls[i].toString());
 				f = new File(urls[i].getFile());
 				if (f.exists()) {
 					String ext = FileUtil.cutExtension(f.getName()).getValue().toString();
@@ -284,7 +278,7 @@ public class ClassFileChooser extends JFileChooser {
 						try {
 							f = new JarArchive(f.getAbsolutePath());
 						} catch (IOException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage(), e);
 						}
 					}
 					l.add(f);
@@ -310,7 +304,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * @see javax.swing.filechooser.FileSystemView#getRoots()
 		 */
 		public File[] getRoots() {
-
 			return this.roots;
 		}
 
@@ -320,7 +313,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * @see javax.swing.filechooser.FileSystemView#getHomeDirectory()
 		 */
 		public File getHomeDirectory() {
-
 			return this.roots[0];
 		}
 
@@ -330,7 +322,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * @see javax.swing.filechooser.FileSystemView#getDefaultDirectory()
 		 */
 		public File getDefaultDirectory() {
-
 			return this.roots[0];
 		}
 
@@ -353,8 +344,7 @@ public class ClassFileChooser extends JFileChooser {
 					try {
 						ret[i] = new JarArchive(ret[i].getAbsolutePath());
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.error(e.getMessage(), e);
 					}
 				}
 			}
@@ -369,7 +359,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * .File)
 		 */
 		public File getParentDirectory(File dir) {
-
 			File ret = null;
 			if (dir instanceof JarArchive) {
 				ret = dir.getParentFile();
@@ -387,7 +376,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * io.File)
 		 */
 		public String getSystemDisplayName(File f) {
-
 			// TODO Auto-generated method stub
 			return super.getSystemDisplayName(f);
 		}
@@ -399,7 +387,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * javax.swing.filechooser.FileSystemView#getSystemIcon(java.io.File)
 		 */
 		public Icon getSystemIcon(File f) {
-
 			// TODO Auto-generated method stub
 			return super.getSystemIcon(f);
 		}
@@ -412,7 +399,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * .io.File)
 		 */
 		public String getSystemTypeDescription(File f) {
-
 			// TODO Auto-generated method stub
 			return super.getSystemTypeDescription(f);
 		}
@@ -423,7 +409,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * @see javax.swing.filechooser.FileSystemView#isRoot(java.io.File)
 		 */
 		public boolean isRoot(File f) {
-
 			for (int i = 0; i < this.roots.length; i++) {
 				if (this.roots[i].equals(f)) {
 					return true;
@@ -450,7 +435,6 @@ public class ClassFileChooser extends JFileChooser {
 		 *            the classfilechooser to notify with events.
 		 */
 		public BugfixMouseListener(final ClassFileChooser peer) {
-
 			this.m_peer = peer;
 		}
 
@@ -461,7 +445,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 		 */
 		public void mouseClicked(MouseEvent e) {
-
 			if (!this.clickToggle || (System.currentTimeMillis() - this.tstamp > this.ClickLatency)) {
 				this.clickToggle = true;
 				this.tstamp = System.currentTimeMillis();
@@ -485,7 +468,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 		 */
 		public void mouseEntered(MouseEvent e) {
-
 			// TODO Auto-generated method stub
 			int i = 0;
 		}
@@ -497,9 +479,7 @@ public class ClassFileChooser extends JFileChooser {
 		 * java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 		 */
 		public void mouseExited(MouseEvent e) {
-
 			// TODO Auto-generated method stub
-
 		}
 
 		/*
@@ -509,9 +489,7 @@ public class ClassFileChooser extends JFileChooser {
 		 * java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 		 */
 		public void mousePressed(MouseEvent e) {
-
 			int i = 0;
-
 		}
 
 		/*
@@ -521,7 +499,6 @@ public class ClassFileChooser extends JFileChooser {
 		 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 		 */
 		public void mouseReleased(MouseEvent e) {
-
 			int i = 0;
 		}
 	}

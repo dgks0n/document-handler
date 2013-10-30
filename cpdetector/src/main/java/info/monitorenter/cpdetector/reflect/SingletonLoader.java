@@ -52,6 +52,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>
  * A stateless helper that performs dynamic class loading and instantiation with support for invoking
@@ -77,6 +80,8 @@ import java.lang.reflect.Modifier;
  */
 public final class SingletonLoader {
 
+	private static final Logger logger = LoggerFactory.getLogger(SingletonLoader.class);
+	
 	private static SingletonLoader instance = null;
 
 	private Object[] dummyParameters = new Object[0];
@@ -101,8 +106,7 @@ public final class SingletonLoader {
 	 * retrieval support. Delegates to {@link #newInstance(Class)}.
 	 * 
 	 */
-	public Object newInstance(String fullyQualifiedClassName)
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public Object newInstance(String fullyQualifiedClassName) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Object ret = this.newInstance(Class.forName(fullyQualifiedClassName));
 		return ret;
 	}
@@ -136,17 +140,11 @@ public final class SingletonLoader {
 									// we are static and don't need an instance.
 									ret = m.invoke(null, dummyParameters);
 								} catch (IllegalArgumentException e) {
-									// This will not happen:
-									// we ensured that no arguments are needed.
-									e.printStackTrace();
+									logger.error("This will not happen: we ensured that no arguments are needed." + e.getMessage(), e);
 								} catch (IllegalAccessException e) {
-									// This will not happen (only in applet
-									// context perhaps or with some
-									// SecurityManager):
-									// we ensured public access.
-									e.printStackTrace();
+									logger.error("This will not happen (only in applet context perhaps or with some SecurityManager): we ensured public access." + e.getMessage(), e);
 								} catch (InvocationTargetException e) {
-									e.printStackTrace();
+									logger.error(e.getMessage(), e);
 								}
 							}
 						}
@@ -174,13 +172,13 @@ public final class SingletonLoader {
 						ret = c.newInstance();
 					} catch (SecurityException se) {
 						// damn
+						logger.error(se.getMessage(), se);
 					}
 				}
 			}
 		}
 		if (ret == null) {
-			System.err.println("Unable to instantiate: " + c.getName()
-					+ ": no singleton method, no public default constructor.");
+			logger.info("Unable to instantiate: " + c.getName() + ": no singleton method, no public default constructor.");
 		}
 		return ret;
 	}

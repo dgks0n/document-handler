@@ -39,6 +39,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Utility class for file operations.
  * <p>
@@ -51,6 +54,8 @@ import java.util.StringTokenizer;
  * @version 1.1
  */
 public final class FileUtil extends Object {
+	
+	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
 	/** The singleton instance of this class. */
 	private static FileUtil instance;
@@ -87,8 +92,7 @@ public final class FileUtil extends Object {
 			pre = parse;
 			suf = "";
 		} else {
-			final StringTokenizer tokenizer = new StringTokenizer(
-					path.getFile(), "/");
+			final StringTokenizer tokenizer = new StringTokenizer(path.getFile(), "/");
 			tmp.append(path.getProtocol());
 			tmp.append(":");
 			tmp.append(path.getHost());
@@ -143,36 +147,36 @@ public final class FileUtil extends Object {
 		final StringTokenizer tokenizer = new StringTokenizer(path, fileseparator);
 		final int size = tokenizer.countTokens();
 		switch (size) {
-		case 0:
-			dir.append(new File(".").getAbsolutePath());
-			break;
-
-		case 1:
-			final File test = new File(tokenizer.nextToken());
-			if (new File(path).isDirectory()) {
-				dir.append(test.getAbsolutePath());
-			} else {
+			case 0:
 				dir.append(new File(".").getAbsolutePath());
-				file = path;
-			}
-			break;
-
-		default:
-			String token;
-			while (tokenizer.hasMoreElements()) {
-				// reuse String file separator: bad style...
-				token = tokenizer.nextToken();
-				if (tokenizer.hasMoreTokens()) {
-					dir.append(token);
-					dir.append(fileseparator);
+				break;
+	
+			case 1:
+				final File test = new File(tokenizer.nextToken());
+				if (new File(path).isDirectory()) {
+					dir.append(test.getAbsolutePath());
 				} else {
-					if (new File(path).isFile()) {
-						file = token;
-					} else {
+					dir.append(new File(".").getAbsolutePath());
+					file = path;
+				}
+				break;
+	
+			default:
+				String token;
+				while (tokenizer.hasMoreElements()) {
+					// reuse String file separator: bad style...
+					token = tokenizer.nextToken();
+					if (tokenizer.hasMoreTokens()) {
 						dir.append(token);
+						dir.append(fileseparator);
+					} else {
+						if (new File(path).isFile()) {
+							file = token;
+						} else {
+							dir.append(token);
+						}
 					}
 				}
-			}
 		}
 
 		return new Entry<String, String>(dir.toString(), file);
@@ -475,10 +479,10 @@ public final class FileUtil extends Object {
 	public static void removeDuplicateLineBreaks(final File f) {
 		final String sep = StringUtil.getNewLine();
 		if (!f.exists()) {
-			System.err.println("FileUtil.removeDuplicateLineBreak(File f): " + f.getAbsolutePath() + " does not exist!");
+			logger.info("FileUtil.removeDuplicateLineBreak(File f): " + f.getAbsolutePath() + " does not exist!");
 		} else {
 			if (f.isDirectory()) {
-				System.err.println("FileUtil.removeDuplicateLineBreak(File f): " + f.getAbsolutePath() + " is a directory!");
+				logger.info("FileUtil.removeDuplicateLineBreak(File f): " + f.getAbsolutePath() + " is a directory!");
 			} else {
 				// real file
 				FileInputStream inStream = null;
@@ -525,7 +529,7 @@ public final class FileUtil extends Object {
 						try {
 							in.close();
 						} catch (final IOException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage(), e);
 						}
 					}
 					if (out != null) {
@@ -533,7 +537,7 @@ public final class FileUtil extends Object {
 							out.flush();
 							out.close();
 						} catch (final IOException e) {
-							e.printStackTrace();
+							logger.error(e.getMessage(), e);
 						}
 					}
 				}

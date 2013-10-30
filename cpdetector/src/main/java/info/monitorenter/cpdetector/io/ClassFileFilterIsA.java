@@ -58,12 +58,17 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
  *  
  */
 public class ClassFileFilterIsA implements IClassFileFilter, FileFilter {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ClassFileFilterIsA.class);
 
 	protected Set superclasses = new TreeSet();
 
@@ -212,9 +217,9 @@ public class ClassFileFilterIsA implements IClassFileFilter, FileFilter {
 
 	public static void main(String[] args) {
 		ClassFileFilterIsA test = new ClassFileFilterIsA();
-		System.out.println("Adding interface: " + FileFilter.class.getName() + " to instance test (" + test.getClass().getName() + ")");
+		logger.info("Adding interface: " + FileFilter.class.getName() + " to instance test (" + test.getClass().getName() + ")");
 		test.addSuperClass(FileFilter.class);
-		System.out.println("test.accept(" + test.getClass().getName() + " : " + test.accept(test.getClass()));
-		System.out.println("test.accept(new File(\"bin/cpdetector/io/ClassfileFilterIsA.class\").getAbsoluteFile()) : " + test.accept(new File("bin/cpdetector/io/ClassfileFilterIsA.class").getAbsoluteFile()));
+		logger.info("test.accept(" + test.getClass().getName() + " : " + test.accept(test.getClass()));
+		logger.info("test.accept(new File(\"bin/cpdetector/io/ClassfileFilterIsA.class\").getAbsoluteFile()) : " + test.accept(new File("bin/cpdetector/io/ClassfileFilterIsA.class").getAbsoluteFile()));
 	}
 }

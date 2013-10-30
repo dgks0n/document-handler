@@ -57,6 +57,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import antlr.ANTLRException;
 
 /**
@@ -104,6 +107,9 @@ import antlr.ANTLRException;
  * 
  */
 public class ParsingDetector extends AbstractCodepageDetector {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ParsingDetector.class);
+	
 	/**
 	 * Generated <code>serialVersionUID</code>.
 	 */
@@ -132,7 +138,7 @@ public class ParsingDetector extends AbstractCodepageDetector {
 		String csName = null;
 		InputStream limitedInputStream = new LimitedInputStream(in, length);
 		if (this.m_verbose) {
-			System.out.println("  parsing for html-charset/xml-encoding attribute with codepage: US-ASCII");
+			logger.info("  parsing for html-charset/xml-encoding attribute with codepage: US-ASCII");
 		}
 		try {
 			lexer = new EncodingLexer(new InputStreamReader(limitedInputStream, "US-ASCII"));
@@ -153,11 +159,11 @@ public class ParsingDetector extends AbstractCodepageDetector {
 			}
 		} catch (ANTLRException ae) {
 			if (this.m_verbose) {
-				System.out.println("  ANTLR parser exception: " + ae.getMessage());
+				logger.info("  ANTLR parser exception: " + ae.getMessage());
 			}
 		} catch (Exception deepdown) {
 			if (this.m_verbose) {
-				System.out.println("  Decoding Exception: " + deepdown.getMessage() + " (unsupported java charset).");
+				logger.info("  Decoding Exception: " + deepdown.getMessage() + " (unsupported java charset).");
 			}
 			if (charset == null) {
 				if (csName != null) {

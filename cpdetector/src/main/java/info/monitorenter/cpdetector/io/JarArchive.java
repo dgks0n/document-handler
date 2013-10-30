@@ -67,6 +67,9 @@ import java.util.TreeSet;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * A jar file that pretends to be a simple file by extending {@link java.io.File}.
@@ -77,6 +80,8 @@ import java.util.jar.JarFile;
  */
 public class JarArchive extends File {
 
+	private static final Logger logger = LoggerFactory.getLogger(JarArchive.class);
+	
 	protected JarFile jar;
 
 	protected Set childs = new TreeSet();
@@ -90,8 +95,8 @@ public class JarArchive extends File {
 		super(pathname);
 		this.jar = new JarFile(pathname);
 		ITreeNode root = this.parseTree();
-		System.out.println("tree:");
-		System.out.println(root.toString() + '\n');
+		logger.info("tree:");
+		logger.info(root.toString() + '\n');
 		this.buildTree(root, this);
 	}
 
@@ -117,7 +122,7 @@ public class JarArchive extends File {
 			newnode = root;
 			oldnode = root;
 			entry = ((JarEntry) entries.nextElement()).getName();
-			System.out.println("Entry: " + entry);
+			logger.info("Entry: " + entry);
 			StringTokenizer tokenizer = new StringTokenizer(entry, "/");
 			while (tokenizer.hasMoreElements()) {
 				String path = tokenizer.nextToken();
@@ -140,19 +145,19 @@ public class JarArchive extends File {
 		while (childNodesIt.hasNext()) {
 			childNode = (ITreeNode) childNodesIt.next();
 			search = getSearchPath(childNode);
-			System.out.println("Searching for: " + search);
+			logger.info("Searching for: " + search);
 			entry = this.jar.getJarEntry(search);
 			if (entry == null) {
 				System.err.println("Entry for " + search + " (" + this.jar.getName() + ")is null!!!");
 			} else {
-				System.out.println("Entry: " + entry.toString());
+				logger.info("Entry: " + entry.toString());
 				child = new JarElement(entry, this);
 				child.buildTree(childNode, this);
 				this.childs.add(child);
 			}
 
 		}
-		System.out.println(this + " has finished building...");
+		logger.info(this + " has finished building...");
 	}
 
 	/**

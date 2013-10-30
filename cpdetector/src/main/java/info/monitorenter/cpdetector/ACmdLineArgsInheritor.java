@@ -98,13 +98,10 @@ public abstract class ACmdLineArgsInheritor {
 	/**
 	 * Returns the option <b>value </b> of a parsed command line option.
 	 */
-	protected final Object getParsedCmdLineOption(String key)
-			throws IllegalArgumentException {
+	protected final Object getParsedCmdLineOption(String key) throws IllegalArgumentException {
 		Object ret = this.cmdLineOptions.get(key);
 		if (key == null) {
-			throw new IllegalArgumentException("Option with key: \""
-					+ String.valueOf(key)
-					+ "\" has not been set in constructor.");
+			throw new IllegalArgumentException("Option with key: \"" + String.valueOf(key) + "\" has not been set in constructor.");
 		}
 		return this.cmdLineParser.getOptionValue((CmdLineParser.Option) ret);
 	}
@@ -122,9 +119,7 @@ public abstract class ACmdLineArgsInheritor {
 	 * @param cmdLineArgs
 	 */
 	public void parseArgs(String[] cmdLineArgs) throws Exception {
-
 		this.cmdLineParser.parse(cmdLineArgs);
-
 	}
 
 	protected abstract void usage();

@@ -117,6 +117,7 @@ import java.nio.charset.Charset;
  * @version $Revision: 1.2 $
  */
 public class UnicodeDetector extends AbstractCodepageDetector {
+	
 	private static ICodepageDetector instance;
 
 	/**

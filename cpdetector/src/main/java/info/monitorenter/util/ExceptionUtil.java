@@ -74,8 +74,7 @@ public final class ExceptionUtil {
 	 * @throws IOException
 	 *             if something goes wrong.
 	 */
-	public static InputStream captureSystemErrForDebuggingPurposesOnly(
-			final boolean teeToOriginalSysErr) throws IOException {
+	public static InputStream captureSystemErrForDebuggingPurposesOnly(final boolean teeToOriginalSysErr) throws IOException {
 		PipedOutputStream pipeOut = new PipedOutputStream();
 		PipedInputStream pipeIn = new PipedInputStream(pipeOut);
 		OutputStream out = pipeOut;
@@ -114,8 +113,7 @@ public final class ExceptionUtil {
 	 * @throws IOException
 	 *             if something goes wrong.
 	 */
-	public static InputStream captureSystemOutForDebuggingPurposesOnly(
-			final boolean teeToOriginalSysOut) throws IOException {
+	public static InputStream captureSystemOutForDebuggingPurposesOnly(final boolean teeToOriginalSysOut) throws IOException {
 		PipedOutputStream pipeOut = new PipedOutputStream();
 		PipedInputStream pipeIn = new PipedInputStream(pipeOut);
 		OutputStream out = pipeOut;
@@ -146,11 +144,9 @@ public final class ExceptionUtil {
 	 * @throws IOException
 	 *             if something goes wrong.
 	 */
-	public static InputStreamTracer findMatchInSystemOut(
-			final String expectMatch) throws IOException {
+	public static InputStreamTracer findMatchInSystemOut(final String expectMatch) throws IOException {
 		InputStream systemout = captureSystemOutForDebuggingPurposesOnly(true);
-		InputStreamTracer result = new InputStreamTracer(systemout,
-				expectMatch, Charset.defaultCharset());
+		InputStreamTracer result = new InputStreamTracer(systemout, expectMatch, Charset.defaultCharset());
 		Thread traceThread = new Thread(result);
 		traceThread.setDaemon(true);
 		traceThread.start();
@@ -176,11 +172,9 @@ public final class ExceptionUtil {
 	 * @throws IOException
 	 *             if something goes wrong.
 	 */
-	public static InputStreamTracer findMatchInSystemErr(
-			final String expectMatch) throws IOException {
+	public static InputStreamTracer findMatchInSystemErr(final String expectMatch) throws IOException {
 		InputStream systemout = captureSystemErrForDebuggingPurposesOnly(true);
-		InputStreamTracer result = new InputStreamTracer(systemout,
-				expectMatch, Charset.defaultCharset());
+		InputStreamTracer result = new InputStreamTracer(systemout, expectMatch, Charset.defaultCharset());
 		Thread traceThread = new Thread(result);
 		traceThread.setDaemon(true);
 		traceThread.start();

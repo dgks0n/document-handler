@@ -81,8 +81,7 @@ public class EncodingLexer extends antlr.CharScanner implements EncodingParserTo
 				}
 			} catch (CharStreamException cse) {
 				if (cse instanceof CharStreamIOException) {
-					throw new TokenStreamIOException(
-							((CharStreamIOException) cse).io);
+					throw new TokenStreamIOException(((CharStreamIOException) cse).io);
 				} else {
 					throw new TokenStreamException(cse.getMessage());
 				}
@@ -90,9 +89,7 @@ public class EncodingLexer extends antlr.CharScanner implements EncodingParserTo
 		}
 	}
 
-	public final void mMETA_CONTENT_TYPE(boolean _createToken)
-			throws RecognitionException, CharStreamException,
-			TokenStreamException {
+	public final void mMETA_CONTENT_TYPE(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype;
 		Token _token = null;
 		int _begin = text.length();
