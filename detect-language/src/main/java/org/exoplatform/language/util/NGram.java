@@ -189,7 +189,7 @@ public class NGram {
         _ngrams = new StringBuffer(" ");
         _capitalWord = false;
         
-        logger.info("Initialize N-Gram");
+        logger.info("Initializes an empty instance. The N-Gram can be used to crate ngrams and character ngrams.");
     }
 
     /**

@@ -89,16 +89,16 @@ public class DetectorFactory {
 				// Add profile to detector instance
 				addLanguageProfile(profile, profiles.length);
 			} catch (JSONException e) {
-				throw new LanguageDetectException("profile format error in for: " + profiles[i], ErrorCode.FORMATERROR);
+				throw new LanguageDetectException("Profile format error in for: " + profiles[i], ErrorCode.FORMATERROR);
 			} catch (IOException e) {
-				throw new LanguageDetectException("profile format error in for: " + profiles[i], ErrorCode.FORMATERROR);
+				throw new LanguageDetectException("Profile format error in for: " + profiles[i], ErrorCode.FORMATERROR);
 			} finally {
 				try {
 					if (inputStream != null) {
 						inputStream.close();
 					}
 				} catch (IOException e) {
-					logger.warn("profile format error in for: " + profiles[i]);
+					logger.warn("Profile format error in for: " + profiles[i]);
 				}
 			}
 		}
@@ -164,7 +164,7 @@ public class DetectorFactory {
 
 	private static Detector createDetector() throws LanguageDetectException {
 		if (_instance.languages.size() == 0) {
-			throw new LanguageDetectException("need to load profiles", ErrorCode.NEEDLOADPROFILEERROR);
+			throw new LanguageDetectException("Need to load profiles", ErrorCode.NEEDLOADPROFILEERROR);
 		}
 		Detector detector = new Detector(_instance);
 		return detector;

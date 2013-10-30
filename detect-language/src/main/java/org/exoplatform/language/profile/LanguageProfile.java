@@ -49,7 +49,7 @@ public class LanguageProfile {
      * Constructor for JSONIC 
      */
     public LanguageProfile() {
-    	logger.info("Constructor for JSONIC");
+    	logger.info("Initializes an empty instance for JSONIC");
     }
 
     /**
@@ -88,7 +88,7 @@ public class LanguageProfile {
 		}
 		
 		if (logger.isDebugEnabled()) {
-			logger.info("Add n-gram to profile");
+			logger.info("Adding N-Gram to language analyzer");
 		}
 		
 		int len = nGram.length();
