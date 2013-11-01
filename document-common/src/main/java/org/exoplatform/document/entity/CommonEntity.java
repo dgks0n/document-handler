@@ -21,7 +21,7 @@ package org.exoplatform.document.entity;
  * @version CommonEntity.java Oct 31, 2013
  *
  */
-public class CommonEntity extends Entity<String> {
+public abstract class CommonEntity extends Entity<String> {
 
 	/**
 	 * 
@@ -35,11 +35,9 @@ public class CommonEntity extends Entity<String> {
 	private String selfLink;
 
 	public CommonEntity() {
-		super();
 	}
 
 	public CommonEntity(String kind, String selfLink) {
-		super();
 		this.kind = kind;
 		this.selfLink = selfLink;
 	}

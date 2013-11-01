@@ -38,7 +38,6 @@ public class Thumbnail extends Entity<String> {
 	 * 
 	 */
 	public Thumbnail() {
-		super();
 	}
 
 	/**
@@ -46,7 +45,6 @@ public class Thumbnail extends Entity<String> {
 	 * @param mimeType
 	 */
 	public Thumbnail(byte[] image, String mimeType) {
-		super();
 		this.image = image;
 		this.mimeType = mimeType;
 	}

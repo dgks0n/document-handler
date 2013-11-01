@@ -47,7 +47,6 @@ public class Label extends Entity<String> {
 	 * 
 	 */
 	public Label() {
-		super();
 	}
 
 	/**
@@ -57,9 +56,7 @@ public class Label extends Entity<String> {
 	 * @param restricted
 	 * @param viewed
 	 */
-	public Label(boolean starred, boolean hidden, boolean trashed,
-			boolean restricted, boolean viewed) {
-		super();
+	public Label(boolean starred, boolean hidden, boolean trashed, boolean restricted, boolean viewed) {
 		this.starred = starred;
 		this.hidden = hidden;
 		this.trashed = trashed;

@@ -41,8 +41,8 @@ public class Children extends CommonEntity {
 	/**
 	 * @param childLink
 	 */
-	public Children(String childLink) {
-		super();
+	public Children(String kind, String selfLink, String childLink) {
+		super(kind, selfLink);
 		this.childLink = childLink;
 	}
 

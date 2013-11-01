@@ -42,8 +42,8 @@ public class Parent extends CommonEntity {
 	 * @param parentLink
 	 * @param isRoot
 	 */
-	public Parent(String parentLink, boolean isRoot) {
-		super();
+	public Parent(String kind, String selfLink, String parentLink, boolean isRoot) {
+		super(kind, selfLink);
 		this.parentLink = parentLink;
 		this.isRoot = isRoot;
 	}

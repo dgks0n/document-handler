@@ -35,14 +35,12 @@ public class Picture extends Entity<String> {
 	 * 
 	 */
 	public Picture() {
-		super();
 	}
 
 	/**
 	 * @param url
 	 */
 	public Picture(String url) {
-		super();
 		this.url = url;
 	}
 
@@ -60,4 +58,33 @@ public class Picture extends Entity<String> {
 		this.url = url;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.getId().hashCode();
+		result = prime * result + this.getUrl().hashCode();
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return this.getId().equals(((Picture) obj).getId())
+				&& this.getUrl().equals(((Picture) obj).getUrl());
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Picture [url=" + url + "]";
+	}
+	
 }

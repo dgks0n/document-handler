@@ -47,14 +47,12 @@ public class Owner extends Entity<String> {
 	 * 
 	 */
 	public Owner() {
-		super();
 	}
 
 	/**
 	 * @param picture
 	 */
 	public Owner(Picture picture) {
-		super();
 		this.picture = picture;
 	}
 
@@ -65,9 +63,7 @@ public class Owner extends Entity<String> {
 	 * @param isAuthenticatedUser
 	 * @param permissionId
 	 */
-	public Owner(String kind, String displayName, Picture picture,
-			boolean isAuthenticatedUser, String permissionId) {
-		super();
+	public Owner(String kind, String displayName, Picture picture, boolean isAuthenticatedUser, String permissionId) {
 		this.kind = kind;
 		this.displayName = displayName;
 		this.picture = picture;
@@ -165,6 +161,5 @@ public class Owner extends Entity<String> {
 		return this.getId().equals(((Owner) obj).getId())
 				&& this.getDisplayName().equals(((Owner) obj).getDisplayName());
 	}
-	
 	
 }
