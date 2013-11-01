@@ -16,13 +16,15 @@
  */
 package org.exoplatform.document.entity;
 
+import org.exoplatform.document.entity.procedure.OwnerProcedure;
+
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
  * @version BaseOwner.java Nov 1, 2013
  */
-public class BaseOwner extends Entity<String> implements OwnerPlugin {
+public class RootOwner extends Entity<String> implements OwnerProcedure {
 
 	/**
 	 * 
@@ -33,10 +35,10 @@ public class BaseOwner extends Entity<String> implements OwnerPlugin {
 	private String displayName;
 
 	
-	public BaseOwner() {
+	public RootOwner() {
 	}
 
-	public BaseOwner(String displayName) {
+	public RootOwner(String displayName) {
 		this.displayName = displayName;
 	}
 

@@ -23,7 +23,7 @@ package org.exoplatform.document.entity;
  *          
  * @version Revision.java Nov 1, 2013
  */
-public class Revision extends BaseDocument {
+public class Revision extends RootDocument<String> {
 
 	/**
 	 * 

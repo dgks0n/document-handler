@@ -21,7 +21,7 @@ package org.exoplatform.document.entity;
  * @version Parent.java Oct 31, 2013
  *
  */
-public class Parent extends CommonEntity {
+public class Parent extends RootEntity<String> {
 
 	/**
 	 * 

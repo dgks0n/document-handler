@@ -24,7 +24,7 @@ import java.util.List;
  * @version File.java Oct 31, 2013
  *
  */
-public class File extends BaseDocument {
+public class File extends RootDocument<String> {
 
 	/**
 	 * 
@@ -75,7 +75,7 @@ public class File extends BaseDocument {
 	private long quotaBytesUsed;
 	
 	// Name(s) of the owner(s) of this file.
-	private BaseOwner[] ownerNames;
+	private RootOwner[] ownerNames;
 	
 	// Whether the file can be edited by the current user.
 	private boolean editable;

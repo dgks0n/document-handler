@@ -16,7 +16,10 @@
  */
 package org.exoplatform.document.entity;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import org.exoplatform.document.entity.procedure.DocumentProcedure;
 
 /**
  * Created by The eXo Platform SAS
@@ -24,7 +27,7 @@ import java.util.Date;
  *          
  * @version BaseDocument.java Nov 1, 2013
  */
-public class BaseDocument extends CommonEntity implements DocumentPlugin {
+public class RootDocument<I extends Serializable> extends RootEntity<I> implements DocumentProcedure {
 
 	/**
 	 * 
@@ -66,11 +69,11 @@ public class BaseDocument extends CommonEntity implements DocumentPlugin {
 	// The last user to modify this file.
 	private Owner lastModifyingUser;
 	
-	public BaseDocument() {
+	public RootDocument() {
 		super();
 	}
 	
-	public BaseDocument(String kind, String selfLink, String[] etag, String mimeType, Date modifiedDate,
+	public RootDocument(String kind, String selfLink, String[] etag, String mimeType, Date modifiedDate,
 			String downloadUrl, String originalFilename, String md5Checksum,
 			long fileSize, String lastModifyingUserName, Owner lastModifyingUser) {
 		super(kind, selfLink);

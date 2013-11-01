@@ -9,7 +9,7 @@
 <!-- 		<param name="MaxBackupIndex" value="5" /> -->
 		<param name="Threshold" value="ALL" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSSZ} %-5p [%c{1}] %m%n" />
+			<param name="ConversionPattern" value="%d{ISO8601} | %-5p | [%c{1.}: %L] | %m%n" />
 		</layout>
 	</appender>
 	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
@@ -17,7 +17,7 @@
 		<param name="Threshold" value="ALL" />
 		<param name="Encoding" value="UTF-8" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSSZ} %-5p [%c{1}] %m%n" />
+			<param name="ConversionPattern" value="%d{ISO8601} | %-5p | [%c{1.}: %L] | %m%n" />
 		</layout>
 	</appender>
 	<logger name="org.apache" additivity="true">

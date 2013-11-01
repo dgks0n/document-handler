@@ -21,7 +21,7 @@ package org.exoplatform.document.entity;
  * @version Owner.java Oct 31, 2013
  *
  */
-public class Owner extends BaseOwner implements OwnerPlugin {
+public class Owner extends RootOwner {
 
 	/**
 	 * 
@@ -30,9 +30,6 @@ public class Owner extends BaseOwner implements OwnerPlugin {
 
 	// This is always entity#user.
 	private String kind;
-	
-	// A plain text displayable name for this user.
-	private String displayName;
 	
 	// The user's profile picture.
 	private Picture picture;
@@ -64,8 +61,8 @@ public class Owner extends BaseOwner implements OwnerPlugin {
 	 * @param permissionId
 	 */
 	public Owner(String kind, String displayName, Picture picture, boolean isAuthenticatedUser, String permissionId) {
+		super(displayName);
 		this.kind = kind;
-		this.displayName = displayName;
 		this.picture = picture;
 		this.isAuthenticatedUser = isAuthenticatedUser;
 		this.permissionId = permissionId;
@@ -83,20 +80,6 @@ public class Owner extends BaseOwner implements OwnerPlugin {
 	 */
 	public void setKind(String kind) {
 		this.kind = kind;
-	}
-
-	/**
-	 * @return the displayName
-	 */
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	/**
-	 * @param displayName the displayName to set
-	 */
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 
 	/**

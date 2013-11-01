@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity;
+package org.exoplatform.document.entity.procedure;
 
 import java.io.Serializable;
 
@@ -23,13 +23,35 @@ import java.io.Serializable;
  * @version BasePlugin.java Oct 31, 2013
  *
  */
-public interface BasePlugin<I extends Serializable> {
+public interface EntityProcedure<I extends Serializable> {
 
+	/**
+	 * Removes a parent from an entity
+	 * 
+	 * @param fileId : The ID of the entity
+	 * @param folderId : The ID of the parent
+	 */
 	public void deleteEntity(String fileId, String folderId);
 	
+	/**
+	 * Gets a specific parent reference
+	 * 
+	 * @param fileId : The ID of the entity
+	 * @param parentid : The ID of the parent
+	 */
 	public void findEntity(String fileId, String parentid);
 	
+	/**
+	 * Adds a parent folder for a file (entity)
+	 * 
+	 * @param fileId : The ID of the entity
+	 */
 	public void insertEntity(String fileId);
 	
+	/**
+	 * Lists a file's parents
+	 * 
+	 * @param fileId  : The ID of the entity
+	 */
 	public void findParentsOfEntity(String fileId);
 }

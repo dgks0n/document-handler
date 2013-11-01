@@ -28,8 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.picocontainer.DefaultPicoContainer;
 import org.picocontainer.MutablePicoContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
@@ -37,8 +35,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class TestCharsetsDetector {
-	
-	private static final Logger logger = LoggerFactory.getLogger(TestCharsetsDetector.class);
 	
 	static final String RESOURCES_BASE_PATH = "ucs/";
 	
@@ -48,8 +44,6 @@ public class TestCharsetsDetector {
 	
 	@Before
 	public void setUp() {
-		logger.info("Initialization variables");
-		
 		MutablePicoContainer container = new DefaultPicoContainer();
 		container.addComponent(CodepageDetectorProxy.class);
 		container.addComponent(CharsetsDetector.class);

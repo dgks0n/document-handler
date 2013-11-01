@@ -16,12 +16,14 @@
  */
 package org.exoplatform.document.entity;
 
+import java.io.Serializable;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version CommonEntity.java Oct 31, 2013
  *
  */
-public abstract class CommonEntity extends Entity<String> {
+public abstract class RootEntity<I extends Serializable> extends Entity<I> {
 
 	/**
 	 * 
@@ -34,10 +36,10 @@ public abstract class CommonEntity extends Entity<String> {
 	// A link back to this reference.
 	private String selfLink;
 
-	public CommonEntity() {
+	public RootEntity() {
 	}
 
-	public CommonEntity(String kind, String selfLink) {
+	public RootEntity(String kind, String selfLink) {
 		this.kind = kind;
 		this.selfLink = selfLink;
 	}
@@ -87,7 +89,7 @@ public abstract class CommonEntity extends Entity<String> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return this.getId().equals(((CommonEntity) obj).getId());
+		return this.getId().equals(((RootEntity<I>) obj).getId());
 	}
 
 }

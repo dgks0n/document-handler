@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity;
+package org.exoplatform.document.entity.procedure;
 
 /**
  * Created by The eXo Platform SAS
@@ -22,7 +22,7 @@ package org.exoplatform.document.entity;
  *          
  * @version OwnerPlugin.java Nov 1, 2013
  */
-public interface OwnerPlugin {
+public interface OwnerProcedure {
 
 	/**
 	 * Get display name of the Owner
