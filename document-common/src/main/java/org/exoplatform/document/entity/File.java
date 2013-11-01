@@ -17,8 +17,7 @@
 package org.exoplatform.document.entity;
 
 import java.util.Date;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+import java.util.List;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
