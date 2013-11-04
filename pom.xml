@@ -7,15 +7,24 @@
 	<version>1.0.0</version>
 	<name>Document :: Document Handler</name>
 	<url>http://maven.apache.org</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 	<modules>
 		<!-- Code Page Detector -->
 		<module>cpdetector</module>
+		
+		<!-- Common Base -->
+		<module>common-base</module>
 		
 		<module>detect-language</module>
     	<module>document-util</module>
     	<module>detect-charsets</module>
     	<module>document-common</module>
-  </modules>
+  	</modules>
 	<description>
     	<![CDATA[Please refer to the <a href="http://www.picocontainer.org/web">main website</a> for documentation.]]>
   	</description>
