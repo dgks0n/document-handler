@@ -138,7 +138,7 @@ public class ParsingDetector extends AbstractCodepageDetector {
 		String csName = null;
 		InputStream limitedInputStream = new LimitedInputStream(in, length);
 		if (this.m_verbose) {
-			logger.info("  parsing for html-charset/xml-encoding attribute with codepage: US-ASCII");
+			logger.info("Parsing for html-charset/xml-encoding attribute with codepage: US-ASCII");
 		}
 		try {
 			lexer = new EncodingLexer(new InputStreamReader(limitedInputStream, "US-ASCII"));
@@ -159,11 +159,11 @@ public class ParsingDetector extends AbstractCodepageDetector {
 			}
 		} catch (ANTLRException ae) {
 			if (this.m_verbose) {
-				logger.info("  ANTLR parser exception: " + ae.getMessage());
+				logger.info("ANTLR parser exception: " + ae.getMessage());
 			}
 		} catch (Exception deepdown) {
 			if (this.m_verbose) {
-				logger.info("  Decoding Exception: " + deepdown.getMessage() + " (unsupported java charset).");
+				logger.info("Decoding Exception: " + deepdown.getMessage() + " (unsupported java charset).");
 			}
 			if (charset == null) {
 				if (csName != null) {

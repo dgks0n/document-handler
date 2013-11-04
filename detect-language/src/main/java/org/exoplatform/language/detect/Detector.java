@@ -28,7 +28,7 @@ import org.exoplatform.document.util.StringUtils;
 import org.exoplatform.language.Language;
 import org.exoplatform.language.define.ErrorCode;
 import org.exoplatform.language.exception.LanguageDetectException;
-import org.exoplatform.language.util.NGram;
+import org.exoplatform.language.util.NGramTokenizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -185,7 +185,7 @@ public class Detector {
 		
 		char pre = 0;
 		for (int i = 0; i < target.length() && i < _maxTextLength; ++i) {
-			char character = NGram.normalize(target.charAt(i));
+			char character = NGramTokenizer.normalize(target.charAt(i));
 			if (character != ' ' || pre != ' ') {
 				this._text.append(character);
 			}
@@ -321,11 +321,11 @@ public class Detector {
 	 */
 	private ArrayList<String> extractNGrams() {
 		ArrayList<String> list = new ArrayList<String>();
-		NGram ngram = new NGram();
+		NGramTokenizer ngram = new NGramTokenizer();
 		
 		for (int i = 0; i < _text.length(); ++i) {
 			ngram.addChar(_text.charAt(i));
-			for (int n = 1; n <= NGram.N_GRAM; ++n) {
+			for (int n = 1; n <= NGramTokenizer.N_GRAM; ++n) {
 				String w = ngram.get(n);
 				if (w != null && _wordLangProbability.containsKey(w)) {
 					list.add(w);

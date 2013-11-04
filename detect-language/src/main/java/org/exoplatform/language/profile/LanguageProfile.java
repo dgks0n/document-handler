@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.exoplatform.document.util.StringUtils;
-import org.exoplatform.language.util.NGram;
+import org.exoplatform.language.util.NGramTokenizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,7 @@ public class LanguageProfile {
     
     public String name = null;
     public HashMap<String, Integer> frequency = new HashMap<String, Integer>();
-    public int[] nWords = new int[NGram.N_GRAM];
+    public int[] nWords = new int[NGramTokenizer.N_GRAM];
 
     /**
      * Constructor for JSONIC 
@@ -92,7 +92,7 @@ public class LanguageProfile {
 		}
 		
 		int len = nGram.length();
-		if (len < 1 || len > NGram.N_GRAM) {
+		if (len < 1 || len > NGramTokenizer.N_GRAM) {
 			return;
 		}
 		++nWords[len - 1];

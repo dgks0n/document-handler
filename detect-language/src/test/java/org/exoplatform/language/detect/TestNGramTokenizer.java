@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import static org.hamcrest.CoreMatchers.is;
-import org.exoplatform.language.util.NGram;
+import org.exoplatform.language.util.NGramTokenizer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ import org.junit.Test;
  *          
  * @version TestNGram.java Oct 24, 2013
  */
-public class TestNGram {
+public class TestNGramTokenizer {
 
 	/**
      * @throws java.lang.Exception
@@ -52,70 +52,68 @@ public class TestNGram {
      */
     @Test
     public final void testConstants() {
-        assertThat(NGram.N_GRAM, is(3));
-        assertEquals(NGram.N_GRAM, 3);
+        assertThat(NGramTokenizer.N_GRAM, is(3));
+        assertEquals(NGramTokenizer.N_GRAM, 3);
     }
 
     /**
-     * Test method for {@link NGram#normalize(char)} with Latin characters
+     * Test method for {@link NGramTokenizer#normalize(char)} with Latin characters
      */
     @Test
     public final void testNormalizeWithLatin() {
-        assertEquals(NGram.normalize('\u0000'), ' ');
-        assertEquals(NGram.normalize('\u0009'), ' ');
-        assertEquals(NGram.normalize('\u0020'), ' ');
-        assertEquals(NGram.normalize('\u0030'), ' ');
-        assertEquals(NGram.normalize('\u0040'), ' ');
-        assertEquals(NGram.normalize('\u0041'), '\u0041');
-        assertEquals(NGram.normalize('\u005a'), '\u005a');
-        assertEquals(NGram.normalize('\u005b'), ' ');
-        assertEquals(NGram.normalize('\u0060'), ' ');
-        assertEquals(NGram.normalize('\u0061'), '\u0061');
-        assertEquals(NGram.normalize('\u007a'), '\u007a');
-        assertEquals(NGram.normalize('\u007b'), ' ');
-        assertEquals(NGram.normalize('\u007f'), ' ');
-        assertEquals(NGram.normalize('\u0080'), '\u0080');
-        assertEquals(NGram.normalize('\u00a1'), '\u00a1');
+        assertEquals(NGramTokenizer.normalize('\u0000'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u0009'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u0020'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u0030'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u0040'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u0041'), '\u0041');
+        assertEquals(NGramTokenizer.normalize('\u005a'), '\u005a');
+        assertEquals(NGramTokenizer.normalize('\u005b'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u0060'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u0061'), '\u0061');
+        assertEquals(NGramTokenizer.normalize('\u007a'), '\u007a');
+        assertEquals(NGramTokenizer.normalize('\u007b'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u007f'), ' ');
+        assertEquals(NGramTokenizer.normalize('\u0080'), '\u0080');
+        assertEquals(NGramTokenizer.normalize('\u00a1'), '\u00a1');
     }
 
     /**
-     * Test method for {@link NGram#normalize(char)} with CJK Kanji characters
+     * Test method for {@link NGramTokenizer#normalize(char)} with CJK Kanji characters
      */
     @Test
     public final void testNormalizeWithCJKKanji() {
-        assertEquals(NGram.normalize('\u4E00'), '\u4E00');
-        assertEquals(NGram.normalize('\u4E01'), '\u4E01');
-        assertEquals(NGram.normalize('\u4E02'), '\u4E02');
-        assertEquals(NGram.normalize('\u4E03'), '\u4E01');
-        assertEquals(NGram.normalize('\u4E04'), '\u4E04');
-        assertEquals(NGram.normalize('\u4E05'), '\u4E05');
-        assertEquals(NGram.normalize('\u4E06'), '\u4E06');
-        assertEquals(NGram.normalize('\u4E07'), '\u4E07');
-        assertEquals(NGram.normalize('\u4E08'), '\u4E08');
-        assertEquals(NGram.normalize('\u4E09'), '\u4E09');
-        assertEquals(NGram.normalize('\u4E10'), '\u4E10');
-        assertEquals(NGram.normalize('\u4E11'), '\u4E11');
-        assertEquals(NGram.normalize('\u4E12'), '\u4E12');
-        assertEquals(NGram.normalize('\u4E13'), '\u4E13');
-        assertEquals(NGram.normalize('\u4E14'), '\u4E14');
-        assertEquals(NGram.normalize('\u4E15'), '\u4E15');
-        assertEquals(NGram.normalize('\u4E1e'), '\u4E1e');
-        assertEquals(NGram.normalize('\u4E1f'), '\u4E1f');
-        assertEquals(NGram.normalize('\u4E20'), '\u4E20');
-        assertEquals(NGram.normalize('\u4E21'), '\u4E21');
-        assertEquals(NGram.normalize('\u4E22'), '\u4E22');
-        assertEquals(NGram.normalize('\u4E23'), '\u4E23');
-//        assertEquals(NGram.normalize('\u4E24'), '\u4E24');
-//        assertEquals(NGram.normalize('\u4E25'), '\u4E25');
-        assertEquals(NGram.normalize('\u4E30'), '\u4E30');
+        assertEquals(NGramTokenizer.normalize('\u4E00'), '\u4E00');
+        assertEquals(NGramTokenizer.normalize('\u4E01'), '\u4E01');
+        assertEquals(NGramTokenizer.normalize('\u4E02'), '\u4E02');
+        assertEquals(NGramTokenizer.normalize('\u4E03'), '\u4E01');
+        assertEquals(NGramTokenizer.normalize('\u4E04'), '\u4E04');
+        assertEquals(NGramTokenizer.normalize('\u4E05'), '\u4E05');
+        assertEquals(NGramTokenizer.normalize('\u4E06'), '\u4E06');
+        assertEquals(NGramTokenizer.normalize('\u4E07'), '\u4E07');
+        assertEquals(NGramTokenizer.normalize('\u4E08'), '\u4E08');
+        assertEquals(NGramTokenizer.normalize('\u4E09'), '\u4E09');
+        assertEquals(NGramTokenizer.normalize('\u4E10'), '\u4E10');
+        assertEquals(NGramTokenizer.normalize('\u4E11'), '\u4E11');
+        assertEquals(NGramTokenizer.normalize('\u4E12'), '\u4E12');
+        assertEquals(NGramTokenizer.normalize('\u4E13'), '\u4E13');
+        assertEquals(NGramTokenizer.normalize('\u4E14'), '\u4E14');
+        assertEquals(NGramTokenizer.normalize('\u4E15'), '\u4E15');
+        assertEquals(NGramTokenizer.normalize('\u4E1e'), '\u4E1e');
+        assertEquals(NGramTokenizer.normalize('\u4E1f'), '\u4E1f');
+        assertEquals(NGramTokenizer.normalize('\u4E20'), '\u4E20');
+        assertEquals(NGramTokenizer.normalize('\u4E21'), '\u4E21');
+        assertEquals(NGramTokenizer.normalize('\u4E22'), '\u4E22');
+        assertEquals(NGramTokenizer.normalize('\u4E23'), '\u4E23');
+        assertEquals(NGramTokenizer.normalize('\u4E30'), '\u4E30');
     }
 
     /**
-     * Test method for {@link NGram#get(int)} and {@link NGram#addChar(char)}
+     * Test method for {@link NGramTokenizer#get(int)} and {@link NGramTokenizer#addChar(char)}
      */
     @Test
     public final void testNGram() {
-        NGram ngram = new NGram();
+        NGramTokenizer ngram = new NGramTokenizer();
         assertEquals(ngram.get(0), null);
         assertEquals(ngram.get(1), null);
         assertEquals(ngram.get(2), null);
