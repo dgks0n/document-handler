@@ -10,7 +10,7 @@
 	<groupId>org.exoplatform.document</groupId>
 	<artifactId>document-util</artifactId>
 	<version>1.0.0</version>
-	<name>Document :: Document Util Tools</name>
+	<name>Document Handler :: Document Util Tools</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>

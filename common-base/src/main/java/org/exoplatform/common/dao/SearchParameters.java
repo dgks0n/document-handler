@@ -16,24 +16,14 @@
  */
 package org.exoplatform.common.dao;
 
+import com.googlecode.genericdao.search.ISearch;
+
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version DAODispatcherException.java Nov 4, 2013
+ * @version SearchParameters.java Nov 5, 2013
  */
-public class DAODispatcherException extends RuntimeException {
+public interface SearchParameters extends ISearch {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5040626020686295007L;
-
-	public DAODispatcherException(String message) {
-		super(message);
-	}
-	
-	public DAODispatcherException(Throwable cause) {
-		super(cause);
-	}
 }

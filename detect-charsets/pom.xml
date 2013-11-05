@@ -10,7 +10,7 @@
 	<groupId>org.exoplatform.charsets</groupId>
 	<artifactId>detect-charsets</artifactId>
 	<version>1.0.0</version>
-	<name>Document :: Detect The Charset Of Content</name>
+	<name>Document Handler :: Detect The Charset Of Content</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>

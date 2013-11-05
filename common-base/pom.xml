@@ -10,23 +10,13 @@
 	<groupId>org.exoplatform.common.dao</groupId>
 	<artifactId>common-base</artifactId>
 	<version>1.2.0</version>
-	<name>Document :: Common Base (Generic DAO)</name>
+	<name>Document Handler :: Common Base (Generic DAO)</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.2.7.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.2.7.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
+	        <groupId>com.googlecode.genericdao</groupId>
+	        <artifactId>dao-hibernate</artifactId>
+	        <version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

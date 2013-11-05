@@ -5,7 +5,7 @@
 	<artifactId>document-handler</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0.0</version>
-	<name>Document :: Document Handler</name>
+	<name>Document Handler :: Document Handler</name>
 	<url>http://maven.apache.org</url>
 	<licenses>
 		<license>

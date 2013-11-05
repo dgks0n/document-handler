@@ -10,7 +10,7 @@
 	<groupId>cpdetector</groupId>
 	<artifactId>cpdetector</artifactId>
 	<version>1.0.10</version>
-	<name>Document :: Code Page Detector</name>
+	<name>Document Handler :: Code Page Detector</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>

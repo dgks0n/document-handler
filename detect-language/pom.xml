@@ -10,7 +10,7 @@
 	<groupId>org.exoplatform.language</groupId>
 	<artifactId>detect-language</artifactId>
 	<version>1.0.0</version>
-	<name>Document :: Detect Language Of Contents</name>
+	<name>Document Handler :: Detect Language Of Contents</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
