@@ -19,10 +19,9 @@ package org.exoplatform.common.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import com.googlecode.genericdao.dao.DAOUtil;
-import com.googlecode.genericdao.dao.hibernate.HibernateBaseDAO;
-import com.googlecode.genericdao.search.ExampleOptions;
-import com.googlecode.genericdao.search.Filter;
+import org.exoplatform.common.dao.hibernate.HibernateDAOProcessor;
+import org.hibernate.SessionFactory;
+
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 
@@ -42,43 +41,37 @@ import com.googlecode.genericdao.search.SearchResult;
  *          
  * @version GenericDAOProviderImpl.java Nov 6, 2013
  */
-public class GenericDAOProviderImpl<T, ID extends Serializable> extends HibernateBaseDAO implements GenericDAOProvider<T, ID> {
+public class GenericDAOProviderImpl<T, ID extends Serializable> extends HibernateDAOProcessor implements GenericDAOProvider<T, ID> {
 	
-	protected Class<T> persistentClass = (Class<T>) DAOUtil.getTypeArguments(GenericDAOProviderImpl.class, this.getClass()).get(0);
+	protected Class<T> persistentClass = (Class<T>) HibernateDAOUtil.getTypeArguments(GenericDAOProviderImpl.class, this.getClass()).get(0);
+	
+	public GenericDAOProviderImpl(SessionFactory sessionFactory) {
+		super(sessionFactory);
+	}
 
 	@Override
 	public T find(ID id) {
-		return _get(persistentClass, id);
+		return _getEntity(persistentClass, id);
 	}
 
 	@Override
 	public T[] find(ID... ids) {
-		return _get(persistentClass, ids);
+		return _getEntities(persistentClass, ids);
 	}
 
 	@Override
 	public T getReference(ID id) {
-		return _load(persistentClass, id); 
+		return _loadEntity(persistentClass, id);
 	}
 
 	@Override
 	public T[] getReferences(ID... ids) {
-		return _load(persistentClass, ids);
+		return _loadEntities(persistentClass, ids);
 	}
 
 	@Override
 	public void persist(T... entities) {
-		
-	}
-
-	@Override
-	public T merge(T entity) {
-		return merge(entity);
-	}
-
-	@Override
-	public T[] merge(T... entities) {
-		return null;
+		_persistEntities(entities);
 	}
 
 	@Override
@@ -104,17 +97,17 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 
 	@Override
 	public boolean removeById(ID id) {
-		return _deleteById(persistentClass, id);
+		return _deleteEntityById(persistentClass, id);
 	}
 
 	@Override
 	public void removeByIds(ID... ids) {
-		_deleteById(persistentClass, ids);
+		_deleteEntityById(persistentClass, ids);
 	}
 
 	@Override
 	public List<T> findAll() {
-		return _all(persistentClass);
+		return _allEnties(persistentClass);
 	}
 
 	@Override
@@ -122,12 +115,12 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 		if (parameters == null) {
 			return (List<RT>) findAll();
 		}
-		return _search(persistentClass, parameters);
+		return _searchEntity(persistentClass, parameters);
 	}
 
 	@Override
 	public <RT> RT searchUnique(SearchParameters parameters) {
-		return (RT) _searchUnique(persistentClass, parameters);
+		return (RT) _searchUniqueEntity(persistentClass, parameters);
 	}
 
 	@Override
@@ -135,7 +128,7 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 		if (parameters == null) {
 			parameters = (SearchParameters) new Search();
 		}
-		return _count(persistentClass, parameters);
+		return _countEntity(persistentClass, parameters);
 	}
 
 	@Override
@@ -146,25 +139,23 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 			result.setTotalCount(result.getResult().size());
 			return result;
 		}
-		return _searchAndCount(persistentClass, parameters);
+		return _searchAndCountEntity(persistentClass, parameters);
 	}
 
 	@Override
 	public boolean isAttached(T entity) {
-		// TODO Auto-generated method stub
-		return false;
+		return _sessionContains(entity);
 	}
 
 	@Override
+	@Deprecated
 	public boolean isConnected(Object object) {
-		// TODO Auto-generated method stub
-		return false;
+		return _sessionContains(object);
 	}
 
 	@Override
 	public void refresh(T... entities) {
-		// TODO Auto-generated method stub
-		
+		_refreshEntities(entities);
 	}
 
 	@Override
@@ -173,13 +164,8 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 	}
 
 	@Override
-	public Filter getFilterFromExample(T example) {
-		return _getFilterFromExample(example);
-	}
-
-	@Override
-	public Filter getFilterFromExample(T example, ExampleOptions options) {
-		return _getFilterFromExample(example, options);
+	public T merge(T entity) {
+		return _mergeEntity(entity);
 	}
 
 }

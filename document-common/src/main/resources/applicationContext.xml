@@ -8,8 +8,8 @@
         <context:annotation-config />
 
         <!-- Spring will find all of our service and DAO components because they have @Service and @Repository annotations. We do not need to configure them in XML -->
-        <context:component-scan base-package="com.saltlux.common.service" />
-        <context:component-scan base-package="com.saltlux.common.dao" />
+        <context:component-scan base-package="org.exoplatform.document.service" />
+        <context:component-scan base-package="org.exoplatform.document.dao" />
 
         <context:property-placeholder location="classpath*:application.properties" />
 

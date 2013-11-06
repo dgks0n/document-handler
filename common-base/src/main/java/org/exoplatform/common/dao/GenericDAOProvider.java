@@ -19,8 +19,6 @@ package org.exoplatform.common.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import com.googlecode.genericdao.search.ExampleOptions;
-import com.googlecode.genericdao.search.Filter;
 import com.googlecode.genericdao.search.SearchResult;
 
 /**
@@ -122,21 +120,6 @@ public interface GenericDAOProvider<T, ID extends Serializable> {
 	 * association is mapped with cascade="merge".
 	 */
 	public T merge(T entity);
-
-	/**
-	 * <p>
-	 * Copy the state of the given objects onto the persistent objects with the
-	 * same identifier. If there is no persistent instance currently associated
-	 * with the session, it will be loaded. Return the persistent instances. If
-	 * a given instance is unsaved, save a copy and return it as a newly
-	 * persistent instance.
-	 * 
-	 * <p>
-	 * The instances that are passed in do not become associated with the
-	 * session. This operation cascades to associated instances if the
-	 * association is mapped with cascade="merge".
-	 */
-	public T[] merge(T... entities);
 	
 	/**
 	 * If an entity with the same ID already exists in the database, merge the
@@ -232,7 +215,6 @@ public interface GenericDAOProvider<T, ID extends Serializable> {
 	 * @Deprecated: Should use isAttached instead for isConnected.
 	 * @see isAttached
 	 */
-	@Deprecated
 	public boolean isConnected(Object object);
 
 	/**
@@ -244,14 +226,4 @@ public interface GenericDAOProvider<T, ID extends Serializable> {
 	 * Flushes changes in the Hibernate session to the datastore.
 	 */
 	public void flush();
-	
-	/**
-	 * Generates a search filter from the given example using default options. 
-	 */
-	public Filter getFilterFromExample(T example);
-	
-	/**
-	 * Generates a search filter from the given example using the specified options. 
-	 */
-	public Filter getFilterFromExample(T example, ExampleOptions options);
 }
