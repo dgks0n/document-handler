@@ -36,7 +36,7 @@ public class Document extends Entity<String> {
 	 */
 	private static final long serialVersionUID = 2664377649402353894L;
 	
-	private static Document _document; 
+	private static Document _document = null; 
 
 	/**
 	 * File's name
@@ -145,8 +145,8 @@ public class Document extends Entity<String> {
 	}
 
 	public static Document getInstance() {
-		if (_document == null) {
-			return new Document();
+		if (Document._document == null) {
+			Document._document = new Document();
 		}
 		
 		return _document;

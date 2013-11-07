@@ -27,6 +27,7 @@ import info.monitorenter.util.StringUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 
@@ -38,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version CharsetsDetector.java Oct 26, 2013
  *
  */
-public class CharsetsDetector {
+public class CharsetsDetector extends CharsetsDetectorPlugin implements BaseCharsetDetector {
 
 	private static final Logger logger = LoggerFactory.getLogger(CharsetsDetector.class);
 	
@@ -63,6 +64,10 @@ public class CharsetsDetector {
 	    detector.add(UnicodeDetector.getInstance());
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.exoplatform.charsets.BaseCharsetDetector#detectCharsetEncoding(java.lang.String)
+	 */
+	@Override
 	public Charset detectCharsetEncoding(String path) throws FileNotFoundException {
 		if (StringUtil.isEmpty(path)) {
 			throw new FileNotFoundException("The file's path '" + path + "' is invalid.");
@@ -71,6 +76,10 @@ public class CharsetsDetector {
 		return detectCharsetEncoding(new File(path));
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.exoplatform.charsets.BaseCharsetDetector#detectCharsetEncoding(java.io.File)
+	 */
+	@Override
 	public Charset detectCharsetEncoding(File file) throws FileNotFoundException {
 		if (!file.exists()) {
 			throw new FileNotFoundException("The file's path '" + file.getAbsolutePath() + "' is invalid.");
@@ -86,5 +95,18 @@ public class CharsetsDetector {
 			logger.error("Cannot detect charsets encoding of file " + file.getName() + ".", ioe);
 		}
 		return charset;
+	}
+
+	@Override
+	public Charset detectCodepage(InputStream inputStream, int length) throws IOException, IllegalArgumentException {
+		if (inputStream == null) {
+			throw new IllegalArgumentException("The detector has not support in the inputstream null case. You should put valid argument.");
+		}
+		
+		if (!inputStream.markSupported()) {
+			throw new IllegalArgumentException("The given input stream (" + inputStream.getClass().getName() + ") has to support for marking.");
+		}
+		
+		return detector.detectCodepage(inputStream, length);
 	}
 }
