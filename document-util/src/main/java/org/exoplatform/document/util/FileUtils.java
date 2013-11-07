@@ -18,8 +18,12 @@ package org.exoplatform.document.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.CountingInputStream;
 import org.exoplatform.document.util.exception.DuplicateFileException;
 
 /**
@@ -75,5 +79,43 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	public static boolean move(File source, String targetName, boolean isOverwrite) throws FileNotFoundException, DuplicateFileException, IOException {
 		File target = new File(source.getParentFile().getPath() + File.separator + targetName);
 		return move(source, target, isOverwrite);
+	}
+	
+	/**
+	 * Returns the size of the specified file or directory. If the provided File is a regular file, then the file's length is returned.
+	 * If the argument is a directory, then the size of the directory is calculated recursively. If a directory or subdirectory is security restricted, its size will not be included.
+	 * 
+	 * @param inputStream - the input stream
+	 * @param fileName - the file's name
+	 * 
+	 * @return the length of the file, or recursive size of the directory, provided (in bytes).
+	 * @throws NullPointerException - if the file is null
+	 * @throws IllegalArgumentException - if the file does not exist.
+	 */
+	public static long sizeOf(InputStream inputStream, String fileName) throws NullPointerException, IllegalArgumentException {
+		if (inputStream == null) {
+			throw new NullPointerException("The input stream is null.");
+		}
+		
+		FileOutputStream fileOutputStream = null;
+        CountingInputStream countingInputStream = null;
+        
+        long sizeOfFile = 0;
+        try {
+            fileName = FileNameUtils.getName(fileName);
+            fileOutputStream = new FileOutputStream(new File(FilePathUtils.ROOT_PATH + fileName));
+            countingInputStream = new CountingInputStream(inputStream);
+            
+            // Write file directly on location
+            IOUtils.copyLarge(countingInputStream, fileOutputStream);
+            sizeOfFile = countingInputStream.getByteCount();
+		} catch (Exception ex) {
+			sizeOfFile = 0;
+		} finally {
+			IOUtils.closeQuietly(countingInputStream);
+            IOUtils.closeQuietly(fileOutputStream);
+		}
+        
+        return sizeOfFile;
 	}
 }
