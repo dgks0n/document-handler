@@ -16,8 +16,11 @@
  */
 package org.exoplatform.document.composer;
 
+import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
+
 import javax.servlet.ServletContext;
 
+import org.exoplatform.charsets.CharsetsDetector;
 import org.exoplatform.document.upload.rest.UploadDocumentService;
 import org.exoplatform.document.upload.util.UploadMultipartHandler;
 import org.picocontainer.Characteristics;
@@ -37,7 +40,8 @@ public class DocumentUploadComposer implements WebappComposer {
 	 */
 	@Override
 	public void composeApplication(MutablePicoContainer container, ServletContext servletContext) {
-		
+		container.addComponent(CodepageDetectorProxy.class);
+		container.addComponent(CharsetsDetector.class);
 	}
 
 	/* (non-Javadoc)

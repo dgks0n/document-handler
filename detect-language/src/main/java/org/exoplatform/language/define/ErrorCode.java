@@ -22,14 +22,22 @@ package org.exoplatform.language.define;
  *
  */
 public enum ErrorCode {
-	
+	// Text note
 	NOTEXTERROR, 
+	// Format error
 	FORMATERROR, 
+	// File loader
 	FILELOADERROR, 
+	// Duplicate language
 	DUPLICATELANGERROR, 
+	// Need load profile
 	NEEDLOADPROFILEERROR, 
+	// Can't detect
 	CANTDETECTERROR, 
+	// Can't open train data
 	CANTOPENTRAINDATA, 
+	// Train data format error
 	TRAINDATAFORMATERROR, 
+	// Error when initialize parameters
 	INITPARAMERROR
 }

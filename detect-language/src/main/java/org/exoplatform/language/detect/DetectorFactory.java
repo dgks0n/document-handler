@@ -56,13 +56,12 @@ public class DetectorFactory {
 	private static final Logger logger = LoggerFactory.getLogger(DetectorFactory.class);
 	
 	static DetectorFactory _instance = new DetectorFactory();
+	
 	HashMap<String, double[]> wordLangProbability;
+	
 	ArrayList<String> languages;
     
-    
     public DetectorFactory() {
-    	logger.info("This class manages an initialization and constructions of Detector.");
-        // Initialization
     	wordLangProbability = new HashMap<String, double[]>();
         languages = new ArrayList<String>();
     }
@@ -78,7 +77,7 @@ public class DetectorFactory {
      */
 	public static void loadLanguageProfiles(String... profiles) throws LanguageDetectException {
 		if (logger.isDebugEnabled()) {
-			logger.info("Load profiles from specified directory.");
+			logger.info("Load profiles from specified directory \"" + profiles + "\"");
 		}
 		
 		for (int i = 0; i < profiles.length; i++) {
@@ -114,13 +113,11 @@ public class DetectorFactory {
      */
 	protected static void addLanguageProfile(LanguageProfile profile, int langsize) throws LanguageDetectException {
 		if (logger.isDebugEnabled()) {
-			logger.info("Add profile from specified Language Profile");
+			logger.info("Added language profile from specified Profile \"" + profile.getLanguageProfile() + "\"");
 		}
 		
         String language = profile.getLanguageProfile();
         if (_instance.languages.contains(language)) {
-        	// show the name is duplicate the same language profile
-        	logger.info("Duplicate language profile name " + language + ".");
             throw new LanguageDetectException("Duplicate the same language profile", ErrorCode.DUPLICATELANGERROR);
         }
         _instance.languages.add(language);

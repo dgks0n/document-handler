@@ -33,19 +33,19 @@ public class Message {
 	private static final Logger logger = LoggerFactory.getLogger(Message.class);
 	
 	private static final String BUNDLE_NAME = "org.exoplatform.language.message.Message";
+	
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, Locale.getDefault());
 	
 	public Message() {
-		logger.info("Initialize message bundle");
 	}
 	
 	public static String getMessage(String key) {
-		logger.info("Get resource bundle of " + key);
+		logger.info("Get resource bundle of \"" + key + "\"");
 		
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException mre) {
-			logger.error("Can't find any messages matches with " + key, mre);
+			logger.error("Can't find any messages matches with \"" + key + "\"", mre);
 			return "[" + key + "]";
 		}
 	}

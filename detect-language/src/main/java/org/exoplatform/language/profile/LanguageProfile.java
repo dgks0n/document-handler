@@ -42,14 +42,16 @@ public class LanguageProfile {
     static final int LESS_FREQ_RATIO = 100000;
     
     public String name = null;
+    
     public HashMap<String, Integer> frequency = new HashMap<String, Integer>();
+    
     public int[] nWords = new int[NGramTokenizer.N_GRAM];
 
     /**
      * Constructor for JSONIC 
      */
     public LanguageProfile() {
-    	logger.info("Initializes an empty instance for JSONIC");
+    	//TODO don't do anything here
     }
 
     /**
@@ -88,7 +90,7 @@ public class LanguageProfile {
 		}
 		
 		if (logger.isDebugEnabled()) {
-			logger.info("Adding N-Gram to language analyzer");
+			logger.info("Adding N-Gram \"" + nGram + "\" to language analyzer");
 		}
 		
 		int len = nGram.length();
@@ -112,7 +114,7 @@ public class LanguageProfile {
 		}
 		
 		if (logger.isDebugEnabled()) {
-			logger.info("Eliminate below less frequency n-grams and noise Latin alphabets");
+			logger.info("Eliminate below less frequency N-Grams and noise Latin alphabets");
 		}
 		
 		int threshold = nWords[0] / LESS_FREQ_RATIO;

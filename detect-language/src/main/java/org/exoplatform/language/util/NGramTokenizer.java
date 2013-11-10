@@ -20,8 +20,6 @@ import java.lang.Character.UnicodeBlock;
 import java.util.HashMap;
 
 import org.exoplatform.language.message.Message;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
@@ -30,8 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NGramTokenizer {
 
-	private static final Logger logger = LoggerFactory.getLogger(NGramTokenizer.class);
-	
 	static final String LATIN1_EXCLUDED = Message.getMessage("NGramTokenizer.LATIN1_EXCLUDE");
 	
 	StringBuffer _ngrams;
@@ -188,8 +184,6 @@ public class NGramTokenizer {
 	public NGramTokenizer() {
         _ngrams = new StringBuffer(" ");
         _capitalWord = false;
-        
-        logger.info("Initializes an empty instance. The N-Gram can be used to crate ngrams and character ngrams.");
     }
 
     /**
