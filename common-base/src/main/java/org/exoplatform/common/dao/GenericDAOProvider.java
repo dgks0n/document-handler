@@ -179,20 +179,20 @@ public interface GenericDAOProvider<T, ID extends Serializable> {
 	 * 
 	 * @param RT The result type is automatically determined by the context in which the method is called.
 	 */
-	public <RT> List<RT> search(SearchParameters parameters);
+	public <RT> List<RT> search(SearchCriterion parameters);
 
 	/**
 	 * Search for a single entity using the given parameters.
 	 * 
 	 * @param RT The result type is automatically determined by the context in which the method is called.
 	 */
-	public <RT> RT searchUnique(SearchParameters parameters);
+	public <RT> RT searchUnique(SearchCriterion parameters);
 
 	/**
 	 * Returns the total number of results that would be returned using the
 	 * given <code>ISearch</code> if there were no paging or maxResults limits.
 	 */
-	public int count(SearchParameters parameters);
+	public int count(SearchCriterion parameters);
 
 	/**
 	 * Returns a <code>SearchResult</code> object that includes both the list of
@@ -201,7 +201,7 @@ public interface GenericDAOProvider<T, ID extends Serializable> {
 	 * 
 	 * @param RT The result type is automatically determined by the context in which the method is called.
 	 */
-	public <RT> SearchResult<RT> searchAndCount(SearchParameters parameters);
+	public <RT> SearchResult<RT> searchAndCount(SearchCriterion parameters);
 
 	/**
 	 * Returns <code>true</code> if the object is connected to the current
@@ -212,9 +212,9 @@ public interface GenericDAOProvider<T, ID extends Serializable> {
 	/**
 	 * Returns true if the object is connected to the current Hibernate session.
 	 * 
-	 * @Deprecated: Should use isAttached instead for isConnected.
-	 * @see isAttached
+	 * @deprecated Use {@link #isAttached(Object)}
 	 */
+	@Deprecated
 	public boolean isConnected(Object object);
 
 	/**

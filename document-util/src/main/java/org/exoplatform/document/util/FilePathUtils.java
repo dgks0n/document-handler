@@ -24,5 +24,8 @@ package org.exoplatform.document.util;
  */
 public class FilePathUtils {
 
+	/**
+	 * The specified local path to storage files and logs.
+	 */
 	public static final String ROOT_PATH = "/document-handler/";
 }

@@ -12,6 +12,17 @@ import antlr.TokenStreamException;
 import antlr.collections.impl.BitSet;
 
 public class EncodingParser extends antlr.LLkParser implements EncodingParserTokenTypes {
+	
+	public static final String[] _tokenNames = { "<0>", "EOF", "<2>",
+		"NULL_TREE_LOOKAHEAD", "META_CONTENT_TYPE", "XML_ENCODING_DECL",
+		"IDENTIFIER", "SPACING", "NEWLINE", "SPACE", "DIGIT", "LETTER" };
+
+	private static final long[] mk_tokenSet_0() {
+		long[] data = { 2L, 0L };
+		return data;
+	}
+	
+	public static final BitSet _tokenSet_0 = new BitSet(mk_tokenSet_0());
 
 	protected EncodingParser(TokenBuffer tokenBuf, int k) {
 		super(tokenBuf, k);
@@ -76,16 +87,4 @@ public class EncodingParser extends antlr.LLkParser implements EncodingParserTok
 		}
 		return charset;
 	}
-
-	public static final String[] _tokenNames = { "<0>", "EOF", "<2>",
-			"NULL_TREE_LOOKAHEAD", "META_CONTENT_TYPE", "XML_ENCODING_DECL",
-			"IDENTIFIER", "SPACING", "NEWLINE", "SPACE", "DIGIT", "LETTER" };
-
-	private static final long[] mk_tokenSet_0() {
-		long[] data = { 2L, 0L };
-		return data;
-	}
-
-	public static final BitSet _tokenSet_0 = new BitSet(mk_tokenSet_0());
-
 }

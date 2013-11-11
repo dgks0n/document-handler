@@ -68,6 +68,10 @@ import org.slf4j.LoggerFactory;
 
 public class FitAuthoringClient extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1283842002469761769L;
 	private static final Logger logger = LoggerFactory.getLogger(FitAuthoringClient.class);
 	
 	public FitAuthoringClient() {

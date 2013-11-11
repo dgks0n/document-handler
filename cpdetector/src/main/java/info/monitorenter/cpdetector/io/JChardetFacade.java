@@ -79,6 +79,11 @@ import org.mozilla.intl.chardet.nsPSMDetector;
  */
 public final class JChardetFacade extends AbstractCodepageDetector implements nsICharsetDetectionObserver {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -889671274694379749L;
+
 	private static JChardetFacade instance = null;
 
 	private static nsDetector det;

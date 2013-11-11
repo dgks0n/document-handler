@@ -71,6 +71,11 @@ import java.nio.charset.Charset;
  */
 public abstract class AbstractCodepageDetector implements ICodepageDetector {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2646856864415681456L;
+
+	/**
      * 
      */
 	public AbstractCodepageDetector() {

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.exoplatform.document</groupId>
+		<artifactId>document-handler</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<groupId>org.exoplatform.document</groupId>
+	<artifactId>document-upload</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+	<name>Document Handler :: Upload Document</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<!-- Picocontainer Web Work -->
+		<dependency>
+			<groupId>org.picocontainer.web</groupId>
+			<artifactId>picocontainer-web-webwork2</artifactId>
+			<version>2.5.1</version>
+			<exclusions>
+        		<exclusion>
+          			<groupId>org.picocontainer.script</groupId>
+          			<artifactId>picocontainer-script-core</artifactId>
+        		</exclusion>
+      		</exclusions>    
+		</dependency>
+		
+		<dependency>
+			<groupId>org.exoplatform.document</groupId>
+			<artifactId>document-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>oscore</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		
+		<!-- Jersey -->
+		<dependency>
+	        <groupId>com.sun.jersey</groupId>
+	        <artifactId>jersey-server</artifactId>
+	        <version>1.9.1</version>
+        </dependency>
+        <dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>1.9.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>1.9.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jettison</groupId>
+			<artifactId>jettison</artifactId>
+			<version>1.3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

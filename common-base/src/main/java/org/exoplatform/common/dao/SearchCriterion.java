@@ -74,6 +74,6 @@ import com.googlecode.genericdao.search.ISearch;
  *          
  * @version SearchParameters.java Nov 5, 2013
  */
-public interface SearchParameters extends ISearch {
+public interface SearchCriterion extends ISearch {
 
 }

@@ -118,6 +118,11 @@ import java.nio.charset.Charset;
  */
 public class UnicodeDetector extends AbstractCodepageDetector {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3499719598083469649L;
+	
 	private static ICodepageDetector instance;
 
 	/**

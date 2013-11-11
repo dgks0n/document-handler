@@ -81,7 +81,6 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 
 	@Override
 	public T[] save(T... entities) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -111,7 +110,7 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 	}
 
 	@Override
-	public <RT> List<RT> search(SearchParameters parameters) {
+	public <RT> List<RT> search(SearchCriterion parameters) {
 		if (parameters == null) {
 			return (List<RT>) findAll();
 		}
@@ -119,20 +118,20 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 	}
 
 	@Override
-	public <RT> RT searchUnique(SearchParameters parameters) {
+	public <RT> RT searchUnique(SearchCriterion parameters) {
 		return (RT) _searchUniqueEntity(persistentClass, parameters);
 	}
 
 	@Override
-	public int count(SearchParameters parameters) {
+	public int count(SearchCriterion parameters) {
 		if (parameters == null) {
-			parameters = (SearchParameters) new Search();
+			parameters = (SearchCriterion) new Search();
 		}
 		return _countEntity(persistentClass, parameters);
 	}
 
 	@Override
-	public <RT> SearchResult<RT> searchAndCount(SearchParameters parameters) {
+	public <RT> SearchResult<RT> searchAndCount(SearchCriterion parameters) {
 		if (parameters == null) {
 			SearchResult<RT> result = new SearchResult<RT>();
 			result.setResult((List<RT>) findAll());

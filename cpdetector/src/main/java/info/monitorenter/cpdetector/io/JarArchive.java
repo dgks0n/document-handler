@@ -80,6 +80,11 @@ import org.slf4j.LoggerFactory;
  */
 public class JarArchive extends File {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -630676894313499847L;
+
 	private static final Logger logger = LoggerFactory.getLogger(JarArchive.class);
 	
 	protected JarFile jar;

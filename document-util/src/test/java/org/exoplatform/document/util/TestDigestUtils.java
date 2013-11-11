@@ -138,6 +138,11 @@ public class TestDigestUtils {
 		assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.shaHex(getBytesUtf8("abc")));
 		assertEquals("84983e441c3bd26ebaae4aa1f95129e5e54670f1", DigestUtils.shaHex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
 		assertEquals(DigestUtils.shaHex(testData), DigestUtils.shaHex(new ByteArrayInputStream(testData)));
+		
+		assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex("abc"));
+		assertEquals("a9993e364706816aba3e25717850c26c9cd0d89d", DigestUtils.sha1Hex(getBytesUtf8("abc")));
+		assertEquals("84983e441c3bd26ebaae4aa1f95129e5e54670f1", DigestUtils.sha1Hex("abcdbcdecdefdefgefghfghighij" + "hijkijkljklmklmnlmnomnopnopq"));
+		assertEquals(DigestUtils.sha1Hex(testData), DigestUtils.sha1Hex(new ByteArrayInputStream(testData)));
 	}
 
 }

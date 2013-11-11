@@ -25,7 +25,7 @@ import java.util.Map;
 
 import javax.persistence.NonUniqueResultException;
 
-import org.exoplatform.common.dao.SearchParameters;
+import org.exoplatform.common.dao.SearchCriterion;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -462,9 +462,9 @@ public class HibernateDAOProcessor {
      * Search for objects based on the search parameters in the specified
      * <code>SearchParameters</code> object.
      * 
-     * @see SearchParameters
+     * @see SearchCriterion
      */
-	protected List _searchEntity(SearchParameters parameters) {
+	protected List _searchEntity(SearchCriterion parameters) {
 		if (parameters == null) {
 			throw new NullPointerException("Search is null.");
 		}
@@ -481,7 +481,7 @@ public class HibernateDAOProcessor {
      * object has a different search class than what is specified, an exception
      * is thrown.
      */
-	protected List _searchEntity(Class<?> searchClass, SearchParameters parameters) {
+	protected List _searchEntity(Class<?> searchClass, SearchCriterion parameters) {
 		if (parameters == null) {
 			throw new NullPointerException("Search is null.");
 		}
@@ -499,9 +499,9 @@ public class HibernateDAOProcessor {
      * Returns the total number of results that would be returned using the
      * given <code>SearchParameters</code> if there were no paging or maxResult limits.
      * 
-     * @see SearchParameters
+     * @see SearchCriterion
      */
-	protected int _countEntity(SearchParameters parameters) {
+	protected int _countEntity(SearchCriterion parameters) {
 		if (parameters == null) {
 			throw new NullPointerException("Search is null.");
 		}
@@ -518,7 +518,7 @@ public class HibernateDAOProcessor {
      * object has a different search class than what is specified, an exception
      * is thrown.
      */
-    protected int _countEntity(Class<?> searchClass, SearchParameters parameters) {
+    protected int _countEntity(Class<?> searchClass, SearchCriterion parameters) {
     	if (parameters == null) {
 			throw new NullPointerException("Search is null.");
 		}
@@ -551,7 +551,7 @@ public class HibernateDAOProcessor {
      * 
      * @see ISearch
      */
-    protected SearchResult _searchAndCountEntity(SearchParameters parameters) {
+    protected SearchResult _searchAndCountEntity(SearchCriterion parameters) {
     	if (parameters == null) {
 			throw new NullPointerException("Search is null.");
 		}
@@ -568,7 +568,7 @@ public class HibernateDAOProcessor {
      * object has a different search class than what is specified, an exception
      * is thrown.
      */
-	protected SearchResult _searchAndCountEntity(Class<?> searchClass, SearchParameters parameters) {
+	protected SearchResult _searchAndCountEntity(Class<?> searchClass, SearchCriterion parameters) {
 		if (parameters == null) {
 			throw new NullPointerException("Search is null.");
 		}
@@ -585,7 +585,7 @@ public class HibernateDAOProcessor {
     /**
      * Search for a single result using the given parameters.
      */
-    protected Object _searchUniqueEntity(SearchParameters parameters) throws NonUniqueResultException {
+    protected Object _searchUniqueEntity(SearchCriterion parameters) throws NonUniqueResultException {
 		if (parameters == null) {
 			throw new NullPointerException("Search is null.");
 		}
@@ -602,7 +602,7 @@ public class HibernateDAOProcessor {
      * object has a different search class than what is specified, an exception
      * is thrown.
      */
-    protected Object _searchUniqueEntity(Class<?> searchClass, SearchParameters parameters) {
+    protected Object _searchUniqueEntity(Class<?> searchClass, SearchCriterion parameters) {
     	if (parameters == null) {
 			throw new NullPointerException("Search is null.");
 		}

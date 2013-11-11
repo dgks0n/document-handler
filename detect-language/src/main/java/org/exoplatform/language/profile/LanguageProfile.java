@@ -58,6 +58,7 @@ public class LanguageProfile {
      * Normal Constructor
      * 
      * @param name language name
+     * @deprecated Use {@link #addLanguageProfile(String)}}
      */
     @Deprecated
     public LanguageProfile(String name) {

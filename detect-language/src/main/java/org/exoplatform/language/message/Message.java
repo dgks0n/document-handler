@@ -40,8 +40,6 @@ public class Message {
 	}
 	
 	public static String getMessage(String key) {
-		logger.info("Get resource bundle of \"" + key + "\"");
-		
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException mre) {

@@ -82,6 +82,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ClassFileChooser extends JFileChooser {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2867817277313989729L;
+
 	private static final Logger logger = LoggerFactory.getLogger(ClassFileChooser.class);
 	
 	private File m_selected;
