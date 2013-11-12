@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.Random;
 
 import org.apache.commons.codec.binary.StringUtils;
-
 import org.junit.Test;
 
 /**
@@ -131,6 +130,7 @@ public class TestDigestUtils {
 		assertEquals(DigestUtils.sha512Hex(testData), DigestUtils.sha512Hex(new ByteArrayInputStream(testData)));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testShaHex() throws IOException {
 		// Examples from FIPS 180-1

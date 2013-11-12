@@ -1,5 +1,15 @@
 @CHARSET "UTF-8";
 
+body {
+	background-color: white;
+	border: 10px;
+	font-family: arial,sans-serif;
+	min-width: 1000px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	display: block;
+}
+
 .uiGlobal {
 	left: 0;
 	min-width: 1000px;
@@ -42,6 +52,13 @@
 	flex: 0 1 auto;
 }
 
+#uiGBA {
+	height: 60px;
+}
+
+.clearBoth {
+	clear: both;
+}
 #uiDocumentList {
 	position: relative;
 }

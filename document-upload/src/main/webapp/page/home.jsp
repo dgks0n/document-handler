@@ -14,7 +14,8 @@
 		</div>
 	</div>
 </div>
-<div style="clear:both"></div>
+<div id="uiGBA"></div>
+<div class="clearBoth"></div>
 <div id="uiDocumentList">
 	<div class="uiSplitPane">
 		<table cellspacing="0" cellpadding="0" border="0">
