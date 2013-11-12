@@ -17,6 +17,7 @@
 package org.exoplatform.common.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.List;
 
 import org.exoplatform.common.dao.hibernate.HibernateDAOProcessor;
@@ -76,12 +77,20 @@ public class GenericDAOProviderImpl<T, ID extends Serializable> extends Hibernat
 
 	@Override
 	public T save(T entity) {
-		return null;
+		if (entity == null || !persistentClass.isInstance(entity)) {
+			throw new IllegalArgumentException("Object class does not match dao type.");
+		}
+		
+		return _getEntity(persistentClass, _saveEntity(entity));
 	}
 
 	@Override
 	public T[] save(T... entities) {
-		return null;
+		T[] savedEntities = (T[]) Array.newInstance(persistentClass, entities.length);
+		for (int j = 0; j < entities.length; j++) {
+			savedEntities[j] = save(entities[j]);
+		}
+		return savedEntities;
 	}
 
 	@Override

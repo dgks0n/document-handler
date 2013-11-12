@@ -204,13 +204,12 @@ public interface GenericDAOProvider<T, ID extends Serializable> {
 	public <RT> SearchResult<RT> searchAndCount(SearchCriterion parameters);
 
 	/**
-	 * Returns <code>true</code> if the object is connected to the current
-	 * Hibernate session.
+	 * Returns <code>true</code> if the object is connected to the current Hibernate session.
 	 */
 	public boolean isAttached(T entity);
 	
 	/**
-	 * Returns true if the object is connected to the current Hibernate session.
+	 * Returns <code>true</code> if the object is connected to the current Hibernate session.
 	 * 
 	 * @deprecated Use {@link #isAttached(Object)}
 	 */
