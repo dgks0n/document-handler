@@ -111,7 +111,7 @@ public class ClassFileFilterIsA implements IClassFileFilter, FileFilter {
 	 * return true for a Class a in the following condition:
 	 * 
 	 * <pre>
-	 * (a instanceof c)
+	 * (a instanceof clazz)
 	 * </pre>
 	 * 
 	 * </p>
@@ -121,18 +121,18 @@ public class ClassFileFilterIsA implements IClassFileFilter, FileFilter {
 	 * classes.
 	 * </p>
 	 * 
-	 * @param c
+	 * @param clazz
 	 *            A non-final Class.
 	 * @return true, if the given class could be added. It is not added, if
-	 *         argument c is final (makes no sense as a final class is never a
+	 *         argument clazz is final (makes no sense as a final class is never a
 	 *         superclass) or the given Class was already contained.
 	 * 
 	 */
-	public synchronized boolean addSuperClass(Class c) {
+	public synchronized boolean addSuperClass(Class clazz) {
 		boolean ret = false;
-		if ((c.getModifiers() & Modifier.FINAL) != 0) {
+		if ((clazz.getModifiers() & Modifier.FINAL) != 0) {
 		} else {
-			ret = this.superclasses.add(c);
+			ret = this.superclasses.add(clazz);
 		}
 		return ret;
 	}
@@ -143,11 +143,11 @@ public class ClassFileFilterIsA implements IClassFileFilter, FileFilter {
 	 * @see #addSuperClass(Class)
 	 * @see info.monitorenter.cpdetector.io.IClassFileFilter#accept(java.lang.Class)
 	 */
-	public boolean accept(Class c) {
+	public boolean accept(Class clazz) {
 		boolean ret = false;
 		Iterator it = this.superclasses.iterator();
 		while (it.hasNext() && !ret) {
-			ret = ((Class) it.next()).isAssignableFrom(c);
+			ret = ((Class) it.next()).isAssignableFrom(clazz);
 		}
 		return ret;
 	}

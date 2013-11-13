@@ -61,10 +61,10 @@ package info.monitorenter.util;
 public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 
 	/** The key instance. */
-	private final V m_key;
+	private final V key;
 
 	/** The value instance. */
-	private K m_value;
+	private K value;
 
 	/**
 	 * Creates an instance with the given key and value.
@@ -77,8 +77,8 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 	 *            the value instance to use.
 	 */
 	public Entry(final V key, final K value) {
-		this.m_key = key;
-		this.m_value = value;
+		this.key = key;
+		this.value = value;
 	}
 
 	/**
@@ -97,18 +97,18 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 			return false;
 		}
 		final Entry<V, K> other = (Entry<V, K>) obj;
-		if (this.m_key == null) {
-			if (other.m_key != null) {
+		if (this.key == null) {
+			if (other.key != null) {
 				return false;
 			}
-		} else if (!this.m_key.equals(other.m_key)) {
+		} else if (!this.key.equals(other.key)) {
 			return false;
 		}
-		if (this.m_value == null) {
-			if (other.m_value != null) {
+		if (this.value == null) {
+			if (other.value != null) {
 				return false;
 			}
-		} else if (!this.m_value.equals(other.m_value)) {
+		} else if (!this.value.equals(other.value)) {
 			return false;
 		}
 		return true;
@@ -120,7 +120,7 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 	 * @see java.util.Map.Entry#getKey()
 	 */
 	public V getKey() {
-		return this.m_key;
+		return this.key;
 	}
 
 	/**
@@ -129,7 +129,7 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 	 * @see java.util.Map.Entry#getValue()
 	 */
 	public K getValue() {
-		return this.m_value;
+		return this.value;
 	}
 
 	/**
@@ -139,8 +139,8 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.m_key == null) ? 0 : this.m_key.hashCode());
-		result = prime * result + ((this.m_value == null) ? 0 : this.m_value.hashCode());
+		result = prime * result + ((this.key == null) ? 0 : this.key.hashCode());
+		result = prime * result + ((this.value == null) ? 0 : this.value.hashCode());
 		return result;
 	}
 
@@ -156,8 +156,8 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 	 * @return the previous value instance.
 	 */
 	public K setValue(final K value) {
-		final K ret = this.m_value;
-		this.m_value = value;
+		final K ret = this.value;
+		this.value = value;
 		return ret;
 	}
 

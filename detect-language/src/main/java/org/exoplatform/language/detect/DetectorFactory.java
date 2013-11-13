@@ -55,11 +55,9 @@ public class DetectorFactory {
 
 	private static final Logger logger = LoggerFactory.getLogger(DetectorFactory.class);
 	
-	static DetectorFactory _instance = new DetectorFactory();
-	
-	HashMap<String, double[]> wordLangProbability;
-	
-	ArrayList<String> languages;
+	private static DetectorFactory _instance = new DetectorFactory();
+	private HashMap<String, double[]> wordLangProbability;
+	private ArrayList<String> languages;
     
     public DetectorFactory() {
     	wordLangProbability = new HashMap<String, double[]>();

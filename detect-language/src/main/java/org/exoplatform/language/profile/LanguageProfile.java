@@ -38,13 +38,10 @@ public class LanguageProfile {
 
 	private static final Logger logger = LoggerFactory.getLogger(LanguageProfile.class);
 	
-	static final int MINIMUM_FREQ = 2;
-    static final int LESS_FREQ_RATIO = 100000;
-    
+	private static final int MINIMUM_FREQ = 2;
+    private static final int LESS_FREQ_RATIO = 100000;
     public String name = null;
-    
     public HashMap<String, Integer> frequency = new HashMap<String, Integer>();
-    
     public int[] nWords = new int[NGramTokenizer.N_GRAM];
 
     /**

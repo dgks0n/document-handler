@@ -61,7 +61,7 @@ import java.io.InputStream;
 public class LimitedInputStream extends FilterInputStream {
 
 	/** The amount of remaining bytes to allow reading. */
-	protected int m_amountOfBytesReadable;
+	protected int amountOfBytesReadable;
 
 	/**
 	 * Construct an instance that wraps the given input stream and decorates it
@@ -78,7 +78,7 @@ public class LimitedInputStream extends FilterInputStream {
 	 */
 	public LimitedInputStream(final InputStream in, final int limit) {
 		super(in);
-		this.m_amountOfBytesReadable = limit;
+		this.amountOfBytesReadable = limit;
 	}
 
 	/**
@@ -88,12 +88,12 @@ public class LimitedInputStream extends FilterInputStream {
 	public int available() throws IOException {
 		int result;
 
-		if (this.m_amountOfBytesReadable == 0) {
+		if (this.amountOfBytesReadable == 0) {
 			result = 0; // EOF
 		} else {
 			result = super.available();
-			if (this.m_amountOfBytesReadable < result) {
-				result = this.m_amountOfBytesReadable;
+			if (this.amountOfBytesReadable < result) {
+				result = this.amountOfBytesReadable;
 			}
 		}
 		return result;
@@ -111,12 +111,12 @@ public class LimitedInputStream extends FilterInputStream {
 	public int read() throws IOException {
 
 		int result;
-		if (this.m_amountOfBytesReadable == 0) {
+		if (this.amountOfBytesReadable == 0) {
 			result = -1; // EOF
 		} else {
 			result = super.read();
 			if (result >= 0) {
-				this.m_amountOfBytesReadable--;
+				this.amountOfBytesReadable--;
 			}
 		}
 		return result;
@@ -140,15 +140,15 @@ public class LimitedInputStream extends FilterInputStream {
 
 		int result;
 		int bytesToRead = len;
-		if (this.m_amountOfBytesReadable == 0) {
+		if (this.amountOfBytesReadable == 0) {
 			result = -1; // EOF
 		} else {
-			if (this.m_amountOfBytesReadable < len) {
-				bytesToRead = this.m_amountOfBytesReadable; // limit
+			if (this.amountOfBytesReadable < len) {
+				bytesToRead = this.amountOfBytesReadable; // limit
 			}
 			result = super.read(b, off, bytesToRead);
 			if (result > 0) {
-				this.m_amountOfBytesReadable -= result;
+				this.amountOfBytesReadable -= result;
 			}
 		}
 		return result;
@@ -159,14 +159,14 @@ public class LimitedInputStream extends FilterInputStream {
 
 		long result;
 		long bytesToSkip = howManyBytes;
-		if (this.m_amountOfBytesReadable == 0) {
+		if (this.amountOfBytesReadable == 0) {
 			result = 0; // EOF
 		} else {
-			if (this.m_amountOfBytesReadable < howManyBytes) {
-				bytesToSkip = this.m_amountOfBytesReadable;
+			if (this.amountOfBytesReadable < howManyBytes) {
+				bytesToSkip = this.amountOfBytesReadable;
 			}
 			result = super.skip(howManyBytes);
-			this.m_amountOfBytesReadable -= result;
+			this.amountOfBytesReadable -= result;
 		}
 		return result;
 	}

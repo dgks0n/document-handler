@@ -60,5 +60,5 @@ import java.io.FileFilter;
  *
  */
 public interface IClassFileFilter extends FileFilter {
-	public boolean accept(Class c);
+	public boolean accept(Class clazz);
 }

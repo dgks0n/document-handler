@@ -70,7 +70,7 @@ import java.util.Map;
 public class UnsupportedCharset extends Charset {
 
 	/** The name of this unsupported charset. */
-	private String m_name;
+	private String name;
 
 	/**
 	 * Singleton cache for the unsupported charsets (no need to instanciate the
@@ -123,14 +123,14 @@ public class UnsupportedCharset extends Charset {
 	 * @see java.nio.charset.Charset#displayName()
 	 */
 	public String displayName() {
-		return this.m_name;
+		return this.name;
 	}
 
 	/**
 	 * @see java.nio.charset.Charset#displayName(java.util.Locale)
 	 */
 	public String displayName(Locale locale) {
-		return this.m_name;
+		return this.name;
 	}
 
 }

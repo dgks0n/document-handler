@@ -153,7 +153,7 @@ public class JarArchive extends File {
 			logger.info("Searching for: " + search);
 			entry = this.jar.getJarEntry(search);
 			if (entry == null) {
-				System.err.println("Entry for " + search + " (" + this.jar.getName() + ")is null!!!");
+				logger.error("Entry for " + search + " (" + this.jar.getName() + ")is null!!!");
 			} else {
 				logger.info("Entry: " + entry.toString());
 				child = new JarElement(entry, this);
@@ -400,7 +400,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#isHidden()
 	 */
 	public boolean isHidden() {
-
 		return false;
 	}
 
@@ -594,9 +593,9 @@ public class JarArchive extends File {
 
 	class JarElement extends JarArchive {
 
-		private File m_parent;
+		private File parent;
 
-		private JarEntry m_entry;
+		private JarEntry entry;
 
 		/**
 		 * Creates an element with the given entry and parent file.
@@ -614,11 +613,11 @@ public class JarArchive extends File {
 		JarElement(JarEntry entry, File parent) throws IOException {
 
 			super(new File(JarArchive.this.jar.getName()));
-			this.m_parent = parent;
+			this.parent = parent;
 			if (entry == null) {
-				System.err.println("Entry is null.");
+				logger.error("Entry is null.");
 			}
-			this.m_entry = entry;
+			this.entry = entry;
 			this.jar = JarArchive.this.jar;
 		}
 
@@ -650,7 +649,7 @@ public class JarArchive extends File {
 		public String getAbsolutePath() {
 
 			String prefix = JarArchive.this.jar.getName();
-			String postfix = this.m_entry.getName();
+			String postfix = this.entry.getName();
 			return prefix + "/" + postfix;
 		}
 
@@ -661,7 +660,7 @@ public class JarArchive extends File {
 		 */
 		public String getName() {
 
-			return this.m_entry.getName();
+			return this.entry.getName();
 		}
 
 		/*
@@ -671,7 +670,7 @@ public class JarArchive extends File {
 		 */
 		public String getParent() {
 
-			return this.m_parent.getAbsolutePath();
+			return this.parent.getAbsolutePath();
 		}
 
 		/*
@@ -681,7 +680,7 @@ public class JarArchive extends File {
 		 */
 		public File getParentFile() {
 
-			return this.m_parent;
+			return this.parent;
 		}
 
 		/*
@@ -713,7 +712,7 @@ public class JarArchive extends File {
 		 */
 		public long lastModified() {
 
-			return this.m_entry.getTime();
+			return this.entry.getTime();
 		}
 
 		/*
@@ -723,12 +722,12 @@ public class JarArchive extends File {
 		 */
 		public long length() {
 
-			return this.m_entry.getSize();
+			return this.entry.getSize();
 		}
 
 		public String toString() {
 
-			return this.m_entry.toString();
+			return this.entry.toString();
 		}
 
 		/*
@@ -738,7 +737,7 @@ public class JarArchive extends File {
 		 */
 		public String getPath() {
 
-			return this.m_entry.getName();
+			return this.entry.getName();
 		}
 	}
 

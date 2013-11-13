@@ -22,6 +22,7 @@ import antlr.TokenStreamRecognitionException;
 import antlr.collections.impl.BitSet;
 
 public class EncodingLexer extends antlr.CharScanner implements EncodingParserTokenTypes, TokenStream {
+	
 	public EncodingLexer(InputStream in) {
 		this(new ByteBuffer(in));
 	}

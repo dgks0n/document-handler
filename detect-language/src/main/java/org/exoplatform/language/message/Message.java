@@ -40,11 +40,13 @@ public class Message {
 	}
 	
 	public static String getMessage(String key) {
+		String valueOfKey;
 		try {
-			return RESOURCE_BUNDLE.getString(key);
+			valueOfKey = RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException mre) {
 			logger.error("Can't find any messages matches with \"" + key + "\"", mre);
-			return "[" + key + "]";
+			valueOfKey = "[" + key + "]";
 		}
+		return valueOfKey;
 	}
 }

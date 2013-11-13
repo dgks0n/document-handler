@@ -215,20 +215,30 @@ public class ByteOrderMarkDetector extends AbstractCodepageDetector implements I
 				// from here on default to UTF-16, little-endian
 				readByte = in.read();
 				switch (readByte) {
-				case (0x00): {
-					// 0x FF FE 00
-					readByte = in.read();
-					switch (readByte) {
 					case (0x00): {
-						// 0x FF FE 00 00
-						// UCS-4, little-endian machine (4321 order)
-						try {
-							result = Charset.forName("UCS-4LE");
-						} catch (UnsupportedCharsetException uce) {
-							result = UnsupportedCharset.forName("UCS-4LE");
+						// 0x FF FE 00
+						readByte = in.read();
+						switch (readByte) {
+						case (0x00): {
+							// 0x FF FE 00 00
+							// UCS-4, little-endian machine (4321 order)
+							try {
+								result = Charset.forName("UCS-4LE");
+							} catch (UnsupportedCharsetException uce) {
+								result = UnsupportedCharset.forName("UCS-4LE");
+							}
+							return result;
+	
 						}
-						return result;
-
+						default: {
+							try {
+								result = Charset.forName("UTF-16LE");
+							} catch (UnsupportedCharsetException uce) {
+								result = UnsupportedCharset.forName("UTF-16LE");
+							}
+							return result;
+						}
+						}
 					}
 					default: {
 						try {
@@ -241,46 +251,36 @@ public class ByteOrderMarkDetector extends AbstractCodepageDetector implements I
 					}
 				}
 				default: {
-					try {
-						result = Charset.forName("UTF-16LE");
-					} catch (UnsupportedCharsetException uce) {
-						result = UnsupportedCharset.forName("UTF-16LE");
-					}
 					return result;
 				}
-				}
-			}
-			default: {
-				return result;
-			}
 			}
 		}
 		case (0xEF): {
 			// 0x EF
 			readByte = in.read();
 			switch (readByte) {
-			case (0xBB): {
-				// 0x EF BB
-				readByte = in.read();
-				switch (readByte) {
-				case (0xBF): {
-					try {
-						result = Charset.forName("utf-8");
-					} catch (UnsupportedCharsetException uce) {
-						result = UnsupportedCharset.forName("utf-8");
+				case (0xBB): {
+					// 0x EF BB
+					readByte = in.read();
+					switch (readByte) {
+					case (0xBF): {
+						try {
+							result = Charset.forName("utf-8");
+						} catch (UnsupportedCharsetException uce) {
+							result = UnsupportedCharset.forName("utf-8");
+						}
+						return result;
+	
 					}
-					return result;
-
+					default: {
+						return result;
+					}
+					}
+	
 				}
 				default: {
 					return result;
 				}
-				}
-
-			}
-			default: {
-				return result;
-			}
 			}
 
 		}

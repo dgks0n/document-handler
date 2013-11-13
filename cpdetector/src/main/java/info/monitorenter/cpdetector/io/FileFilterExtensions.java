@@ -59,7 +59,8 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
  */
 public final class FileFilterExtensions implements FileFilter {
-	private String[] m_extensions;
+	
+	private String[] extensions;
 
 	/**
 	 * 
@@ -69,12 +70,12 @@ public final class FileFilterExtensions implements FileFilter {
 	 */
 	public FileFilterExtensions(String[] extensionsWithoutDot) throws IllegalArgumentException {
 		this.verify(extensionsWithoutDot);
-		this.m_extensions = extensionsWithoutDot;
+		this.extensions = extensionsWithoutDot;
 	}
 
 	/**
 	 * @param extensions
-	 *            The array with the Strings of m_extensions.
+	 *            The array with the Strings of extensions.
 	 * @throws IllegalArgumentException
 	 *             If a String of the array is null or contains a dot ('.').
 	 */
@@ -109,8 +110,8 @@ public final class FileFilterExtensions implements FileFilter {
 		while (tokenizer.hasMoreElements()) {
 			extension = tokenizer.nextToken();
 		}
-		for (int i = this.m_extensions.length - 1; i >= 0; i--) {
-			if (this.m_extensions[i].equals(extension)) {
+		for (int i = this.extensions.length - 1; i >= 0; i--) {
+			if (this.extensions[i].equals(extension)) {
 				ret = true;
 				break;
 			}

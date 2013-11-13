@@ -66,8 +66,9 @@ import java.util.List;
  * @version $Revision: 1.3 $
  */
 public class MultiplexingOutputStream extends OutputStream {
+	
 	/** The multiplex sources. */
-	private List<OutputStream> m_delegates;
+	private List<OutputStream> delegates;
 
 	/**
 	 * Constructor ensuring that at least two targets are needed (thus use of
@@ -80,9 +81,9 @@ public class MultiplexingOutputStream extends OutputStream {
 	 *            the 2nd stream to delegate writes to.
 	 */
 	public MultiplexingOutputStream(final OutputStream streamOne, final OutputStream streamTwo) {
-		this.m_delegates = new LinkedList<OutputStream>();
-		this.m_delegates.add(streamOne);
-		this.m_delegates.add(streamTwo);
+		this.delegates = new LinkedList<OutputStream>();
+		this.delegates.add(streamOne);
+		this.delegates.add(streamTwo);
 	}
 
 	/**
@@ -93,7 +94,7 @@ public class MultiplexingOutputStream extends OutputStream {
 	 *            this instance.
 	 */
 	public void addOutputStream(final OutputStream delegate) {
-		this.m_delegates.add(delegate);
+		this.delegates.add(delegate);
 	}
 
 	/**
@@ -108,7 +109,7 @@ public class MultiplexingOutputStream extends OutputStream {
 	 *         before.
 	 */
 	public boolean removeOutputStream(final OutputStream delegate) {
-		boolean result = this.m_delegates.remove(delegate);
+		boolean result = this.delegates.remove(delegate);
 		return result;
 	}
 
@@ -117,7 +118,7 @@ public class MultiplexingOutputStream extends OutputStream {
 	 */
 	@Override
 	public void write(int b) throws IOException {
-		for (OutputStream delegate : this.m_delegates) {
+		for (OutputStream delegate : this.delegates) {
 			delegate.write(b);
 		}
 	}

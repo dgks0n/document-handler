@@ -56,13 +56,13 @@ import javax.swing.table.TableModel;
  */
 public abstract class StreamTableRenderer implements ITableRenderer {
 
-	final static int FIRST_CELL_IN_ROW = 0;
-	final static int LAST_CELL_IN_ROW = 1;
+	private final static int FIRST_CELL_IN_ROW = 0;
+	private final static int LAST_CELL_IN_ROW = 1;
 
-	protected Writer m_out;
+	protected Writer out;
 
 	public StreamTableRenderer(Writer out) {
-		this.m_out = out;
+		this.out = out;
 	}
 
 	protected final void renderHeader(TableModel model) throws IOException {
@@ -77,9 +77,9 @@ public abstract class StreamTableRenderer implements ITableRenderer {
 	 * 
 	 */
 	private final void renderHeaderCell(String columnName, int firstOrLast) throws IOException {
-		m_out.write(this.HeadCellStartTag((firstOrLast == FIRST_CELL_IN_ROW)));
-		m_out.write(columnName);
-		m_out.write(this.HeadCellStopTag((firstOrLast == LAST_CELL_IN_ROW)));
+		out.write(this.HeadCellStartTag((firstOrLast == FIRST_CELL_IN_ROW)));
+		out.write(columnName);
+		out.write(this.HeadCellStopTag((firstOrLast == LAST_CELL_IN_ROW)));
 	}
 
 	protected abstract String HeadRowStartTag();
@@ -91,12 +91,12 @@ public abstract class StreamTableRenderer implements ITableRenderer {
 	protected abstract String HeadCellStartTag(boolean firstOrLast);
 
 	protected final void renderRow(TableModel model, int row) throws IOException {
-		m_out.write(RowStartTag());
+		out.write(RowStartTag());
 		int cols = model.getColumnCount();
 		for (int i = 0; i < cols; i++) {
 			this.renderCell(model.getValueAt(row, i), (i == 0) ? FIRST_CELL_IN_ROW : (i == cols - 1) ? LAST_CELL_IN_ROW : 2);
 		}
-		m_out.write(RowStopTag());
+		out.write(RowStopTag());
 	}
 
 	protected abstract String RowStartTag();
@@ -104,13 +104,13 @@ public abstract class StreamTableRenderer implements ITableRenderer {
 	protected abstract String RowStopTag();
 
 	protected final void renderCell(Object content, int firstOrLast) throws IOException {
-		m_out.write(this.CellStartTag((firstOrLast == FIRST_CELL_IN_ROW)));
+		out.write(this.CellStartTag((firstOrLast == FIRST_CELL_IN_ROW)));
 		if (content instanceof TableModel) {
 			this.render((TableModel) content);
 		} else {
-			m_out.write(content.toString());
+			out.write(content.toString());
 		}
-		m_out.write(this.CellStopTag((firstOrLast == LAST_CELL_IN_ROW)));
+		out.write(this.CellStopTag((firstOrLast == LAST_CELL_IN_ROW)));
 	}
 
 	protected abstract String CellStartTag(boolean rowstart);
@@ -125,17 +125,17 @@ public abstract class StreamTableRenderer implements ITableRenderer {
 	 * .TableModel)
 	 */
 	public final void render(TableModel model) throws IOException {
-		this.m_out.write(this.TableStartTag());
+		this.out.write(this.TableStartTag());
 		int rows = model.getRowCount();
 		// write header
-		m_out.write(this.HeadRowStartTag());
+		out.write(this.HeadRowStartTag());
 		this.renderHeader(model);
-		m_out.write(this.HeadRowStopTag());
+		out.write(this.HeadRowStopTag());
 
 		for (int i = 0; i < rows; i++) {
 			this.renderRow(model, i);
 		}
-		this.m_out.write(this.TableStopTag());
+		this.out.write(this.TableStopTag());
 	}
 
 	protected abstract String TableStartTag();

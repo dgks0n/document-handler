@@ -163,7 +163,7 @@ public class Detector {
 	 * @throws IOException
 	 *             Can't read the reader.
 	 */
-	public void appendTarget(Reader reader) throws IOException {
+	public void appendTarget(final Reader reader) throws LanguageDetectException, IOException {
 		char[] buffered = new char[_maxTextLength / 2];
 		while (_text.length() < _maxTextLength && reader.ready()) {
 			int length = reader.read(buffered);
@@ -179,13 +179,17 @@ public class Detector {
 	 * @param text
 	 *            the target text to append
 	 */
-	public void appendTarget(String target) {
-		target = URL_REGEX.matcher(target).replaceAll(" ");
-		target = MAIL_REGEX.matcher(target).replaceAll(" ");
+	public void appendTarget(final String target) throws LanguageDetectException {
+		if (StringUtils.isEmpty(target)) {
+			throw new LanguageDetectException("The target text is null."); 
+		}
+		
+		String text = URL_REGEX.matcher(target).replaceAll(" ");
+		text = MAIL_REGEX.matcher(text).replaceAll(" ");
 		
 		char pre = 0;
-		for (int i = 0; i < target.length() && i < _maxTextLength; ++i) {
-			char character = NGramTokenizer.normalize(target.charAt(i));
+		for (int i = 0; i < text.length() && i < _maxTextLength; ++i) {
+			char character = NGramTokenizer.normalize(text.charAt(i));
 			if (character != ' ' || pre != ' ') {
 				this._text.append(character);
 			}

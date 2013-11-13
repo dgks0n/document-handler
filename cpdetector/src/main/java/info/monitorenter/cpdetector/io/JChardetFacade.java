@@ -86,13 +86,13 @@ public final class JChardetFacade extends AbstractCodepageDetector implements ns
 
 	private static JChardetFacade instance = null;
 
-	private static nsDetector det;
+	private static nsDetector detector;
 
-	private byte[] buf = new byte[4096];
+	private byte[] buffer = new byte[4096];
 
 	private Charset codpage = null;
 
-	private boolean m_guessing = true;
+	private boolean guessing = true;
 
 	private int amountOfVerifiers = 0;
 
@@ -101,9 +101,9 @@ public final class JChardetFacade extends AbstractCodepageDetector implements ns
    */
 	private JChardetFacade() {
 		super();
-		det = new nsDetector(nsPSMDetector.ALL);
-		det.Init(this);
-		this.amountOfVerifiers = det.getProbableCharsets().length;
+		detector = new nsDetector(nsPSMDetector.ALL);
+		detector.Init(this);
+		this.amountOfVerifiers = detector.getProbableCharsets().length;
 	}
 
 	public static JChardetFacade getInstance() {
@@ -126,16 +126,16 @@ public final class JChardetFacade extends AbstractCodepageDetector implements ns
 		boolean isAscii = true;
 		Charset ret = null;
 		do {
-			len = in.read(buf, 0, Math.min(buf.length, length - read));
+			len = in.read(buffer, 0, Math.min(buffer.length, length - read));
 			if (len > 0) {
 				read += len;
 			}
 			if (!done)
-				done = det.DoIt(buf, len, false);
+				done = detector.DoIt(buffer, len, false);
 		} while (len > 0 && !done);
-		det.DataEnd();
+		detector.DataEnd();
 		if (this.codpage == null) {
-			if (this.m_guessing) {
+			if (this.guessing) {
 				ret = guess();
 			} else {
 				ret = UnknownCharset.getInstance();
@@ -152,7 +152,7 @@ public final class JChardetFacade extends AbstractCodepageDetector implements ns
    */
 	private Charset guess() {
 		Charset ret = null;
-		String[] possibilities = det.getProbableCharsets();
+		String[] possibilities = detector.getProbableCharsets();
 		/*
 		 * Detect US-ASCII by the fact, that no exclusion of any Charset was
 		 * possible.
@@ -187,15 +187,15 @@ public final class JChardetFacade extends AbstractCodepageDetector implements ns
 	}
 
 	public void Reset() {
-		det.Reset();
+		detector.Reset();
 		this.codpage = null;
 	}
 
 	/**
-	 * @return Returns the m_guessing.
+	 * @return Returns the guessing.
 	 */
 	public boolean isGuessing() {
-		return m_guessing;
+		return guessing;
 	}
 
 	/**
@@ -225,6 +225,6 @@ public final class JChardetFacade extends AbstractCodepageDetector implements ns
 	 *            The guessing to set.
 	 */
 	public synchronized void setGuessing(final boolean guessing) {
-		this.m_guessing = guessing;
+		this.guessing = guessing;
 	}
 }

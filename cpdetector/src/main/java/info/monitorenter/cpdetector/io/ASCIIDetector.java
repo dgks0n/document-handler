@@ -97,7 +97,6 @@ public final class ASCIIDetector extends AbstractCodepageDetector {
 	 */
 	private ASCIIDetector() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public static ICodepageDetector getInstance() {
@@ -123,7 +122,5 @@ public final class ASCIIDetector extends AbstractCodepageDetector {
 			ret = Charset.forName("US-ASCII");
 		}
 		return ret;
-
 	}
-
 }

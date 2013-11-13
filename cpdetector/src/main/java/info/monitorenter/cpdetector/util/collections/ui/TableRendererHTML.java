@@ -172,6 +172,5 @@ public class TableRendererHTML extends StreamTableRenderer{
 		}
 		new TableRendererHTML(out).render(model);
 		out.close();
-
 	}
 }

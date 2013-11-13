@@ -28,21 +28,18 @@ import org.exoplatform.language.message.Message;
  */
 public class NGramTokenizer {
 
-	static final String LATIN1_EXCLUDED = Message.getMessage("NGramTokenizer.LATIN1_EXCLUDE");
+	private static final String NGRAM_LATIN1_EXCLUDED = "NGramTokenizer.LATIN1_EXCLUDE";
+	private static final String LATIN1_EXCLUDED = Message.getMessage(NGRAM_LATIN1_EXCLUDED);
 	
-	StringBuffer _ngrams;
-	
-	boolean _capitalWord;
-	
-	static HashMap<Character, Character> cjkKanjiNormalizationMapping;
-	
+	private StringBuffer _ngrams;
+	private boolean _capitalWord;
+	private static HashMap<Character, Character> cjkKanjiNormalizationMapping;
 	public static final int N_GRAM = 3;
-	
 	
 	/**
      * CJK Kanji Normalization Mapping
      */
-    static final String[] CJK_KANJI_NORMALIZATION = {
+    private static final String[] CJK_KANJI_NORMALIZATION = {
         Message.getMessage("NGramTokenizer.KANJI_1_0"),
         Message.getMessage("NGramTokenizer.KANJI_1_2"),
         Message.getMessage("NGramTokenizer.KANJI_1_4"),
@@ -187,6 +184,8 @@ public class NGramTokenizer {
     }
 
     /**
+     * Add a charater to N-Grams
+     * 
      * @param character
      */
 	public void addChar(char character) {

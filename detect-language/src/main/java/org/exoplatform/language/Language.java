@@ -31,9 +31,8 @@ import org.apache.commons.lang.StringUtils;
  */
 public class Language {
 
-	String _language;
-	
-	double _probability;
+	private String _language;
+	private double _probability;
 
 	public Language(String language, double probability) {
 		this._language = language;
@@ -68,6 +67,42 @@ public class Language {
 	 */
 	public void setProbability(double probability) {
 		this._probability = probability;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((_language == null) ? 0 : _language.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(_probability);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Language other = (Language) obj;
+		if (_language == null) {
+			if (other._language != null)
+				return false;
+		} else if (!_language.equals(other._language))
+			return false;
+		if (Double.doubleToLongBits(_probability) != Double.doubleToLongBits(other._probability))
+			return false;
+		return true;
 	}
 
 	public String toString() {

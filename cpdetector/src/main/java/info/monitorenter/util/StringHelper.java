@@ -44,10 +44,10 @@ import java.nio.charset.Charset;
  * @author Achim.Westermann@gmx.de
  * @version $Revision: 1.1 $
  */
-public final class ExceptionUtil {
+public final class StringHelper {
 
 	/** Singleton instance. */
-	private static ExceptionUtil instance = null;
+	private static StringHelper instance = null;
 
 	/**
 	 * Returns an input stream that contains what will written in this
@@ -83,7 +83,6 @@ public final class ExceptionUtil {
 			out = new MultiplexingOutputStream(System.err, pipeOut);
 		}
 		PrintStream streamOut = new PrintStream(out);
-
 		System.setErr(streamOut);
 		return pipeIn;
 	}
@@ -130,7 +129,7 @@ public final class ExceptionUtil {
 	 * to match the expected output in {@link System#out}.
 	 * <p>
 	 * Ensure that you found the expected String in the input stream given by
-	 * calling {@link ExceptionUtil.InputStreamTracer#isMatched()}. But take
+	 * calling {@link StringHelper.InputStreamTracer#isMatched()}. But take
 	 * into account that it is time - critical (concurrency) if your result was
 	 * found.
 	 * <p>
@@ -158,7 +157,7 @@ public final class ExceptionUtil {
 	 * to match the expected output in {@link System#err}.
 	 * <p>
 	 * Ensure that you found the expected String in the input stream given by
-	 * calling {@link ExceptionUtil.InputStreamTracer#isMatched()}. But take
+	 * calling {@link StringHelper.InputStreamTracer#isMatched()}. But take
 	 * into account that it is time - critical (concurrency) if your result was
 	 * found.
 	 * <p>
@@ -187,7 +186,7 @@ public final class ExceptionUtil {
 	 * This should be run in a separate thread.
 	 * <p>
 	 * Ensure that you found the expected String in the input stream given by
-	 * calling {@link ExceptionUtil.InputStreamTracer#isMatched()}. But take
+	 * calling {@link StringHelper.InputStreamTracer#isMatched()}. But take
 	 * into account that it is time - critical (concurrency) if your result was
 	 * found.
 	 * <p>
@@ -198,16 +197,16 @@ public final class ExceptionUtil {
 	public static class InputStreamTracer implements Runnable {
 
 		/** The input stream to search for occurrence of word. */
-		private InputStream m_streamToTrace;
+		private InputStream streamToTrace;
 
 		/** The string that is tried to be matched. */
-		private String m_match;
+		private String match;
 
 		/** The encoding of the input stream to use for detecting the match. */
-		private Charset m_charset;
+		private Charset charset;
 
 		/** If true the output was matched. */
-		private boolean m_matched;
+		private boolean matched;
 
 		/**
 		 * Returns true if the expected String was matched in the input stream.
@@ -220,13 +219,13 @@ public final class ExceptionUtil {
 		 * @return true if the expected String was matched in the input stream.
 		 */
 		public boolean isMatched() {
-			return this.m_matched;
+			return this.matched;
 		}
 
 		public InputStreamTracer(final InputStream toTrace, final String match, final Charset charset) {
-			this.m_streamToTrace = toTrace;
-			this.m_match = match;
-			this.m_charset = charset;
+			this.streamToTrace = toTrace;
+			this.match = match;
+			this.charset = charset;
 		}
 
 		/**
@@ -234,13 +233,13 @@ public final class ExceptionUtil {
 		 */
 		public void run() {
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(this.m_streamToTrace, this.m_charset));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(this.streamToTrace, this.charset));
 			String line;
 			try {
 				do {
 					line = reader.readLine();
-					if (line != null && line.contains(this.m_match)) {
-						this.m_matched = true;
+					if (line != null && line.contains(this.match)) {
+						this.matched = true;
 						break;
 					}
 				} while (line != null);
@@ -275,10 +274,10 @@ public final class ExceptionUtil {
 	 * 
 	 * @return the singleton instance of this class.
 	 */
-	public static ExceptionUtil instance() {
-		if (ExceptionUtil.instance == null) {
-			ExceptionUtil.instance = new ExceptionUtil();
+	public static StringHelper instance() {
+		if (StringHelper.instance == null) {
+			StringHelper.instance = new StringHelper();
 		}
-		return ExceptionUtil.instance;
+		return StringHelper.instance;
 	}
 }

@@ -57,15 +57,15 @@ import java.io.InputStream;
  * 
  */
 public class InputStreamDebug extends InputStream {
-	private InputStream m_delegate;
+	
+	private InputStream delegate;
 
 	public InputStreamDebug(InputStream delegate) {
-		this.m_delegate = delegate;
+		this.delegate = delegate;
 	}
 
 	public synchronized int read() throws IOException {
-		int ret = this.m_delegate.read();
-		System.out.print((char) ret);
+		int ret = this.delegate.read();
 		return ret;
 	}
 
@@ -73,14 +73,14 @@ public class InputStreamDebug extends InputStream {
      * 
      */
 	public int available() throws IOException {
-		return m_delegate.available();
+		return delegate.available();
 	}
 
 	/**
      * 
      */
 	public void close() throws IOException {
-		m_delegate.close();
+		delegate.close();
 	}
 
 	/*
@@ -89,7 +89,7 @@ public class InputStreamDebug extends InputStream {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
-		return m_delegate.equals(obj);
+		return delegate.equals(obj);
 	}
 
 	/*
@@ -98,21 +98,21 @@ public class InputStreamDebug extends InputStream {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return m_delegate.hashCode();
+		return delegate.hashCode();
 	}
 
 	/**
      * 
      */
 	public void mark(int readlimit) {
-		m_delegate.mark(readlimit);
+		delegate.mark(readlimit);
 	}
 
 	/**
      * 
      */
 	public boolean markSupported() {
-		return m_delegate.markSupported();
+		return delegate.markSupported();
 	}
 
 	/**
@@ -138,14 +138,14 @@ public class InputStreamDebug extends InputStream {
      * 
      */
 	public void reset() throws IOException {
-		m_delegate.reset();
+		delegate.reset();
 	}
 
 	/**
      * 
      */
 	public long skip(long n) throws IOException {
-		return m_delegate.skip(n);
+		return delegate.skip(n);
 	}
 
 	/*
@@ -154,6 +154,6 @@ public class InputStreamDebug extends InputStream {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return m_delegate.toString();
+		return delegate.toString();
 	}
 }

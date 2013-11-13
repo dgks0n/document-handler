@@ -223,7 +223,7 @@ public interface ITreeNode {
 	 * 
 	 * <pre>
 	 * ...
-	 * ITreeNode ret = new &lt;TreeNodeImpl&gt;(m_userObject);
+	 * ITreeNode ret = new &lt;TreeNodeImpl&gt;(userObject);
 	 * if(this.addChildNode(ret){
 	 *   return ret;
 	 * }
@@ -252,7 +252,7 @@ public interface ITreeNode {
 	 * 
 	 * @param userObjects
 	 *            An arry of <tt>Objects</tt> instances which will become the
-	 *            m_userObject members of the newly created <tt>ITreeNode</tt>
+	 *            userObject members of the newly created <tt>ITreeNode</tt>
 	 *            instances.
 	 * 
 	 * @return An array containing all new <tt>ITreeNode</tt> instances created
@@ -367,21 +367,21 @@ public interface ITreeNode {
 	public boolean isRoot();
 
 	/**
-	 * @param l
+	 * @param list
 	 *            An empty List: After this call it will be filled with
 	 *            {@link ITreeNode}instances starting from the root node to the
 	 *            current node that is invoked.
 	 */
-	public void getPathFromRoot(List l);
+	public void getPathFromRoot(List list);
 
 	/**
-	 * @param l
+	 * @param list
 	 *            An empty List: After this call it will be filled with the
 	 *            {@link #getUserObject()}instances starting from the root node
 	 *            to the current node that was invoked.
 	 * 
 	 */
-	public void getUserObjectPathFromRoot(List l);
+	public void getUserObjectPathFromRoot(List list);
 
 	/**
 	 * <p>
@@ -425,12 +425,28 @@ public interface ITreeNode {
 	 * 
 	 * @author <a href="mailto:Achim.Westermann@gmx.de>Achim Westermann </a>
 	 */
-	public static class DefaultTreeNode implements ITreeNode,
-			Comparable<ITreeNode> {
+	public static class DefaultTreeNode implements ITreeNode, Comparable<ITreeNode> {
 		/**
 		 * Flag for saving the marking-state. False by default.
 		 */
 		protected boolean marked = false;
+		
+		/**
+		 * Member for saving the user Object.
+		 * 
+		 * @see #getUserObject()
+		 */
+		protected Object userObject = null;
+
+		/**
+		 * The parent node.
+		 */
+		ITreeNode parent = null;
+
+		/**
+		 * A {@link java.util.List}of child <tt>ITreeNode</tt> instances.
+		 */
+		protected SortedSet children;
 
 		/**
 		 * Two instances are equal, if they both are of this type and user
@@ -451,32 +467,15 @@ public interface ITreeNode {
 		}
 
 		/**
-		 * Member for saving the user Object.
-		 * 
-		 * @see #getUserObject()
-		 */
-		protected Object m_userObject = null;
-
-		/**
-		 * The parent node.
-		 */
-		ITreeNode m_parent = null;
-
-		/**
-		 * A {@link java.util.List}of child <tt>ITreeNode</tt> instances.
-		 */
-		protected SortedSet m_children;
-
-		/**
 		 * <p>
 		 * Create a <tt>ITreeNode</tt> without a parent, user Object and
-		 * m_children. After this call, this instance will be the root node (no
+		 * children. After this call, this instance will be the root node (no
 		 * parent).
 		 * </p>
 		 */
 		public DefaultTreeNode() {
-			this.m_children = new TreeSet();
-			this.m_userObject = "root";
+			this.children = new TreeSet();
+			this.userObject = "root";
 		}
 
 		/**
@@ -490,7 +489,7 @@ public interface ITreeNode {
 		 */
 		public DefaultTreeNode(final Object userObject) {
 			this();
-			this.m_userObject = userObject;
+			this.userObject = userObject;
 		}
 
 		/**
@@ -512,7 +511,7 @@ public interface ITreeNode {
 		 * <p>
 		 * Create a <tt>ITreeNode</tt> without a parent that carries the given
 		 * user Object and has the given <tt>ITreeNode</tt> instances as
-		 * m_children.
+		 * children.
 		 * </p>
 		 * <p>
 		 * Perhaps the most useful constructor. It allows to construct trees in
@@ -589,7 +588,7 @@ public interface ITreeNode {
 				return false;
 			}
 			node.setParent(this);
-			this.m_children.add(node);
+			this.children.add(node);
 			return true;
 		}
 
@@ -599,11 +598,11 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#contains(java.lang.Object)
 		 */
 		public final boolean contains(Object userObject) {
-			if ((this.m_userObject != null) && (this.m_userObject.equals(userObject))) {
+			if ((this.userObject != null) && (this.userObject.equals(userObject))) {
 				return true;
 			} else {
 				if (!this.isLeaf()) {
-					Iterator it = this.m_children.iterator();
+					Iterator it = this.children.iterator();
 					while (it.hasNext()) {
 						if (((ITreeNode) it.next()).contains(userObject))
 							return true;
@@ -626,7 +625,7 @@ public interface ITreeNode {
 				return true;
 			} else {
 				if (!this.isLeaf()) {
-					Iterator it = this.m_children.iterator();
+					Iterator it = this.children.iterator();
 					while (it.hasNext()) {
 						if (((ITreeNode) it.next()).contains(node)) {
 							return true;
@@ -644,7 +643,7 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#getChildCount()
 		 */
 		public final int getChildCount() {
-			return this.m_children.size();
+			return this.children.size();
 		}
 
 		/*
@@ -653,7 +652,7 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#getChilds()
 		 */
 		public final Iterator getChilds() {
-			return this.m_children.iterator();
+			return this.children.iterator();
 		}
 
 		/*
@@ -662,7 +661,7 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#getParent()
 		 */
 		public final ITreeNode getParent() {
-			return (this.m_parent == null) ? ROOT : this.m_parent;
+			return (this.parent == null) ? ROOT : this.parent;
 		}
 
 		/*
@@ -673,15 +672,15 @@ public interface ITreeNode {
 		public final int getSubtreeCount() {
 			// hehehe: clever double-use of child detection and partial
 			// result...
-			int ret = this.m_children.size();
+			int ret = this.children.size();
 			if (ret > 0) {
-				Iterator it = this.m_children.iterator();
+				Iterator it = this.children.iterator();
 				while (it.hasNext()) {
 					ret += ((ITreeNode) it.next()).getSubtreeCount();
 				}
 
 			}
-			if (this.m_parent == ROOT) {
+			if (this.parent == ROOT) {
 				ret++; // root has to count itself...
 			}
 			return ret;
@@ -693,7 +692,7 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#getUserObject()
 		 */
 		public final Object getUserObject() {
-			return this.m_userObject;
+			return this.userObject;
 		}
 
 		/*
@@ -736,13 +735,13 @@ public interface ITreeNode {
 		 */
 		public final ITreeNode remove(final Object userObject) {
 			ITreeNode ret = null;
-			if ((this.m_userObject != null) && (this.m_userObject.equals(userObject))) {
-				this.m_parent.removeChild(this);
-				this.m_parent = null;
+			if ((this.userObject != null) && (this.userObject.equals(userObject))) {
+				this.parent.removeChild(this);
+				this.parent = null;
 				ret = this;
 			} else {
 				if (!this.isLeaf()) {
-					Iterator it = this.m_children.iterator();
+					Iterator it = this.children.iterator();
 					while (it.hasNext()) {
 						ret = ((ITreeNode) it.next());
 						if (ret != null) {
@@ -761,12 +760,12 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#removeAllChilds()
 		 */
 		public final List removeAllChildren() {
-			SortedSet ret = this.m_children;
+			SortedSet ret = this.children;
 			Iterator it = ret.iterator();
 			while (it.hasNext()) {
 				((ITreeNode) it.next()).setParent(null);
 			}
-			this.m_children = new TreeSet();
+			this.children = new TreeSet();
 			return new LinkedList(ret);
 		}
 
@@ -778,7 +777,7 @@ public interface ITreeNode {
 		 * )
 		 */
 		public boolean removeChild(ITreeNode node) {
-			return this.m_children.remove(node);
+			return this.children.remove(node);
 		}
 
 		/*
@@ -787,8 +786,8 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#setUserObject()
 		 */
 		public final Object setUserObject(Object store) {
-			Object ret = this.m_userObject;
-			this.m_userObject = store;
+			Object ret = this.userObject;
+			this.userObject = store;
 			return ret;
 		}
 
@@ -809,11 +808,11 @@ public interface ITreeNode {
 		 * )
 		 */
 		public final void setParent(final ITreeNode parent) {
-			if (this.m_parent != null) {
+			if (this.parent != null) {
 				// will call: node.setParent(null);
-				this.m_parent.removeChild(this);
+				this.parent.removeChild(this);
 			}
-			this.m_parent = parent;
+			this.parent = parent;
 
 		}
 
@@ -823,7 +822,7 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#isLeaf()
 		 */
 		public final boolean isLeaf() {
-			return this.m_children.size() == 0;
+			return this.children.size() == 0;
 		}
 
 		/*
@@ -832,7 +831,7 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#isRoot()
 		 */
 		public final boolean isRoot() {
-			return this.m_parent == null;
+			return this.parent == null;
 		}
 
 		public String toString() {
@@ -846,7 +845,7 @@ public interface ITreeNode {
 			if (this.isLeaf()) {
 				buf.append("-> ");
 			}
-			buf.append('(').append(String.valueOf(this.m_userObject)).append(')');
+			buf.append('(').append(String.valueOf(this.userObject)).append(')');
 			StringBuffer spaceCollect = new StringBuffer();
 			for (int i = depth; i > 0; i--) {
 				spaceCollect.append("  ");
@@ -880,9 +879,8 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#addChildren(java.lang.Object[])
 		 */
 		public final ITreeNode[] addChildren(Object[] userObjects) {
-			List treeNodes = new LinkedList(); // can't know the size, as they
-												// might
-			// contain null.
+			// can't know the size, as they might contain null.
+			List treeNodes = new LinkedList();
 			ITreeNode newNode = null;
 			for (int i = 0; i < userObjects.length; i++) {
 				newNode = this.addChild(userObjects[i]);
@@ -900,7 +898,7 @@ public interface ITreeNode {
 		 * @see aw.util.collections.ITreeNode#getAllChildren()
 		 */
 		public final List getAllChildren() {
-			return new LinkedList(this.m_children);
+			return new LinkedList(this.children);
 		}
 
 		/*
@@ -912,12 +910,12 @@ public interface ITreeNode {
 			return new DefaultTreeNode();
 		}
 
-		public void getPathFromRoot(List l) {
+		public void getPathFromRoot(List list) {
 			if (this.isRoot()) {
-				l.add(this);
+				list.add(this);
 			} else {
-				this.getParent().getPathFromRoot(l);
-				l.add(this);
+				this.getParent().getPathFromRoot(list);
+				list.add(this);
 			}
 		}
 
@@ -928,18 +926,18 @@ public interface ITreeNode {
 		 * cpdetector.util.collections.ITreeNode#getUserObjectPathFromRoot(java
 		 * .util.List)
 		 */
-		public void getUserObjectPathFromRoot(List l) {
+		public void getUserObjectPathFromRoot(List list) {
 			List collect = new LinkedList();
 			this.getPathFromRoot(collect);
 			Iterator it = collect.iterator();
 			while (it.hasNext()) {
-				l.add(((ITreeNode) it.next()).getUserObject());
+				list.add(((ITreeNode) it.next()).getUserObject());
 			}
 		}
 
 		public int compareTo(final ITreeNode o) throws ClassCastException {
 			ITreeNode other = (ITreeNode) o;
-			return ((Comparable) this.m_userObject).compareTo(other.getUserObject());
+			return ((Comparable) this.userObject).compareTo(other.getUserObject());
 		}
 
 	}
