@@ -21,7 +21,7 @@ package org.exoplatform.document.entity;
  * @version Thumbnail.java Oct 31, 2013
  *
  */
-public class Thumbnail extends Entity<String> {
+public class Thumbnail extends AbstractEntity<String> {
 
 	/**
 	 * 

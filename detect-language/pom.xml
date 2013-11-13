@@ -11,7 +11,7 @@
 	<artifactId>detect-language</artifactId>
 	<version>1.0.0</version>
 	<name>Document Handler :: Detect Language Of Contents</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
 		<dependency>
 			<groupId>org.exoplatform.document</groupId>
@@ -22,12 +22,6 @@
 			<groupId>org.exoplatform.document</groupId>
 			<artifactId>document-util</artifactId>
 			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

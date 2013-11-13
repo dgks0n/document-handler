@@ -14,19 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity.procedure;
+package org.exoplatform.document.entity;
 
 import java.util.Date;
-
-import org.exoplatform.document.entity.Owner;
 
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version DocumentPlugin.java Nov 1, 2013
+ * @version IDocument.java Nov 1, 2013
  */
-public interface DocumentProcedure {
+public interface IDocument {
 
 	/**
 	 * The ETag of the document.

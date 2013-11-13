@@ -14,20 +14,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity.procedure;
+package org.exoplatform.document.upload.util;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.exoplatform.document.upload.Document;
 
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version OwnerPlugin.java Nov 1, 2013
+ * @version UploadMultipartPlugin.java Nov 7, 2013
  */
-public interface OwnerProcedure {
+public abstract class UploadMultipart {
 
 	/**
-	 * Get display name of the Owner
+	 * Parse document from HTTP servlet request.
 	 * 
-	 * @return a plain text name
+	 * @param request
+	 * @return
 	 */
-	public String getDisplayName();
+	public abstract Document parseUploadMultipart(HttpServletRequest request) throws NullPointerException;
 }

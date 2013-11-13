@@ -10,8 +10,8 @@
 	<groupId>org.exoplatform.common.dao</groupId>
 	<artifactId>common-base</artifactId>
 	<version>1.2.0</version>
-	<name>Document Handler :: Common Base (Hibernate Generic DAO)</name>
-	<url>http://maven.apache.org</url>
+	<name>Document Handler :: Hibernate Generic DAO</name>
+	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
 		<dependency>
 	        <groupId>com.googlecode.genericdao</groupId>
@@ -23,6 +23,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
 			<scope>test</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

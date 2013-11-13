@@ -14,25 +14,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.upload.util;
+package org.exoplatform.document.entity;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.exoplatform.document.upload.Document;
+import java.io.Serializable;
 
 /**
- * Created by The eXo Platform SAS
- * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
- * @version UploadMultipartPlugin.java Nov 7, 2013
+ * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
+ * @version BasicEntity.java Oct 31, 2013
+ *
  */
-public abstract class UploadMultipartPlugin {
+public interface BasicEntity<I extends Serializable> extends Serializable {
 
 	/**
-	 * Parse document from HTTP servlet request.
+	 * Get Entity's Id
 	 * 
-	 * @param request
-	 * @return
+	 * @return an Entity's Id
 	 */
-	public abstract Document parseUploadMultipart(HttpServletRequest request) throws NullPointerException;
+	public I getId();
 }

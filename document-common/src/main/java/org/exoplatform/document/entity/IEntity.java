@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity.procedure;
+package org.exoplatform.document.entity;
 
 import java.io.Serializable;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version BasePlugin.java Oct 31, 2013
+ * @version IEntity.java Oct 31, 2013
  *
  */
-public interface EntityProcedure<I extends Serializable> {
+public interface IEntity<I extends Serializable> {
 
 	/**
 	 * Removes a parent from an entity

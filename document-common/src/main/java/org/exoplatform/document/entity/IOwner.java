@@ -16,31 +16,18 @@
  */
 package org.exoplatform.document.entity;
 
-import java.io.Serializable;
-
 /**
- * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version Entity.java Oct 31, 2013
- *
+ * Created by The eXo Platform SAS
+ * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
+ *          
+ * @version IOwner.java Nov 1, 2013
  */
-public abstract class Entity<I extends Serializable> implements BaseEntity<I> {
+public interface IOwner {
 
 	/**
+	 * Get display name of the Owner
 	 * 
+	 * @return a plain text name
 	 */
-	private static final long serialVersionUID = 6475766928065560033L;
-
-	/**
-     * ID of Object Entity
-     */
-    public I id;
-
-    public void setId(I id) {
-    	this.id = id;
-    }
-
-    @Override
-    public I getId() {
-    	return id;
-    }
+	public String getDisplayName();
 }

@@ -20,10 +20,10 @@ import java.io.Serializable;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version CommonEntity.java Oct 31, 2013
+ * @version RootEntity.java Oct 31, 2013
  *
  */
-public abstract class RootEntity<I extends Serializable> extends Entity<I> {
+public abstract class RootEntity<I extends Serializable> extends AbstractEntity<I> {
 
 	/**
 	 * 

@@ -11,7 +11,7 @@
 	<artifactId>document-util</artifactId>
 	<version>1.0.0</version>
 	<name>Document Handler :: Document Util Tools</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -28,6 +28,8 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.8</version>
 		</dependency>
+		
+		<!-- JUnit Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

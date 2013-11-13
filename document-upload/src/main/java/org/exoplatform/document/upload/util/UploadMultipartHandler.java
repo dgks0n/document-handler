@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *          
  * @version UploadMultipartHandler.java Nov 7, 2013
  */
-public class UploadMultipartHandler extends UploadMultipartPlugin {
+public class UploadMultipartHandler extends UploadMultipart {
 
 	private static final Logger logger = LoggerFactory.getLogger(UploadMultipartHandler.class);
 	

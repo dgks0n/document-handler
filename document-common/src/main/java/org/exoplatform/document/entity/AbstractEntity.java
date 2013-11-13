@@ -20,15 +20,27 @@ import java.io.Serializable;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version BasicEntity.java Oct 31, 2013
+ * @version AbstractEntity.java Oct 31, 2013
  *
  */
-public interface BaseEntity<I extends Serializable> extends Serializable {
+public abstract class AbstractEntity<I extends Serializable> implements BasicEntity<I> {
 
 	/**
-	 * Get Entity's Id
 	 * 
-	 * @return an Entity's Id
 	 */
-	public I getId();
+	private static final long serialVersionUID = 6475766928065560033L;
+
+	/**
+     * ID of Object Entity
+     */
+    public I id;
+
+    public void setId(I id) {
+    	this.id = id;
+    }
+
+    @Override
+    public I getId() {
+    	return id;
+    }
 }

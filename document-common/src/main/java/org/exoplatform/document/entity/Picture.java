@@ -21,7 +21,7 @@ package org.exoplatform.document.entity;
  * @version Picture.java Oct 31, 2013
  *
  */
-public class Picture extends Entity<String> {
+public class Picture extends AbstractEntity<String> {
 
 	/**
 	 * 

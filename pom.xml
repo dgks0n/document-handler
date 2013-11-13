@@ -6,7 +6,7 @@
 	<packaging>pom</packaging>
 	<version>1.0.0</version>
 	<name>Document Handler :: Document Handler</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/dangokuson/document-handler</url>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>

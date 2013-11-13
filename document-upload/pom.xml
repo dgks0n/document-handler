@@ -12,7 +12,7 @@
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>Document Handler :: Upload Document</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
 		<dependency>
 			<groupId>org.picocontainer.web</groupId>

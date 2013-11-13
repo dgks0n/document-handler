@@ -19,15 +19,13 @@ package org.exoplatform.document.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.exoplatform.document.entity.procedure.DocumentProcedure;
-
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version BaseDocument.java Nov 1, 2013
+ * @version RootDocument.java Nov 1, 2013
  */
-public class RootDocument<I extends Serializable> extends RootEntity<I> implements DocumentProcedure {
+public class RootDocument<I extends Serializable> extends RootEntity<I> implements IDocument {
 
 	/**
 	 * 

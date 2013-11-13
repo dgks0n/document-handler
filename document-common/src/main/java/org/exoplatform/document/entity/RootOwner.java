@@ -16,15 +16,14 @@
  */
 package org.exoplatform.document.entity;
 
-import org.exoplatform.document.entity.procedure.OwnerProcedure;
 
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version BaseOwner.java Nov 1, 2013
+ * @version RootOwner.java Nov 1, 2013
  */
-public class RootOwner extends Entity<String> implements OwnerProcedure {
+public class RootOwner extends AbstractEntity<String> implements IOwner {
 
 	/**
 	 * 

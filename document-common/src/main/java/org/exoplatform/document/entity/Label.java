@@ -21,7 +21,7 @@ package org.exoplatform.document.entity;
  * @version Label.java Oct 31, 2013
  *
  */
-public class Label extends Entity<String> {
+public class Label extends AbstractEntity<String> {
 
 	/**
 	 * 

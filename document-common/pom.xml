@@ -10,20 +10,17 @@
 	<groupId>org.exoplatform.document</groupId>
 	<artifactId>document-common</artifactId>
 	<version>1.0.0</version>
-	<name>Document Handler :: Basic Common Module</name>
-	<url>http://maven.apache.org</url>
-	
+	<name>Document Handler :: Common Module</name>
+	<url>https://github.com/dangokuson/document-handler</url>
 	<licenses>
 		<license>
 			<name>Apache 2</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>    
 		</license>
 	</licenses>
-	
 	<properties>
 	    <spring.version>3.2.4.RELEASE</spring.version>
 	</properties>
-	
 	<dependencies>
 		<dependency>
 			<groupId>org.exoplatform.common.dao</groupId>
@@ -95,13 +92,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.26</version>
-		</dependency>
-                
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

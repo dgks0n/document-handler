@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.exoplatform.document.entity.Entity;
+import org.exoplatform.document.entity.AbstractEntity;
 
 /**
  * Created by The eXo Platform SAS
@@ -29,7 +29,7 @@ import org.exoplatform.document.entity.Entity;
  *          
  * @version Document.java Nov 7, 2013
  */
-public class Document extends Entity<String> {
+public class Document extends AbstractEntity<String> {
 
 	/**
 	 * 
@@ -419,48 +419,6 @@ public class Document extends Entity<String> {
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Document [filename=" + filename + ", size=" + size + ", url="
-				+ url + ", contentType=" + contentType + ", language="
-				+ language + ", encoding=" + encoding + ", mimeType="
-				+ mimeType + ", formFields=" + formFields + ", creationTime="
-				+ creationTime + ", lastAccessTime=" + lastAccessTime
-				+ ", lastModifiedTime=" + lastModifiedTime + ", isDirectory="
-				+ isDirectory + ", isOther=" + isOther + ", isRegularFile="
-				+ isRegularFile + ", isSymbolicLink=" + isSymbolicLink
-				+ ", isReadOnly=" + isReadOnly + ", isHidden=" + isHidden
-				+ ", isArchive=" + isArchive + ", isSystem=" + isSystem + "]";
-	}
-
-	public JSONObject toJSON() throws JSONException {
-		JSONObject jSONObject = new JSONObject();
-		jSONObject.put("filename", filename);
-		jSONObject.put("size", size);
-		jSONObject.put("url", url);
-		jSONObject.put("contentType", contentType);
-		jSONObject.put("contentType", contentType);
-		jSONObject.put("language", language);
-		jSONObject.put("encoding", encoding);
-		jSONObject.put("mimeType", mimeType);
-		jSONObject.put("creationTime", creationTime);
-		jSONObject.put("lastAccessTime", lastAccessTime);
-		jSONObject.put("lastModifiedTime", lastModifiedTime);
-		jSONObject.put("isDirectory", isDirectory);
-		jSONObject.put("isOther", isOther);
-		jSONObject.put("isRegularFile", isRegularFile);
-		jSONObject.put("isSymbolicLink", isSymbolicLink);
-		jSONObject.put("isReadOnly", isReadOnly);
-		jSONObject.put("isHidden", isHidden);
-		jSONObject.put("isArchive", isArchive);
-		jSONObject.put("isSystem", isSystem);
-//		jSONObject.put("formFields", formFields);
-		return jSONObject;
-	}
-
-	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -564,5 +522,47 @@ public class Document extends Entity<String> {
 		} else if (!url.equals(other.url))
 			return false;
 		return true;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Document [filename=" + filename + ", size=" + size + ", url="
+				+ url + ", contentType=" + contentType + ", language="
+				+ language + ", encoding=" + encoding + ", mimeType="
+				+ mimeType + ", formFields=" + formFields + ", creationTime="
+				+ creationTime + ", lastAccessTime=" + lastAccessTime
+				+ ", lastModifiedTime=" + lastModifiedTime + ", isDirectory="
+				+ isDirectory + ", isOther=" + isOther + ", isRegularFile="
+				+ isRegularFile + ", isSymbolicLink=" + isSymbolicLink
+				+ ", isReadOnly=" + isReadOnly + ", isHidden=" + isHidden
+				+ ", isArchive=" + isArchive + ", isSystem=" + isSystem + "]";
+	}
+
+	public JSONObject toJSON() throws JSONException {
+		JSONObject jSONObject = new JSONObject();
+		jSONObject.put("filename", filename);
+		jSONObject.put("size", size);
+		jSONObject.put("url", url);
+		jSONObject.put("contentType", contentType);
+		jSONObject.put("contentType", contentType);
+		jSONObject.put("language", language);
+		jSONObject.put("encoding", encoding);
+		jSONObject.put("mimeType", mimeType);
+		jSONObject.put("creationTime", creationTime);
+		jSONObject.put("lastAccessTime", lastAccessTime);
+		jSONObject.put("lastModifiedTime", lastModifiedTime);
+		jSONObject.put("isDirectory", isDirectory);
+		jSONObject.put("isOther", isOther);
+		jSONObject.put("isRegularFile", isRegularFile);
+		jSONObject.put("isSymbolicLink", isSymbolicLink);
+		jSONObject.put("isReadOnly", isReadOnly);
+		jSONObject.put("isHidden", isHidden);
+		jSONObject.put("isArchive", isArchive);
+		jSONObject.put("isSystem", isSystem);
+//		jSONObject.put("formFields", formFields);
+		return jSONObject;
 	}
 }

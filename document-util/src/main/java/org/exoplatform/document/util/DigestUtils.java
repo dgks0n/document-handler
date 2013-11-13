@@ -33,7 +33,7 @@ public class DigestUtils extends org.apache.commons.codec.digest.DigestUtils {
 	 * @param text - String to calculate a SHA1 hash from.
 	 * @return A SHA1 hash from the provided String.
 	 */
-	public static String getGeneratedSHA1Hash(String text) {
+	public static String getGeneratedSHA1Hash(final String text) {
 		String hashOfText = "";
 	    // If the provided String is null, throw an Exception.
 	    if (text == null) {
