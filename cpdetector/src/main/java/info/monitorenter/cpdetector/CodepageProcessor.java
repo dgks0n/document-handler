@@ -198,7 +198,7 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 
 	public CodepageProcessor() {
 		super();
-		this.detector = CodepageDetectorProxy.getInstance();
+
 		// adding the options:
 		this.addCmdLineOption("documents", new CmdLineParser.Option.StringOption('r', "documents"));
 		this.addCmdLineOption("extensions", new CmdLineParser.Option.StringOption('e', "extensions"));
@@ -209,6 +209,10 @@ public class CodepageProcessor extends ACmdLineArgsInheritor {
 		this.addCmdLineOption("transform", new CmdLineParser.Option.StringOption('t', "transform"));
 		this.addCmdLineOption("detectors", new CmdLineParser.Option.StringOption('d', "detectors"));
 		this.addCmdLineOption("charsets", new CmdLineParser.Option.BooleanOption('c', "charsets"));
+	}
+	
+	public CodepageProcessor(CodepageDetectorProxy codepageDetectorProxy) {
+		this.detector = codepageDetectorProxy;
 	}
 
 	public void parseArgs(String[] cmdLineArgs) throws Exception {

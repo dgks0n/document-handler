@@ -13,6 +13,22 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
+	<developers>
+		<developer>
+			<id>sondn</id>
+			<name>Ngoc Son Dang</name>
+			<email>sondn@exoplatform.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<organization>
+		<name>eXo Platform SEA</name>
+		<url>http://www.exoplatform.com</url>
+	</organization>
+	
 	<modules>
 		<!-- Code Page Detector -->
 		<module>cpdetector</module>
@@ -25,6 +41,7 @@
     	<module>detect-charsets</module>
     	<module>document-common</module>
     	<module>document-upload</module>
+    	<module>document-ui</module>
   	</modules>
 	<description>
     	<![CDATA[Please refer to the <a href="http://www.picocontainer.org/web">main website</a> for documentation.]]>
@@ -72,31 +89,31 @@
 						<groupId>org.picocontainer</groupId>
 						<artifactId>picocontainer</artifactId>
 					</exclusion>
-					<exclusion>
-						<groupId>com.thoughtworks.xstream</groupId>
-						<artifactId>xstream</artifactId>
-					</exclusion>
+<!-- 					<exclusion> -->
+<!-- 						<groupId>com.thoughtworks.xstream</groupId> -->
+<!-- 						<artifactId>xstream</artifactId> -->
+<!-- 					</exclusion> -->
 				</exclusions>
 				<optional>true</optional>
 			</dependency>
-			<dependency>
-				<groupId>com.thoughtworks.paranamer</groupId>
-				<artifactId>paranamer</artifactId>
-				<version>2.2.1</version>
-				<optional>true</optional>
-			</dependency>
-			<dependency>
-				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>xstream</artifactId>
-				<version>1.3.1</version>
-				<optional>false</optional>
-				<exclusions>
-					<exclusion>
-						<groupId>xpp3</groupId>
-						<artifactId>xpp3_min</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.thoughtworks.paranamer</groupId> -->
+<!-- 				<artifactId>paranamer</artifactId> -->
+<!-- 				<version>2.2.1</version> -->
+<!-- 				<optional>true</optional> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.thoughtworks.xstream</groupId> -->
+<!-- 				<artifactId>xstream</artifactId> -->
+<!-- 				<version>1.3.1</version> -->
+<!-- 				<optional>false</optional> -->
+<!-- 				<exclusions> -->
+<!-- 					<exclusion> -->
+<!-- 						<groupId>xpp3</groupId> -->
+<!-- 						<artifactId>xpp3_min</artifactId> -->
+<!-- 					</exclusion> -->
+<!-- 				</exclusions> -->
+<!-- 			</dependency> -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
@@ -123,36 +140,36 @@
 				<version>2.2</version>
 				<scope>test</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty</artifactId>
-				<version>6.1.22</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jmock</groupId>
-				<artifactId>jmock-junit4</artifactId>
-				<version>2.5.1</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jmock</groupId>
-				<artifactId>jmock-legacy</artifactId>
-				<version>2.5.1</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>cglib</groupId>
-				<artifactId>cglib-nodep</artifactId>
-				<version>2.2</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>httpunit</groupId>
-				<artifactId>httpunit</artifactId>
-				<version>1.6.2</version>
-				<scope>test</scope>
-			</dependency>
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.mortbay.jetty</groupId> -->
+<!-- 				<artifactId>jetty</artifactId> -->
+<!-- 				<version>6.1.22</version> -->
+<!-- 				<scope>test</scope> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.jmock</groupId> -->
+<!-- 				<artifactId>jmock-junit4</artifactId> -->
+<!-- 				<version>2.5.1</version> -->
+<!-- 				<scope>test</scope> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.jmock</groupId> -->
+<!-- 				<artifactId>jmock-legacy</artifactId> -->
+<!-- 				<version>2.5.1</version> -->
+<!-- 				<scope>test</scope> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>cglib</groupId> -->
+<!-- 				<artifactId>cglib-nodep</artifactId> -->
+<!-- 				<version>2.2</version> -->
+<!-- 				<scope>test</scope> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>httpunit</groupId> -->
+<!-- 				<artifactId>httpunit</artifactId> -->
+<!-- 				<version>1.6.2</version> -->
+<!-- 				<scope>test</scope> -->
+<!-- 			</dependency> -->
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -161,11 +178,11 @@
 			<artifactId>jsonic</artifactId>
 			<version>1.3.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1.1</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.googlecode.json-simple</groupId> -->
+<!-- 			<artifactId>json-simple</artifactId> -->
+<!-- 			<version>1.1.1</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -174,14 +191,14 @@
 			<groupId>org.picocontainer</groupId>
 			<artifactId>picocontainer-tck</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.jmock</groupId>
-			<artifactId>jmock-junit4</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>httpunit</groupId>
-			<artifactId>httpunit</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jmock</groupId> -->
+<!-- 			<artifactId>jmock-junit4</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>httpunit</groupId> -->
+<!-- 			<artifactId>httpunit</artifactId> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>

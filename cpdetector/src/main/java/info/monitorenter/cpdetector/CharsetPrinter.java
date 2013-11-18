@@ -52,9 +52,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * @author demian reachable (at)\@ rootring.com
@@ -63,11 +60,10 @@ import org.slf4j.LoggerFactory;
  */
 public class CharsetPrinter {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CharsetPrinter.class);
+	private CodepageDetectorProxy detector;
 	
-	private final CodepageDetectorProxy detector = CodepageDetectorProxy.getInstance();
-
-	public CharsetPrinter() {
+	public CharsetPrinter(CodepageDetectorProxy codepageDetectorProxy) {
+		this.detector = codepageDetectorProxy;
 		detector.add(new ParsingDetector(false));
 		detector.add(JChardetFacade.getInstance());
 		detector.add(ASCIIDetector.getInstance());
@@ -80,32 +76,5 @@ public class CharsetPrinter {
 			return null;
 
 		return charset.name();
-	}
-
-	public static void main(String[] args) {
-		CharsetPrinter cp = new CharsetPrinter();
-
-		if (args.length < 1) {
-			logger.error("Please provide one or more files to examine on the command line after the command.");
-		}
-
-		try {
-			File f;
-
-			for (int walk = 0; walk < args.length; walk++) {
-				f = new File(args[walk]);
-
-				if (f.exists() && f.canRead() && f.isFile()) {
-					logger.info(args[walk] + " appears to be " + cp.guessEncoding(f));
-				} else {
-					logger.error(args[walk] + " is not a file, does not exists or is not readable at this time.");
-					logger.info(args[walk] + " appears to be UNKNOWN");
-				}
-			}
-		} catch (MalformedURLException e) {
-			logger.error("The filename makes no sense." + e.getMessage(), e);
-		} catch (IOException e) {
-			logger.error("Problem reading from file" + e.getMessage(), e);
-		}
 	}
 }

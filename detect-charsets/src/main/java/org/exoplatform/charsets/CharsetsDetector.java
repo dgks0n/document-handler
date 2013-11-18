@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version CharsetsDetector.java Oct 26, 2013
  *
  */
-public class CharsetsDetector extends CharsetsDetect implements CharsetEncode {
+public class CharsetsDetector extends Detector implements EncodeDetect {
 
 	private static final Logger logger = LoggerFactory.getLogger(CharsetsDetector.class);
 	

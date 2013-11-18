@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.exoplatform.document</groupId>
+		<artifactId>document-handler</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<groupId>org.exoplatform.document.ui</groupId>
+	<artifactId>document-ui</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+	<name>Document Handler :: Upload Document UI</name>
+	<url>https://github.com/dangokuson/document-handler</url>
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>document-ui</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archiveClasses>false</archiveClasses>
+					<archive>
+						<manifest>
+							<addClasspath>false</addClasspath>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

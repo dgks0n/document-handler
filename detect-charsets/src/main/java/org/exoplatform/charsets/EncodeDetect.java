@@ -29,9 +29,9 @@ import java.nio.charset.Charset;
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version CharsetEncode.java Nov 7, 2013
+ * @version EncodeDetect.java Nov 7, 2013
  */
-public interface CharsetEncode {
+public interface EncodeDetect {
 
 	/**
 	 * Detector the charset encoding of file depends on file's path. No check for images or other resources is made.

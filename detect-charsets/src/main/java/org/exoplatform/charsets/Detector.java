@@ -20,9 +20,9 @@ package org.exoplatform.charsets;
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version CharsetsDetect.java Nov 7, 2013
+ * @version Detector.java Nov 7, 2013
  */
-public abstract class CharsetsDetect {
+public abstract class Detector {
 
 	/**
 	 * Add the implementations of info.monitorenter.cpdetector.io.ICodepageDetector

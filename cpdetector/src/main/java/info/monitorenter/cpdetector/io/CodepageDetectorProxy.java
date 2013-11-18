@@ -99,6 +99,7 @@ public final class CodepageDetectorProxy extends AbstractCodepageDetector {
 	 * 
 	 * @return the sole instance in this VM.
 	 */
+	@Deprecated
 	public static CodepageDetectorProxy getInstance() {
 		if (CodepageDetectorProxy.instance == null) {
 			CodepageDetectorProxy.instance = new CodepageDetectorProxy();

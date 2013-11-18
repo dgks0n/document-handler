@@ -10,8 +10,8 @@
 	<groupId>org.exoplatform.document</groupId>
 	<artifactId>document-upload</artifactId>
 	<version>1.0.0</version>
-	<packaging>war</packaging>
-	<name>Document Handler :: Upload Document</name>
+	<packaging>jar</packaging>
+	<name>Document Handler :: Upload Document REST Service</name>
 	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
 		<dependency>
@@ -25,44 +25,53 @@
         		</exclusion>
       		</exclusions>    
 		</dependency>
-		
 		<dependency>
-			<groupId>org.exoplatform.charsets</groupId>
-			<artifactId>detect-charsets</artifactId>
+			<groupId>org.exoplatform.document</groupId>
+			<artifactId>document-util</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.exoplatform.charsets</groupId> -->
+<!-- 			<artifactId>detect-charsets</artifactId> -->
+<!-- 			<version>1.0.0</version> -->
+<!-- 		</dependency> -->
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>opensymphony</groupId> -->
+<!-- 			<artifactId>oscore</artifactId> -->
+<!-- 			<version>2.2.4</version> -->
+<!-- 		</dependency> -->
 		
 		<dependency>
-			<groupId>opensymphony</groupId>
-			<artifactId>oscore</artifactId>
-			<version>2.2.6</version>
+			<groupId>org.everrest</groupId>
+			<artifactId>everrest-core</artifactId>
+			<version>1.1.3</version>
 		</dependency>
-		
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.ws.rs</groupId> -->
+<!-- 			<artifactId>javax.ws.rs-api</artifactId> -->
+<!-- 			<version>2.0-m09</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.mail</groupId> -->
+<!-- 			<artifactId>mail</artifactId> -->
+<!-- 			<version>1.4.7</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.annotation</groupId> -->
+<!-- 			<artifactId>jsr250-api</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
 		<dependency>
-	        <groupId>com.sun.jersey</groupId>
-	        <artifactId>jersey-server</artifactId>
-	        <version>1.9.1</version>
-        </dependency>
-        <dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-			<version>1.9.1</version>
+			<groupId>org.everrest</groupId>
+			<artifactId>everrest-integration-picocontainer</artifactId>
+			<version>1.1.3</version>
 		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey.contribs</groupId>
-			<artifactId>jersey-multipart</artifactId>
-			<version>1.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jettison</groupId>
-			<artifactId>jettison</artifactId>
-			<version>1.3.4</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.3</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>commons-fileupload</groupId> -->
+<!-- 			<artifactId>commons-fileupload</artifactId> -->
+<!-- 			<version>1.3</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -90,7 +99,7 @@
 		</testResources>
 	</build>
 	<reporting>
-               <outputDirectory>${project.build.directory}/site</outputDirectory>
+		<outputDirectory>${project.build.directory}/site</outputDirectory>
     </reporting>
 
 	<profiles>

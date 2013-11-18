@@ -16,9 +16,10 @@
  */
 package org.exoplatform.document.upload.rest;
 
+import java.io.Serializable;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -35,10 +36,12 @@ import org.exoplatform.document.upload.util.UploadMultipartHandler;
  *          
  * @version UploadDocumentService.java Nov 7, 2013
  */
-@Path("/document/upload")
+@Path("/document")
 public class UploadDocumentService {
 	
-	// https://github.com/venuduggireddy/samples/tree/master/WebRoot
+	private static final String WS_UPLOAD_PATH = "/upload";
+	private static final String WS_SERVICE_INFORMATION_PATH = "/service-infor";
+	
 	private UploadMultipartHandler uploadMultipartHandler;
 	
 	public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler) {
@@ -46,10 +49,9 @@ public class UploadDocumentService {
 	}
 
 	@POST
-    @Path("file")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response uploadFile(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+    @Path(UploadDocumentService.WS_UPLOAD_PATH)
+	@Produces(MediaType.APPLICATION_JSON)
+    public Response uploadFile(@Context HttpServletRequest request) throws Exception {
 		String responseText = "Unable to attach files";
 		Document bean = uploadMultipartHandler.parseUploadMultipart(request);
 		if (null != bean) {
@@ -59,4 +61,110 @@ public class UploadDocumentService {
 		}
 		return Response.ok(responseText).build();
     }
+	
+	@GET
+    @Path(UploadDocumentService.WS_SERVICE_INFORMATION_PATH)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ServiceInfor checkFileSize() {
+		ServiceInfor serviceInfor = new ServiceInfor();
+		serviceInfor.setAuthor("Ngoc Son Dang");
+		serviceInfor.setServiceName(getClass().getName());
+		serviceInfor.setOwner(true);
+		serviceInfor.setDescription("Upload Document REST service");
+		return serviceInfor;
+	}
+	
+	public class ServiceInfor implements Serializable {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8224416078047201046L;
+		
+		String author;
+		
+		String serviceName;
+		
+		boolean isOwner;
+		
+		String description;
+
+		/**
+		 * 
+		 */
+		public ServiceInfor() {
+			super();
+		}
+
+		/**
+		 * @param author
+		 * @param serviceName
+		 * @param isOwner
+		 * @param description
+		 */
+		public ServiceInfor(String author, String serviceName, boolean isOwner,
+				String description) {
+			super();
+			this.author = author;
+			this.serviceName = serviceName;
+			this.isOwner = isOwner;
+			this.description = description;
+		}
+
+		/**
+		 * @return the author
+		 */
+		public String getAuthor() {
+			return author;
+		}
+
+		/**
+		 * @param author the author to set
+		 */
+		public void setAuthor(String author) {
+			this.author = author;
+		}
+
+		/**
+		 * @return the serviceName
+		 */
+		public String getServiceName() {
+			return serviceName;
+		}
+
+		/**
+		 * @param serviceName the serviceName to set
+		 */
+		public void setServiceName(String serviceName) {
+			this.serviceName = serviceName;
+		}
+
+		/**
+		 * @return the isOwner
+		 */
+		public boolean isOwner() {
+			return isOwner;
+		}
+
+		/**
+		 * @param isOwner the isOwner to set
+		 */
+		public void setOwner(boolean isOwner) {
+			this.isOwner = isOwner;
+		}
+
+		/**
+		 * @return the description
+		 */
+		public String getDescription() {
+			return description;
+		}
+
+		/**
+		 * @param description the description to set
+		 */
+		public void setDescription(String description) {
+			this.description = description;
+		}
+	}
 }

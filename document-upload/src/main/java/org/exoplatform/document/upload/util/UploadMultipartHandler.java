@@ -16,20 +16,9 @@
  */
 package org.exoplatform.document.upload.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
-import org.apache.commons.io.IOUtils;
 import org.exoplatform.document.upload.Document;
-import org.exoplatform.document.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,37 +46,37 @@ public class UploadMultipartHandler extends UploadMultipart {
 		}
 		
 		Document document = null;
-		if (ServletFileUpload.isMultipartContent(request)) {
-			document = Document.getInstance();
-			logger.info("Create new instance for document object.");
-		}
-		
-		ServletFileUpload uploadHandler = new ServletFileUpload();
-        InputStream inputStream = null;
-        document.setFormFields(new HashMap<String, String>());
-        
-        try {
-			FileItemIterator iterator = uploadHandler.getItemIterator(request);
-			while (iterator.hasNext()) {
-				FileItemStream fileItemStream = iterator.next();
-				String fileName = fileItemStream.getFieldName();
-				inputStream = fileItemStream.openStream();
-				if (fileItemStream.isFormField()) {
-					String value = Streams.asString(inputStream);
-					document.getFormFields().put(fileName, value);
-				} else {
-					document.setFilename(fileItemStream.getName());
-					document.setContentType(fileItemStream.getContentType());
-					document.setSize(FileUtils.sizeOf(inputStream, fileName));
-				}
-			}
-		} catch (FileUploadException fue) {
-			logger.error(fue.getMessage(), fue);
-		} catch (IOException ioe) {
-			logger.error(ioe.getMessage(), ioe);
-		} finally {
-			IOUtils.closeQuietly(inputStream);
-		}
+//		if (ServletFileUpload.isMultipartContent(request)) {
+//			document = Document.getInstance();
+//			logger.info("Create new instance for document object.");
+//		}
+//		
+//		ServletFileUpload uploadHandler = new ServletFileUpload();
+//        InputStream inputStream = null;
+//        document.setFormFields(new HashMap<String, String>());
+//        
+//        try {
+//			FileItemIterator iterator = uploadHandler.getItemIterator(request);
+//			while (iterator.hasNext()) {
+//				FileItemStream fileItemStream = iterator.next();
+//				String fileName = fileItemStream.getFieldName();
+//				inputStream = fileItemStream.openStream();
+//				if (fileItemStream.isFormField()) {
+//					String value = Streams.asString(inputStream);
+//					document.getFormFields().put(fileName, value);
+//				} else {
+//					document.setFilename(fileItemStream.getName());
+//					document.setContentType(fileItemStream.getContentType());
+//					document.setSize(FileUtils.sizeOf(inputStream, fileName));
+//				}
+//			}
+//		} catch (FileUploadException fue) {
+//			logger.error(fue.getMessage(), fue);
+//		} catch (IOException ioe) {
+//			logger.error(ioe.getMessage(), ioe);
+//		} finally {
+//			IOUtils.closeQuietly(inputStream);
+//		}
         
 		return document;
 	}

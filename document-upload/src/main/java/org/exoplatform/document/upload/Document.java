@@ -16,12 +16,9 @@
  */
 package org.exoplatform.document.upload;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
-
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
-import org.exoplatform.document.entity.AbstractEntity;
 
 /**
  * Created by The eXo Platform SAS
@@ -29,7 +26,7 @@ import org.exoplatform.document.entity.AbstractEntity;
  *          
  * @version Document.java Nov 7, 2013
  */
-public class Document extends AbstractEntity<String> {
+public class Document implements Serializable {
 
 	/**
 	 * 
@@ -539,30 +536,5 @@ public class Document extends AbstractEntity<String> {
 				+ isRegularFile + ", isSymbolicLink=" + isSymbolicLink
 				+ ", isReadOnly=" + isReadOnly + ", isHidden=" + isHidden
 				+ ", isArchive=" + isArchive + ", isSystem=" + isSystem + "]";
-	}
-
-	public JSONObject toJSON() throws JSONException {
-		JSONObject jSONObject = new JSONObject();
-		jSONObject.put("filename", filename);
-		jSONObject.put("size", size);
-		jSONObject.put("url", url);
-		jSONObject.put("contentType", contentType);
-		jSONObject.put("contentType", contentType);
-		jSONObject.put("language", language);
-		jSONObject.put("encoding", encoding);
-		jSONObject.put("mimeType", mimeType);
-		jSONObject.put("creationTime", creationTime);
-		jSONObject.put("lastAccessTime", lastAccessTime);
-		jSONObject.put("lastModifiedTime", lastModifiedTime);
-		jSONObject.put("isDirectory", isDirectory);
-		jSONObject.put("isOther", isOther);
-		jSONObject.put("isRegularFile", isRegularFile);
-		jSONObject.put("isSymbolicLink", isSymbolicLink);
-		jSONObject.put("isReadOnly", isReadOnly);
-		jSONObject.put("isHidden", isHidden);
-		jSONObject.put("isArchive", isArchive);
-		jSONObject.put("isSystem", isSystem);
-//		jSONObject.put("formFields", formFields);
-		return jSONObject;
 	}
 }
