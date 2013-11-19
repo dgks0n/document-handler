@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.List;
 
-import org.exoplatform.common.dao.hibernate.HibernateDAOProcessor;
+import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.hibernate.SessionFactory;
 
 import com.googlecode.genericdao.search.Search;
@@ -40,13 +40,13 @@ import com.googlecode.genericdao.search.SearchResult;
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version GenericDAOProviderImpl.java Nov 6, 2013
+ * @version HibernateManagerProviderImpl.java Nov 6, 2013
  */
-public class GenericDAOProviderImpl<T, ID extends Serializable> extends HibernateDAOProcessor implements GenericDAOProvider<T, ID> {
+public class HibernateManagerProviderImpl<T, ID extends Serializable> extends HibernateTransactionManager implements HibernateManagerProvider<T, ID> {
 	
-	protected Class<T> persistentClass = (Class<T>) HibernateDAOUtil.getTypeArguments(GenericDAOProviderImpl.class, this.getClass()).get(0);
+	protected Class<T> persistentClass = (Class<T>) HibernateTransactionUtil.getTypeArguments(HibernateManagerProviderImpl.class, this.getClass()).get(0);
 	
-	public GenericDAOProviderImpl(SessionFactory sessionFactory) {
+	public HibernateManagerProviderImpl(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 

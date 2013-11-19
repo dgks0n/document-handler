@@ -104,9 +104,7 @@ public final class FileFilterExtensions implements FileFilter {
 		boolean ret = false;
 		// search for extension without dot.
 		StringTokenizer tokenizer = new StringTokenizer(pathname.getAbsolutePath(), ".");
-		String extension = "no.txt"; // a dot, because verify will not allow
-										// these tokens: won't accept, if no
-										// extension in pathname.
+		String extension = "no.txt"; // a dot, because verify will not allow these tokens: won't accept, if no extension in pathname.
 		while (tokenizer.hasMoreElements()) {
 			extension = tokenizer.nextToken();
 		}

@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @version CharsetsDetector.java Oct 26, 2013
  *
  */
-public class CharsetsDetector extends Detector implements EncodeDetect {
+public class CharsetsDetector implements ICharsetsDetector {
 
 	private static final Logger logger = LoggerFactory.getLogger(CharsetsDetector.class);
 	
@@ -52,8 +52,17 @@ public class CharsetsDetector extends Detector implements EncodeDetect {
 	/**
 	 * Add the implementations of info.monitorenter.cpdetector.io.ICodepageDetector
 	 * 
+	 * @deprecated Use {@link #addDetectComponents()} instead for
 	 */
+	@Deprecated
 	public void addDetectorImplementations() {
+		addDetectComponents();
+	}
+	
+	/**
+	 * Add the implementations of info.monitorenter.cpdetector.io.ICodepageDetector
+	 */
+	public void addDetectComponents() {
 		// This one is quick if we deal with unicode codepages: 
 	    detector.add(new ByteOrderMarkDetector()); 
 	    // The first instance delegated to tries to detect the meta charset attribut in html pages.

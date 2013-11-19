@@ -264,7 +264,9 @@ public class Detector {
 	 * 
 	 */
 	private void detectBlock() throws LanguageDetectException {
+		// Cleaning text to detect (eliminate URL, e-mail address and Latin sentence if it is not written in Latin alphabet)
 		cleaningText();
+		
 		ArrayList<String> ngrams = extractNGrams();
 		if (ngrams.size() == 0) {
 			throw new LanguageDetectException("No features in text", ErrorCode.CANTDETECTERROR);
@@ -325,12 +327,12 @@ public class Detector {
 	 */
 	private ArrayList<String> extractNGrams() {
 		ArrayList<String> list = new ArrayList<String>();
-		NGramTokenizer ngram = new NGramTokenizer();
+		NGramTokenizer nGramTokenizer = NGramTokenizer.getInstance();
 		
 		for (int i = 0; i < _text.length(); ++i) {
-			ngram.addChar(_text.charAt(i));
+			nGramTokenizer.addChar(_text.charAt(i));
 			for (int n = 1; n <= NGramTokenizer.N_GRAM; ++n) {
-				String w = ngram.get(n);
+				String w = nGramTokenizer.get(n);
 				if (w != null && _wordLangProbability.containsKey(w)) {
 					list.add(w);
 				}

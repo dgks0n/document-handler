@@ -33,8 +33,10 @@ public class NGramTokenizer {
 	
 	private StringBuffer _ngrams;
 	private boolean _capitalWord;
-	private static HashMap<Character, Character> cjkKanjiNormalizationMapping;
+	private static HashMap<Character, Character> cjkKanjiNormalizations;
 	public static final int N_GRAM = 3;
+	
+	private static NGramTokenizer nGramTokenizer;
 	
 	/**
      * CJK Kanji Normalization Mapping
@@ -169,11 +171,11 @@ public class NGramTokenizer {
     };
     
 	static {
-		cjkKanjiNormalizationMapping = new HashMap<Character, Character>();
+		cjkKanjiNormalizations = new HashMap<Character, Character>();
 		for (String cjkKanjis : CJK_KANJI_NORMALIZATION) {
 			char representative = cjkKanjis.charAt(0);
 			for (int i = 0; i < cjkKanjis.length(); ++i) {
-				cjkKanjiNormalizationMapping.put(cjkKanjis.charAt(i), representative);
+				cjkKanjiNormalizations.put(cjkKanjis.charAt(i), representative);
 			}
 		}
 	}
@@ -183,6 +185,12 @@ public class NGramTokenizer {
         _capitalWord = false;
     }
 
+	public static NGramTokenizer getInstance() {
+		if (nGramTokenizer == null) {
+			nGramTokenizer = new NGramTokenizer();
+		}
+		return nGramTokenizer;
+	}
     /**
      * Add a charater to N-Grams
      * 
@@ -267,8 +275,8 @@ public class NGramTokenizer {
 		} else if (block == UnicodeBlock.BOPOMOFO || block == UnicodeBlock.BOPOMOFO_EXTENDED) {
 			character = '\u3105';
 		} else if (block == UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) {
-			if (cjkKanjiNormalizationMapping.containsKey(character)) {
-				character = cjkKanjiNormalizationMapping.get(character);
+			if (cjkKanjiNormalizations.containsKey(character)) {
+				character = cjkKanjiNormalizations.get(character);
 			}
 		} else if (block == UnicodeBlock.HANGUL_SYLLABLES) {
 			character = '\uac00';

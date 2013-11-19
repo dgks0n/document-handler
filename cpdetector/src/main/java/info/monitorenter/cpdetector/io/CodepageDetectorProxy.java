@@ -142,9 +142,7 @@ public final class CodepageDetectorProxy extends AbstractCodepageDetector {
 			if (ret != null) {
 				if (ret != UnknownCharset.getInstance()) {
 					if (ret instanceof UnsupportedCharset) {
-						// TODO: Debug logging: found illegal charset tag or
-						// encoding
-						// declaration.
+						// TODO: Debug logging: found illegal charset tag or encoding declaration.
 					} else {
 						break;
 					}
@@ -199,9 +197,7 @@ public final class CodepageDetectorProxy extends AbstractCodepageDetector {
 		while (detectorIt.hasNext()) {
 			in.mark(markLimit);
 			ret = detectorIt.next().detectCodepage(in, length);
-			// if more bytes have been read than marked (length) this will throw
-			// an
-			// exception:
+			// if more bytes have been read than marked (length) this will throw an exception:
 			try {
 				in.reset();
 			} catch (IOException ioex) {
@@ -213,9 +209,7 @@ public final class CodepageDetectorProxy extends AbstractCodepageDetector {
 			if (ret != null) {
 				if (ret != UnknownCharset.getInstance()) {
 					if (ret instanceof UnsupportedCharset) {
-						// TODO: Debug logging: found illegal charset tag or
-						// encoding
-						// declaration.
+						// TODO: Debug logging: found illegal charset tag or encoding declaration.
 					} else {
 						break;
 					}

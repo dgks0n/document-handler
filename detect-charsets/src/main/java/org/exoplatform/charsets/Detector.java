@@ -22,6 +22,7 @@ package org.exoplatform.charsets;
  *          
  * @version Detector.java Nov 7, 2013
  */
+@Deprecated
 public abstract class Detector {
 
 	/**

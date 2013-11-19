@@ -34,12 +34,13 @@ public class Message {
 	
 	private static final String BUNDLE_NAME = "org.exoplatform.language.message.Message";
 	
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, Locale.getDefault());
+	private static final ResourceBundle RESOURCE_BUNDLE;
 	
-	public Message() {
+	static {
+		RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, Locale.getDefault());
 	}
 	
-	public static String getMessage(String key) {
+	public static String getMessage(final String key) {
 		String valueOfKey;
 		try {
 			valueOfKey = RESOURCE_BUNDLE.getString(key);

@@ -82,7 +82,7 @@ public class LanguageProfile {
      * Add n-gram to profile
      * @param gram
      */
-	public void addNGramToProfile(String nGram) {
+	public void addNGramToProfile(final String nGram) {
 		if (StringUtils.isEmpty(name) || StringUtils.isEmpty(nGram)) {
 			return;
 		}

@@ -20,9 +20,9 @@ import com.googlecode.genericdao.dao.DAOUtil;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version HibernateDAOUtil.java Nov 6, 2013
+ * @version HibernateTransactionUtil.java Nov 6, 2013
  *
  */
-public class HibernateDAOUtil extends DAOUtil {
+public class HibernateTransactionUtil extends DAOUtil {
 
 }

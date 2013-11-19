@@ -149,8 +149,6 @@ public class UnicodeDetector extends AbstractCodepageDetector {
 	public Charset detectCodepage(InputStream in, int length) throws IOException {
 		byte[] bom = new byte[4]; // Get the byte-order mark, if there is one
 		in.read(bom, 0, 4);
-		// Unicode formats => read BOM
-		byte b = (byte) 0xEF;
 		if (bom[0] == (byte) 0x00 && bom[1] == (byte) 0x00 && bom[2] == (byte) 0xFE && bom[2] == (byte) 0xFF) // utf-32BE
 			return Charset.forName("UTF-32BE");
 		if (bom[0] == (byte) 0xFF && bom[1] == (byte) 0xFE && bom[2] == (byte) 0x00 && bom[2] == (byte) 0x00) // utf-32BE

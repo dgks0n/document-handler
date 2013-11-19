@@ -11,6 +11,7 @@ import antlr.TokenStream;
 import antlr.TokenStreamException;
 import antlr.collections.impl.BitSet;
 
+@Deprecated
 public class EncodingParser extends antlr.LLkParser implements EncodingParserTokenTypes {
 
 	public static final String[] _tokenNames = { "<0>", "EOF", "<2>",

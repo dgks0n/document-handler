@@ -187,18 +187,12 @@ public class ClassFileFilterIsA implements IClassFileFilter, FileFilter {
 			searchpath = StringUtil.prefixIntersection(this.classpaths[i].getAbsolutePath(), filename);
 		}
 		if (!searchpath.getKey().equals("")) {
-			// the given file might be a full match of the classpath (e.g. a
-			// jarfile)
+			// the given file might be a full match of the classpath (e.g. a jarfile)
 			if (!searchpath.getValue().equals("")) {
-
-				// remove trailing .class:
-				// bad reuse of filename
-				filename = (String) FileUtil.cutExtension(
-						(String) searchpath.getValue()).getKey();
-				// file path to class syntax. First worked with
-				// "file.separator", but the file may be some
-				// facade (e.g. a jar entry) that sticks to unix syntax even on
-				// windows machines....
+				// remove trailing .class: bad reuse of filename
+				filename = (String) FileUtil.cutExtension((String) searchpath.getValue()).getKey();
+				// file path to class syntax. First worked with "file.separator", but the file may be some
+				// facade (e.g. a jar entry) that sticks to unix syntax even on windows machines....
 				filename = (filename).replace('/', '.');
 				filename = (filename).replace('\\', '.');
 				// remove potential leading dots:

@@ -104,13 +104,11 @@ public class ByteOrderMarkDetector extends AbstractCodepageDetector implements I
 	private static final long serialVersionUID = 3618977875919778866L;
 
 	/**
-	 * @see info.monitorenter.cpdetector.io.ICodepageDetector#detectCodepage(java.io.InputStream,
-	 *      int)
+	 * @see info.monitorenter.cpdetector.io.ICodepageDetector#detectCodepage(java.io.InputStream, int)
 	 */
 	public Charset detectCodepage(final InputStream in, final int length) throws IOException {
 		// dumbest pragmatic code ever written (nearly a code generator would
-		// have
-		// been faster). But it's proven fast.
+		// have been faster). But it's proven fast.
 		Charset result = UnknownCharset.getInstance();
 		int readByte = 0;
 		readByte = in.read();
@@ -163,28 +161,28 @@ public class ByteOrderMarkDetector extends AbstractCodepageDetector implements I
 				// from here on default to UTF-16, big-endian
 				readByte = in.read();
 				switch (readByte) {
-				case (0x00): {
-					// 0x FE FF 00
-					readByte = in.read();
-					switch (readByte) {
 					case (0x00): {
-						// 0x FE FF 00 00
-						// UCS-4, unusual octet order (3412)
-						try {
-							result = Charset.forName("UCS-4");
-						} catch (UnsupportedCharsetException uce) {
-							result = UnsupportedCharset.forName("UCS-4");
+						// 0x FE FF 00
+						readByte = in.read();
+						switch (readByte) {
+						case (0x00): {
+							// 0x FE FF 00 00
+							// UCS-4, unusual octet order (3412)
+							try {
+								result = Charset.forName("UCS-4");
+							} catch (UnsupportedCharsetException uce) {
+								result = UnsupportedCharset.forName("UCS-4");
+							}
+							return result;
 						}
-						return result;
-					}
-					default: {
-						try {
-							result = Charset.forName("UTF-16BE");
-						} catch (UnsupportedCharsetException uce) {
-							result = UnsupportedCharset.forName("UTF-16BE");
+						default: {
+							try {
+								result = Charset.forName("UTF-16BE");
+							} catch (UnsupportedCharsetException uce) {
+								result = UnsupportedCharset.forName("UTF-16BE");
+							}
+							return result;
 						}
-						return result;
-					}
 					}
 
 				}
@@ -263,18 +261,18 @@ public class ByteOrderMarkDetector extends AbstractCodepageDetector implements I
 					// 0x EF BB
 					readByte = in.read();
 					switch (readByte) {
-					case (0xBF): {
-						try {
-							result = Charset.forName("utf-8");
-						} catch (UnsupportedCharsetException uce) {
-							result = UnsupportedCharset.forName("utf-8");
+						case (0xBF): {
+							try {
+								result = Charset.forName("utf-8");
+							} catch (UnsupportedCharsetException uce) {
+								result = UnsupportedCharset.forName("utf-8");
+							}
+							return result;
+		
 						}
-						return result;
-	
-					}
-					default: {
-						return result;
-					}
+						default: {
+							return result;
+						}
 					}
 	
 				}

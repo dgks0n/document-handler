@@ -21,6 +21,7 @@ import antlr.TokenStreamIOException;
 import antlr.TokenStreamRecognitionException;
 import antlr.collections.impl.BitSet;
 
+@Deprecated
 public class EncodingLexer extends antlr.CharScanner implements EncodingParserTokenTypes, TokenStream {
 	
 	public EncodingLexer(InputStream in) {

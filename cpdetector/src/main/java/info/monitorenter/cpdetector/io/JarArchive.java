@@ -100,16 +100,16 @@ public class JarArchive extends File {
 		super(pathname);
 		this.jar = new JarFile(pathname);
 		ITreeNode root = this.parseTree();
+		this.buildTree(root, this);
+		
 		logger.info("tree:");
 		logger.info(root.toString() + '\n');
-		this.buildTree(root, this);
 	}
 
 	/**
 	 * Only for the subclass to avoid double-parsing.
 	 */
 	private JarArchive(File f) {
-
 		super(f.getAbsolutePath());
 	}
 
@@ -118,7 +118,6 @@ public class JarArchive extends File {
 	 * 
 	 */
 	private ITreeNode parseTree() {
-
 		ITreeNode root = new TreeNodeUniqueChildren();
 		ITreeNode newnode, oldnode;
 		Enumeration entries = this.jar.entries();
@@ -140,7 +139,6 @@ public class JarArchive extends File {
 	}
 
 	protected void buildTree(ITreeNode node, JarArchive element) throws IOException {
-
 		List childNodes = node.getAllChildren();
 		Iterator childNodesIt = childNodes.iterator();
 		ITreeNode childNode;
@@ -153,7 +151,7 @@ public class JarArchive extends File {
 			logger.info("Searching for: " + search);
 			entry = this.jar.getJarEntry(search);
 			if (entry == null) {
-				logger.error("Entry for " + search + " (" + this.jar.getName() + ")is null!!!");
+				logger.error("Entry for " + search + " (" + this.jar.getName() + ") is null!!!");
 			} else {
 				logger.info("Entry: " + entry.toString());
 				child = new JarElement(entry, this);
@@ -171,7 +169,6 @@ public class JarArchive extends File {
 	 * entries.
 	 */
 	private String getSearchPath(ITreeNode node) {
-
 		List l = new LinkedList();
 		node.getUserObjectPathFromRoot(l);
 		Iterator it = l.iterator();
@@ -199,7 +196,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#canRead()
 	 */
 	public boolean canRead() {
-
 		return true;
 	}
 
@@ -209,7 +205,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#canWrite()
 	 */
 	public boolean canWrite() {
-
 		return false;
 	}
 
@@ -219,7 +214,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#compareTo(java.io.File)
 	 */
 	public int compareTo(File pathname) {
-
 		return super.compareTo(pathname);
 	}
 
@@ -229,7 +223,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#createNewFile()
 	 */
 	public boolean createNewFile() throws IOException {
-
 		return false;
 	}
 
@@ -239,7 +232,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#delete()
 	 */
 	public boolean delete() {
-
 		return false;
 	}
 
@@ -258,7 +250,6 @@ public class JarArchive extends File {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
-
 		return super.equals(obj);
 	}
 
@@ -268,7 +259,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#exists()
 	 */
 	public boolean exists() {
-
 		return true;
 	}
 
@@ -278,7 +268,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#getAbsoluteFile()
 	 */
 	public File getAbsoluteFile() {
-
 		return super.getAbsoluteFile();
 	}
 
@@ -288,7 +277,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#getAbsolutePath()
 	 */
 	public String getAbsolutePath() {
-
 		String ret = super.getAbsolutePath();
 		return ret;
 	}
@@ -299,7 +287,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#getCanonicalFile()
 	 */
 	public File getCanonicalFile() throws IOException {
-
 		return super.getCanonicalFile();
 	}
 
@@ -309,7 +296,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#getCanonicalPath()
 	 */
 	public String getCanonicalPath() throws IOException {
-
 		return super.getCanonicalPath();
 	}
 
@@ -319,7 +305,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#getName()
 	 */
 	public String getName() {
-
 		return super.getName();
 
 	}
@@ -330,7 +315,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#getParent()
 	 */
 	public String getParent() {
-
 		return super.getParent();
 	}
 
@@ -340,7 +324,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#getParentFile()
 	 */
 	public File getParentFile() {
-
 		return super.getParentFile();
 	}
 
@@ -350,7 +333,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#getPath()
 	 */
 	public String getPath() {
-
 		return super.getPath();
 	}
 
@@ -360,7 +342,6 @@ public class JarArchive extends File {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-
 		return super.hashCode();
 	}
 
@@ -370,7 +351,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#isAbsolute()
 	 */
 	public boolean isAbsolute() {
-
 		return super.isAbsolute();
 	}
 
@@ -380,7 +360,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#isDirectory()
 	 */
 	public boolean isDirectory() {
-
 		return true;
 	}
 
@@ -390,7 +369,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#isFile()
 	 */
 	public boolean isFile() {
-
 		return false;
 	}
 
@@ -409,7 +387,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#lastModified()
 	 */
 	public long lastModified() {
-
 		return super.lastModified();
 	}
 
@@ -419,7 +396,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#length()
 	 */
 	public long length() {
-
 		return super.length();
 	}
 
@@ -429,7 +405,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#list()
 	 */
 	public String[] list() {
-
 		String[] ret = new String[this.childs.size()];
 		Iterator it = this.childs.iterator();
 		for (int i = 0; it.hasNext(); i++) {
@@ -444,7 +419,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#list(java.io.FilenameFilter)
 	 */
 	public String[] list(FilenameFilter filter) {
-
 		List ret = new LinkedList();
 		Iterator it = this.childs.iterator();
 		File next;
@@ -463,7 +437,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#listFiles()
 	 */
 	public File[] listFiles() {
-
 		File[] ret = new File[this.childs.size()];
 		Iterator it = this.childs.iterator();
 		for (int i = 0; it.hasNext(); i++) {
@@ -478,7 +451,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#listFiles(java.io.FileFilter)
 	 */
 	public File[] listFiles(FileFilter filter) {
-
 		List ret = new LinkedList();
 		Iterator it = this.childs.iterator();
 		File next;
@@ -497,7 +469,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#listFiles(java.io.FilenameFilter)
 	 */
 	public File[] listFiles(FilenameFilter filter) {
-
 		List ret = new LinkedList();
 		Iterator it = this.childs.iterator();
 		File next;
@@ -516,7 +487,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#mkdir()
 	 */
 	public boolean mkdir() {
-
 		return false;
 	}
 
@@ -526,7 +496,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#mkdirs()
 	 */
 	public boolean mkdirs() {
-
 		return false;
 	}
 
@@ -536,7 +505,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#renameTo(java.io.File)
 	 */
 	public boolean renameTo(File dest) {
-
 		return false;
 	}
 
@@ -546,7 +514,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#setLastModified(long)
 	 */
 	public boolean setLastModified(long time) {
-
 		return super.setLastModified(time);
 	}
 
@@ -556,7 +523,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#setReadOnly()
 	 */
 	public boolean setReadOnly() {
-
 		return super.setReadOnly();
 	}
 
@@ -566,7 +532,6 @@ public class JarArchive extends File {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-
 		return super.toString();
 	}
 
@@ -576,7 +541,6 @@ public class JarArchive extends File {
 	 * @see java.io.File#toURI()
 	 */
 	public URI toURI() {
-
 		return super.toURI();
 	}
 
@@ -587,7 +551,6 @@ public class JarArchive extends File {
 	 */
 	@SuppressWarnings("deprecation")
 	public URL toURL() throws MalformedURLException {
-
 		return super.toURL();
 	}
 
@@ -611,7 +574,6 @@ public class JarArchive extends File {
 		 *             if sth goes wrong.
 		 */
 		JarElement(JarEntry entry, File parent) throws IOException {
-
 			super(new File(JarArchive.this.jar.getName()));
 			this.parent = parent;
 			if (entry == null) {
@@ -637,7 +599,6 @@ public class JarArchive extends File {
 		 * @see java.io.File#getAbsoluteFile()
 		 */
 		public File getAbsoluteFile() {
-
 			return this;
 		}
 
@@ -647,7 +608,6 @@ public class JarArchive extends File {
 		 * @see java.io.File#getAbsolutePath()
 		 */
 		public String getAbsolutePath() {
-
 			String prefix = JarArchive.this.jar.getName();
 			String postfix = this.entry.getName();
 			return prefix + "/" + postfix;
@@ -659,7 +619,6 @@ public class JarArchive extends File {
 		 * @see java.io.File#getName()
 		 */
 		public String getName() {
-
 			return this.entry.getName();
 		}
 
@@ -669,7 +628,6 @@ public class JarArchive extends File {
 		 * @see java.io.File#getParent()
 		 */
 		public String getParent() {
-
 			return this.parent.getAbsolutePath();
 		}
 
@@ -679,7 +637,6 @@ public class JarArchive extends File {
 		 * @see java.io.File#getParentFile()
 		 */
 		public File getParentFile() {
-
 			return this.parent;
 		}
 
@@ -689,7 +646,6 @@ public class JarArchive extends File {
 		 * @see java.io.File#isDirectory()
 		 */
 		public boolean isDirectory() {
-
 			// would not work, don't know why (false, even if is a dir):
 			// this.entry.isDirectory();
 			return this.childs.size() != 0;
@@ -701,7 +657,6 @@ public class JarArchive extends File {
 		 * @see java.io.File#isFile()
 		 */
 		public boolean isFile() {
-
 			return !this.isDirectory();
 		}
 
@@ -711,7 +666,6 @@ public class JarArchive extends File {
 		 * @see java.io.File#lastModified()
 		 */
 		public long lastModified() {
-
 			return this.entry.getTime();
 		}
 
@@ -721,12 +675,10 @@ public class JarArchive extends File {
 		 * @see java.io.File#length()
 		 */
 		public long length() {
-
 			return this.entry.getSize();
 		}
 
 		public String toString() {
-
 			return this.entry.toString();
 		}
 
@@ -736,9 +688,7 @@ public class JarArchive extends File {
 		 * @see java.io.File#getPath()
 		 */
 		public String getPath() {
-
 			return this.entry.getName();
 		}
 	}
-
 }

@@ -123,7 +123,6 @@ public final class JChardetFacade extends AbstractCodepageDetector implements ns
 		int len;
 		int read = 0;
 		boolean done = false;
-		boolean isAscii = true;
 		Charset ret = null;
 		do {
 			len = in.read(buffer, 0, Math.min(buffer.length, length - read));

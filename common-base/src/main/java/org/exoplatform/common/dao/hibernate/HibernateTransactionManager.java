@@ -42,10 +42,10 @@ import com.googlecode.genericdao.search.hibernate.HibernateSearchProcessor;
  * This is the heart of Hibernate Generic DAO.
  * 
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version HibernateDAOProcessor.java Nov 6, 2013
+ * @version HibernateTransactionManager.java Nov 6, 2013
  *
  */
-public class HibernateDAOProcessor {
+public class HibernateTransactionManager {
 
 	private HibernateSearchProcessor searchProcessor;
 	
@@ -57,7 +57,7 @@ public class HibernateDAOProcessor {
 	/**
 	 * Construction Dependency Injection
 	 */
-	public HibernateDAOProcessor(SessionFactory sessionFactory) {
+	public HibernateTransactionManager(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 		// Get instance of...
 		searchProcessor = HibernateSearchProcessor.getInstanceForSessionFactory(sessionFactory);
