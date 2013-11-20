@@ -20,38 +20,15 @@ import java.io.Serializable;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version IEntity.java Oct 31, 2013
+ * @version Entity.java Oct 31, 2013
  *
  */
-public interface IEntity<I extends Serializable> {
+public interface Entity<I extends Serializable> extends Serializable {
 
 	/**
-	 * Removes a parent from an entity
+	 * Get Entity's Id
 	 * 
-	 * @param fileId : The ID of the entity
-	 * @param folderId : The ID of the parent
+	 * @return an Entity's Id
 	 */
-	public void deleteEntity(String fileId, String folderId);
-	
-	/**
-	 * Gets a specific parent reference
-	 * 
-	 * @param fileId : The ID of the entity
-	 * @param parentid : The ID of the parent
-	 */
-	public void findEntity(String fileId, String parentid);
-	
-	/**
-	 * Adds a parent folder for a file (entity)
-	 * 
-	 * @param fileId : The ID of the entity
-	 */
-	public void insertEntity(String fileId);
-	
-	/**
-	 * Lists a file's parents
-	 * 
-	 * @param fileId  : The ID of the entity
-	 */
-	public void findParentsOfEntity(String fileId);
+	public I getId();
 }

@@ -24,7 +24,7 @@ import java.util.List;
  * @version File.java Oct 31, 2013
  *
  */
-public class File extends RootDocument<String> {
+public class File extends Document<String> {
 
 	/**
 	 * 
@@ -75,7 +75,7 @@ public class File extends RootDocument<String> {
 	private long quotaBytesUsed;
 	
 	// Name(s) of the owner(s) of this file.
-	private RootOwner[] ownerNames;
+	private OwnerEntity[] ownerNames;
 	
 	// Whether the file can be edited by the current user.
 	private boolean editable;
@@ -168,7 +168,7 @@ public class File extends RootDocument<String> {
 			Date createdDate, Date modifiedByMeDate, String fileExtension,
 			String alternateLink, String embedLink, Label labelOfFile,
 			Date sharedWithMeDate, List parents, long quotaBytesUsed,
-			RootOwner[] ownerNames, boolean editable, boolean writersCanShare,
+			OwnerEntity[] ownerNames, boolean editable, boolean writersCanShare,
 			String thumbnailLink, Date lastViewedByMeDate,
 			String webContentLink, boolean explicitlyTrashed,
 			Thumbnail thumbnail, String webViewLink, String iconLink,
@@ -376,14 +376,14 @@ public class File extends RootDocument<String> {
 	/**
 	 * @return the ownerNames
 	 */
-	public RootOwner[] getOwnerNames() {
+	public OwnerEntity[] getOwnerNames() {
 		return ownerNames;
 	}
 
 	/**
 	 * @param ownerNames the ownerNames to set
 	 */
-	public void setOwnerNames(RootOwner[] ownerNames) {
+	public void setOwnerNames(OwnerEntity[] ownerNames) {
 		this.ownerNames = ownerNames;
 	}
 

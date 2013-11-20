@@ -21,7 +21,7 @@ package org.exoplatform.document.entity;
  * @version Children.java Oct 31, 2013
  *
  */
-public class Children extends RootEntity<String> {
+public class Children extends BaseEntity<String> {
 
 	/**
 	 * 

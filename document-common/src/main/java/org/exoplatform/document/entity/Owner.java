@@ -21,7 +21,7 @@ package org.exoplatform.document.entity;
  * @version Owner.java Oct 31, 2013
  *
  */
-public class Owner extends RootOwner {
+public class Owner extends OwnerEntity {
 
 	/**
 	 * 

@@ -16,43 +16,18 @@
  */
 package org.exoplatform.document.entity;
 
-
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version RootOwner.java Nov 1, 2013
+ * @version OwnerProducer.java Nov 1, 2013
  */
-public class RootOwner extends AbstractEntity<String> implements IOwner {
+public interface OwnerProducer {
 
 	/**
+	 * Get display name of the Owner
 	 * 
+	 * @return a plain text name
 	 */
-	private static final long serialVersionUID = -1033877984805774048L;
-	
-	// A plain text displayable name for this user.
-	private String displayName;
-
-	
-	public RootOwner() {
-	}
-
-	public RootOwner(String displayName) {
-		this.displayName = displayName;
-	}
-
-	/**
-	 * @return the displayName
-	 */
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	/**
-	 * @param displayName the displayName to set
-	 */
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-	
+	public String getDisplayName();
 }

@@ -20,10 +20,10 @@ import java.io.Serializable;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version RootEntity.java Oct 31, 2013
+ * @version BaseEntity.java Oct 31, 2013
  *
  */
-public abstract class RootEntity<I extends Serializable> extends AbstractEntity<I> {
+public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<I> {
 
 	/**
 	 * 
@@ -36,10 +36,10 @@ public abstract class RootEntity<I extends Serializable> extends AbstractEntity<
 	// A link back to this reference.
 	private String selfLink;
 
-	public RootEntity() {
+	public BaseEntity() {
 	}
 
-	public RootEntity(String kind, String selfLink) {
+	public BaseEntity(String kind, String selfLink) {
 		this.kind = kind;
 		this.selfLink = selfLink;
 	}
@@ -89,7 +89,7 @@ public abstract class RootEntity<I extends Serializable> extends AbstractEntity<
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return this.getId().equals(((RootEntity<I>) obj).getId());
+		return this.getId().equals(((BaseEntity<I>) obj).getId());
 	}
 
 }

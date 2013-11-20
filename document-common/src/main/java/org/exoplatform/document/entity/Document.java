@@ -23,9 +23,9 @@ import java.util.Date;
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version RootDocument.java Nov 1, 2013
+ * @version Document.java Nov 1, 2013
  */
-public class RootDocument<I extends Serializable> extends RootEntity<I> implements IDocument {
+public class Document<I extends Serializable> extends BaseEntity<I> implements DocumentProducer {
 
 	/**
 	 * 
@@ -67,11 +67,11 @@ public class RootDocument<I extends Serializable> extends RootEntity<I> implemen
 	// The last user to modify this file.
 	private Owner lastModifyingUser;
 	
-	public RootDocument() {
+	public Document() {
 		super();
 	}
 	
-	public RootDocument(String kind, String selfLink, String[] etag, String mimeType, Date modifiedDate,
+	public Document(String kind, String selfLink, String[] etag, String mimeType, Date modifiedDate,
 			String downloadUrl, String originalFilename, String md5Checksum,
 			long fileSize, String lastModifyingUserName, Owner lastModifyingUser) {
 		super(kind, selfLink);

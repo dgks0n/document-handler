@@ -25,7 +25,7 @@ import java.util.Date;
  *          
  * @version Revision.java Nov 1, 2013
  */
-public class Revision extends RootDocument<String> {
+public class Revision extends Document<String> {
 
 	/**
 	 * 

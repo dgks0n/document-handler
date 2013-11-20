@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @version AbstractEntity.java Oct 31, 2013
  *
  */
-public abstract class AbstractEntity<I extends Serializable> implements BasicEntity<I> {
+public abstract class AbstractEntity<I extends Serializable> implements Entity<I> {
 
 	/**
 	 * 
