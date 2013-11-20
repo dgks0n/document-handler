@@ -16,6 +16,10 @@
  */
 package org.exoplatform.document.composer;
 
+import info.monitorenter.cpdetector.CharsetPrinter;
+import info.monitorenter.cpdetector.CodepageProcessor;
+import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
+
 import javax.servlet.ServletContext;
 
 import org.everrest.pico.EverrestComposer;
@@ -38,9 +42,9 @@ public class DocumentApplicationComposer extends EverrestComposer {
 	
 	@Override
 	protected void doComposeRequest(MutablePicoContainer container) {
-//		container.addComponent(CodepageDetectorProxy.class);
-//		container.addComponent(CharsetPrinter.class);
-//		container.addComponent(CodepageProcessor.class);
+		container.addComponent(CodepageDetectorProxy.class);
+		container.addComponent(CharsetPrinter.class);
+		container.addComponent(CodepageProcessor.class);
 	}
 
 	@Override

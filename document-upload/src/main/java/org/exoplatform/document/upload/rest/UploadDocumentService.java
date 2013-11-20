@@ -17,6 +17,7 @@
 package org.exoplatform.document.upload.rest;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -53,11 +54,11 @@ public class UploadDocumentService {
 	@Produces(MediaType.APPLICATION_JSON)
     public Response uploadFile(@Context HttpServletRequest request) throws Exception {
 		String responseText = "Unable to attach files";
-		Document bean = uploadMultipartHandler.parseUploadMultipart(request);
-		if (null != bean) {
-			responseText = "{\"fileName\":\"" + bean.getFilename()
-					+ "\",\"type\":\"" + bean.getContentType()
-					+ "\",\"size\":\"" + bean.getSize() + "\"}";
+		List<Document> documents = uploadMultipartHandler.parseHttpRequest(request);
+		if (null != documents && documents.size() > 0) {
+			responseText = "{\"fileName\":\"" + documents.get(0).getFilename()
+					+ "\",\"type\":\"" + documents.get(0).getContentType()
+					+ "\",\"size\":\"" + documents.get(0).getSize() + "\"}";
 		}
 		return Response.ok(responseText).build();
     }

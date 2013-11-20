@@ -28,4 +28,6 @@ public class FilePathUtils {
 	 * The specified local path to storage files and logs.
 	 */
 	public static final String ROOT_PATH = "/document-handler/";
+	
+	public static final String TEMPRORY_PATH = System.getProperty("java.io.tmpdir"); // Old path "/document-handler/temp";
 }

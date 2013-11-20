@@ -10,7 +10,6 @@
 	<groupId>org.exoplatform.document</groupId>
 	<artifactId>document-upload</artifactId>
 	<version>1.0.0</version>
-	<packaging>jar</packaging>
 	<name>Document Handler :: Upload Document REST Service</name>
 	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
@@ -67,11 +66,11 @@
 			<artifactId>everrest-integration-picocontainer</artifactId>
 			<version>1.1.3</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>commons-fileupload</groupId> -->
-<!-- 			<artifactId>commons-fileupload</artifactId> -->
-<!-- 			<version>1.3</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

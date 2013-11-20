@@ -16,9 +16,19 @@
  */
 package org.exoplatform.document.upload.util;
 
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.exoplatform.document.upload.Document;
+import org.exoplatform.document.util.FilePathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,15 +38,38 @@ import org.slf4j.LoggerFactory;
  *          
  * @version UploadMultipartHandler.java Nov 7, 2013
  */
-public class UploadMultipartHandler extends UploadMultipart {
+public class UploadMultipartHandler extends HttpServlet implements HttpRequestHandler {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2024802260998718378L;
 
 	private static final Logger logger = LoggerFactory.getLogger(UploadMultipartHandler.class);
+	
+	private static final String DATA_DIRECTORY = "data";
+	
+	private static final int DEFAULT_FILE_SIZE = 50 * 1024;
+	
+	private static final int DEFAULT_SIZE_THRESHOLD = 4 * 1024;
+	
+	private String filePath;
+	
+	private File file;
 	
 	/* (non-Javadoc)
 	 * @see org.exoplatform.document.upload.util.UploadMultipartPlugin#parseUploadMultipart(javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
-	public Document parseUploadMultipart(HttpServletRequest request) throws NullPointerException {
+	public List<Document> parseUploadMultipart(HttpServletRequest request) throws NullPointerException, FileUploadException {
+		return parseHttpRequest(request);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.exoplatform.document.upload.util.UploadMultipartPlugin#parseRequestMultipart(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public List<Document> parseHttpRequest(HttpServletRequest request) throws NullPointerException, FileUploadException {
 		if (logger.isDebugEnabled()) {
 			logger.info("Parse file item form HTTP servlet request.");
 		}
@@ -46,38 +79,52 @@ public class UploadMultipartHandler extends UploadMultipart {
 		}
 		
 		Document document = null;
-//		if (ServletFileUpload.isMultipartContent(request)) {
-//			document = Document.getInstance();
-//			logger.info("Create new instance for document object.");
-//		}
-//		
-//		ServletFileUpload uploadHandler = new ServletFileUpload();
-//        InputStream inputStream = null;
-//        document.setFormFields(new HashMap<String, String>());
-//        
-//        try {
-//			FileItemIterator iterator = uploadHandler.getItemIterator(request);
-//			while (iterator.hasNext()) {
-//				FileItemStream fileItemStream = iterator.next();
-//				String fileName = fileItemStream.getFieldName();
-//				inputStream = fileItemStream.openStream();
-//				if (fileItemStream.isFormField()) {
-//					String value = Streams.asString(inputStream);
-//					document.getFormFields().put(fileName, value);
-//				} else {
-//					document.setFilename(fileItemStream.getName());
-//					document.setContentType(fileItemStream.getContentType());
-//					document.setSize(FileUtils.sizeOf(inputStream, fileName));
-//				}
-//			}
-//		} catch (FileUploadException fue) {
-//			logger.error(fue.getMessage(), fue);
-//		} catch (IOException ioe) {
-//			logger.error(ioe.getMessage(), ioe);
-//		} finally {
-//			IOUtils.closeQuietly(inputStream);
-//		}
-        
-		return document;
+		// Check that we have a file upload request
+		if (ServletFileUpload.isMultipartContent(request)) {
+			document = Document.getInstance();
+			logger.info("Create new instance for document object.");
+		}
+		
+		// Get the file location where it would be stored.
+		filePath = getServletContext().getRealPath("") + File.separator + DATA_DIRECTORY;
+		
+		// Create a factory for disk-based file items
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		// Set factory constraints
+		// Maximum size that will be stored in memory
+		factory.setSizeThreshold(DEFAULT_SIZE_THRESHOLD);
+		// Sets the directory used to temporarily store files that are larger
+        // than the configured size threshold. We use temporary directory for java
+		factory.setRepository(new File(FilePathUtils.TEMPRORY_PATH));
+		
+		// Create a new file upload handler
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		// Set overall request size constraint. 
+		// Maximum file size to be uploaded.
+		upload.setSizeMax(DEFAULT_FILE_SIZE);
+		
+		try {
+			// Parse the request
+			List<FileItem> items = upload.parseRequest(request);
+			// Process the uploaded items
+			Iterator<FileItem> iterator = items.iterator();
+			while (iterator.hasNext()) {
+				FileItem fileItem = iterator.next();
+				if (!fileItem.isFormField()) {
+					document.setFilename(fileItem.getName());
+					document.setContentType(fileItem.getContentType());
+					document.setSize(fileItem.getSize());
+					
+					int lastIndexOf = document.getFilename().lastIndexOf("\\");
+					file = new File(filePath + document.getFilename().substring((lastIndexOf >= 0) ? lastIndexOf : lastIndexOf + 1));
+					// Write file items to disk-based
+					fileItem.write(file);
+				}
+			}
+		} catch (Exception ex) {
+			logger.error("Error encountered while uploading file.", ex);
+		}
+		
+		return null;
 	}
 }

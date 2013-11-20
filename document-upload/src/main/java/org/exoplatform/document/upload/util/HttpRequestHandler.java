@@ -16,23 +16,38 @@
  */
 package org.exoplatform.document.upload.util;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileUploadException;
 import org.exoplatform.document.upload.Document;
 
 /**
- * Created by The eXo Platform SAS
- * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
- * @version UploadMultipartPlugin.java Nov 7, 2013
+ * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
+ * @version HttpRequestHandler.java Nov 20, 2013
+ *
  */
-public abstract class UploadMultipart {
+public interface HttpRequestHandler {
 
 	/**
 	 * Parse document from HTTP servlet request.
 	 * 
 	 * @param request
 	 * @return
+	 * @throws FileUploadException 
+	 * 
+	 * @deprecated Use {@link #parseHttpRequest(HttpServletRequest)} instead for
 	 */
-	public abstract Document parseUploadMultipart(HttpServletRequest request) throws NullPointerException;
+	@Deprecated
+	public List<Document> parseUploadMultipart(HttpServletRequest request) throws NullPointerException, FileUploadException;
+	
+	/**
+	 * Parse document(s) from HTTP servlet request.
+	 * 
+	 * @param request
+	 * @return
+	 * @throws FileUploadException 
+	 */
+	public List<Document> parseHttpRequest(HttpServletRequest request) throws NullPointerException, FileUploadException;
 }

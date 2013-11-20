@@ -16,34 +16,25 @@ $(function() {
         $('div.uiMenuBlockVertical').hide();
     });
 	
-
-	$.ajax({
-		url: 'document/check-file-size',
+	_inputFile.fileupload({
+		url: 'rest/document/service-infor',
+		type: 'POST',
 		dataType: 'json',
-		type: 'GET'
-	}).done(function(data) {
-		console.log(data);
+		singleFileUploads: true,
+		multipart: 'multipart/form-data',
+		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+		add: function(event, data) {
+			data.submit();
+			console.log("It is invoked as soon as files are added to the fileupload widget.");
+		},
+		done: function(event, data) {
+			
+		},
+		fail: function(event, data) {
+			console.log(data.jqXHR, data.textStatus, data.errorThrown);
+		},
+		always: function(event, data) {
+			console.log(data.jqXHR, data.textStatus, data.result);
+		}
 	});
-	
-//	_inputFile.fileupload({
-//		url: 'document/upload',
-//		type: 'POST',
-//		dataType: 'json',
-//		singleFileUploads: true,
-//		multipart: 'multipart/form-data',
-//		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-//		add: function(event, data) {
-//			data.submit();
-//			console.log("It is invoked as soon as files are added to the fileupload widget.");
-//		},
-//		done: function(event, data) {
-//			
-//		},
-//		fail: function(event, data) {
-//			console.log(data.jqXHR, data.textStatus, data.errorThrown);
-//		},
-//		always: function(event, data) {
-//			console.log(data.jqXHR, data.textStatus, data.result);
-//		}
-//	});
 });

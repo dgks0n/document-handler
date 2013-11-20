@@ -9,6 +9,7 @@
 		<param-name>webapp-composer-class</param-name>
 		<param-value>org.exoplatform.document.composer.DocumentApplicationComposer</param-value>
 	</context-param>
+	
 	<filter>
 		<filter-name>document-filter</filter-name>
 		<filter-class>org.everrest.pico.servlet.EverrestPicoFilter</filter-class>
@@ -17,6 +18,7 @@
 		<filter-name>document-filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<listener>
 		<listener-class>org.picocontainer.web.PicoServletContainerListener</listener-class>
 	</listener>
