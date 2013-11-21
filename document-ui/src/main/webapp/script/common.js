@@ -1,13 +1,14 @@
 $(function() {
 	var _menuVertical = $('.uiMenuBlockVertical');
+	var _uploadForm = $('#formupload'); 
 	var _inputFile = $('input[type="file"]');
-	$('.uiCreationPane').on("click", "div.uiJFKButtonNarrow", function(event) {
+	$('.uiCreationPane').on('click', 'div.uiJFKButtonNarrow', function(event) {
 		event.stopPropagation();
 		// Show Upload File(s) Menu
 		_menuVertical.css({top: 144, left: 106, display: 'block'});
 	});
 	
-	_menuVertical.on("click", ".uiMenuItem", function(event) {
+	_menuVertical.on('click', '.uiMenuItem', function(event) {
 		_inputFile.click();
 	});
 	
@@ -16,8 +17,8 @@ $(function() {
         $('div.uiMenuBlockVertical').hide();
     });
 	
-	_inputFile.fileupload({
-		url: 'rest/document/service-infor',
+	_uploadForm.fileupload({
+		url: 'rest/document-service/document/upload',
 		type: 'POST',
 		dataType: 'json',
 		singleFileUploads: true,
@@ -34,7 +35,7 @@ $(function() {
 			console.log(data.jqXHR, data.textStatus, data.errorThrown);
 		},
 		always: function(event, data) {
-			console.log(data.jqXHR, data.textStatus, data.result);
+			console.log(data.jqXHR, data.textStatus, data.errorThrown);
 		}
 	});
 });

@@ -16,6 +16,7 @@
  */
 package org.exoplatform.document.upload.util;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +41,7 @@ public interface HttpRequestHandler {
 	 * @deprecated Use {@link #parseHttpRequest(HttpServletRequest)} instead for
 	 */
 	@Deprecated
-	public List<Document> parseUploadMultipart(HttpServletRequest request) throws NullPointerException, FileUploadException;
+	public List<Document> parseUploadMultipart(HttpServletRequest request) throws FileUploadException, IllegalArgumentException, IOException;
 	
 	/**
 	 * Parse document(s) from HTTP servlet request.
@@ -49,5 +50,5 @@ public interface HttpRequestHandler {
 	 * @return
 	 * @throws FileUploadException 
 	 */
-	public List<Document> parseHttpRequest(HttpServletRequest request) throws NullPointerException, FileUploadException;
+	public List<Document> parseHttpRequest(HttpServletRequest request) throws FileUploadException, IllegalArgumentException, IOException;
 }

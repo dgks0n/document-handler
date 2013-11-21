@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" threshold="null" debug="false">
 	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="${user.home}/document-handler/catalina.log" />
+		<param name="File" value="${user.home}/document-handler/logs/catalina.log" />
 		<param name="Append" value="true" />
 		<param name="Encoding" value="UTF-8" />
 		<param name="MaxFileSize" value="15MB" />

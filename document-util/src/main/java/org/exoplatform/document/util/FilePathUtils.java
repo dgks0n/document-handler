@@ -16,6 +16,7 @@
  */
 package org.exoplatform.document.util;
 
+
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
@@ -24,10 +25,22 @@ package org.exoplatform.document.util;
  */
 public class FilePathUtils {
 
-	/**
-	 * The specified local path to storage files and logs.
-	 */
-	public static final String ROOT_PATH = "/document-handler/";
+  /** . */
+  public static final String USER_HOME = "user.home";
+	public static final String USER_HOME_PATH = System.getProperty(USER_HOME);
 	
-	public static final String TEMPRORY_PATH = System.getProperty("java.io.tmpdir"); // Old path "/document-handler/temp";
+	/**
+   * The specified local path to storage files and logs.
+   */
+	public static final String ROOT_PATH = USER_HOME_PATH + "/document-handler";
+	
+	/**
+	 * We use temporary directory to temporarily store files for java
+	 */
+	public static final String REPOSITORY_PATH = ROOT_PATH + "/repository";
+	
+	/**
+	 * The specified local path to storage documents
+	 */
+	public static final String RESOURCE_PATH = ROOT_PATH + "/resources";
 }

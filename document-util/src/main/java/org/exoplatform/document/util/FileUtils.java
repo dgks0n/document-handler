@@ -97,25 +97,50 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			throw new NullPointerException("The input stream is null.");
 		}
 		
-		FileOutputStream fileOutputStream = null;
-        CountingInputStream countingInputStream = null;
-        
-        long sizeOfFile = 0;
-        try {
-            fileName = FileNameUtils.getName(fileName);
-            fileOutputStream = new FileOutputStream(new File(FilePathUtils.ROOT_PATH + fileName));
-            countingInputStream = new CountingInputStream(inputStream);
-            
-            // Write file directly on location
-            IOUtils.copyLarge(countingInputStream, fileOutputStream);
-            sizeOfFile = countingInputStream.getByteCount();
-		} catch (Exception ex) {
-			sizeOfFile = 0;
-		} finally {
-			IOUtils.closeQuietly(countingInputStream);
-            IOUtils.closeQuietly(fileOutputStream);
-		}
-        
-        return sizeOfFile;
+    FileOutputStream fileOutputStream = null;
+    CountingInputStream countingInputStream = null;
+
+    long sizeOfFile = 0;
+    try {
+      fileName = FileNameUtils.getName(fileName);
+      fileOutputStream = new FileOutputStream(new File(FilePathUtils.ROOT_PATH + fileName));
+      countingInputStream = new CountingInputStream(inputStream);
+
+      // Write file directly on location
+      IOUtils.copyLarge(countingInputStream, fileOutputStream);
+      sizeOfFile = countingInputStream.getByteCount();
+    } catch (Exception ex) {
+      sizeOfFile = 0;
+    } finally {
+      IOUtils.closeQuietly(countingInputStream);
+      IOUtils.closeQuietly(fileOutputStream);
+    }
+
+    return sizeOfFile;
+	}
+	
+	/**
+	 * Create a file or folder from specified path or the directory cannot be created then an exception is thrown.
+	 * 
+	 * @param filePath - the specified local path
+	 * @return File - created file
+	 * 
+	 * @throws IllegalArgumentException if the file's Path is <code>null</code>
+	 * @throws IOException if the directory cannot be created
+	 */
+	public static File forceMkdir(String filePath) throws IllegalArgumentException, IOException {
+    if (StringUtils.isEmpty(filePath)) {
+      throw new IllegalArgumentException("Unable to create directory "
+          + filePath);
+    }
+
+    File directory = new File(filePath);
+    if (!directory.exists()) {
+      if (!directory.mkdirs()) {
+        throw new IOException("Unable to create directory " + directory);
+      }
+    }
+
+    return directory;
 	}
 }

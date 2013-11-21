@@ -16,11 +16,10 @@
  */
 package org.exoplatform.document.upload.rest;
 
-import java.io.Serializable;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -28,8 +27,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import net.arnx.jsonic.JSON;
+
+import org.apache.commons.fileupload.FileUploadException;
 import org.exoplatform.document.upload.Document;
 import org.exoplatform.document.upload.util.UploadMultipartHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by The eXo Platform SAS
@@ -37,135 +41,43 @@ import org.exoplatform.document.upload.util.UploadMultipartHandler;
  *          
  * @version UploadDocumentService.java Nov 7, 2013
  */
-@Path("/document")
+@Path("/document-service/document")
 public class UploadDocumentService {
-	
-	private static final String WS_UPLOAD_PATH = "/upload";
-	private static final String WS_SERVICE_INFORMATION_PATH = "/service-infor";
-	
-	private UploadMultipartHandler uploadMultipartHandler;
-	
-	public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler) {
-		this.uploadMultipartHandler = uploadMultipartHandler;
-	}
 
-	@POST
-    @Path(UploadDocumentService.WS_UPLOAD_PATH)
-	@Produces(MediaType.APPLICATION_JSON)
-    public Response uploadFile(@Context HttpServletRequest request) throws Exception {
-		String responseText = "Unable to attach files";
-		List<Document> documents = uploadMultipartHandler.parseHttpRequest(request);
-		if (null != documents && documents.size() > 0) {
-			responseText = "{\"fileName\":\"" + documents.get(0).getFilename()
-					+ "\",\"type\":\"" + documents.get(0).getContentType()
-					+ "\",\"size\":\"" + documents.get(0).getSize() + "\"}";
-		}
-		return Response.ok(responseText).build();
+  private static final Logger logger = LoggerFactory.getLogger(UploadDocumentService.class);
+  
+  private static final String WS_UPLOAD_PATH = "/upload";
+
+  private UploadMultipartHandler uploadMultipartHandler;
+
+  public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler) {
+    this.uploadMultipartHandler = uploadMultipartHandler;
+  }
+
+  @POST
+  @Path(UploadDocumentService.WS_UPLOAD_PATH)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response uploadFile(@Context HttpServletRequest request) {
+    String responseText;
+    List<Document> documents = null;
+    try {
+      documents = uploadMultipartHandler.parseHttpRequest(request);
+    } catch (IllegalArgumentException illarge) {
+      logger.error("HTTP servlet request is null.", illarge);
+    } catch (IOException ex) {
+      logger.error("Error encountered while uploading file.", ex);
+    } catch (FileUploadException fue) {
+      logger.error("Could not parse multipart servlet request", fue);
     }
-	
-	@GET
-    @Path(UploadDocumentService.WS_SERVICE_INFORMATION_PATH)
-	@Produces(MediaType.APPLICATION_JSON)
-	public ServiceInfor checkFileSize() {
-		ServiceInfor serviceInfor = new ServiceInfor();
-		serviceInfor.setAuthor("Ngoc Son Dang");
-		serviceInfor.setServiceName(getClass().getName());
-		serviceInfor.setOwner(true);
-		serviceInfor.setDescription("Upload Document REST service");
-		return serviceInfor;
-	}
-	
-	public class ServiceInfor implements Serializable {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 8224416078047201046L;
-		
-		String author;
-		
-		String serviceName;
-		
-		boolean isOwner;
-		
-		String description;
-
-		/**
-		 * 
-		 */
-		public ServiceInfor() {
-			super();
-		}
-
-		/**
-		 * @param author
-		 * @param serviceName
-		 * @param isOwner
-		 * @param description
-		 */
-		public ServiceInfor(String author, String serviceName, boolean isOwner,
-				String description) {
-			super();
-			this.author = author;
-			this.serviceName = serviceName;
-			this.isOwner = isOwner;
-			this.description = description;
-		}
-
-		/**
-		 * @return the author
-		 */
-		public String getAuthor() {
-			return author;
-		}
-
-		/**
-		 * @param author the author to set
-		 */
-		public void setAuthor(String author) {
-			this.author = author;
-		}
-
-		/**
-		 * @return the serviceName
-		 */
-		public String getServiceName() {
-			return serviceName;
-		}
-
-		/**
-		 * @param serviceName the serviceName to set
-		 */
-		public void setServiceName(String serviceName) {
-			this.serviceName = serviceName;
-		}
-
-		/**
-		 * @return the isOwner
-		 */
-		public boolean isOwner() {
-			return isOwner;
-		}
-
-		/**
-		 * @param isOwner the isOwner to set
-		 */
-		public void setOwner(boolean isOwner) {
-			this.isOwner = isOwner;
-		}
-
-		/**
-		 * @return the description
-		 */
-		public String getDescription() {
-			return description;
-		}
-
-		/**
-		 * @param description the description to set
-		 */
-		public void setDescription(String description) {
-			this.description = description;
-		}
-	}
+    
+    if (documents.size() > 0) {
+      responseText = JSON.encode(documents.get(0));
+    } else {
+      responseText = "{\"error\":\"" + 2013
+          + "\",\"message\":\"" + "Error encountered while uploading file."
+          + "\"}";
+    }
+    
+    return Response.ok(responseText).build();
+  }
 }

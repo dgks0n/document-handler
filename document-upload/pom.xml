@@ -10,6 +10,7 @@
 	<groupId>org.exoplatform.document</groupId>
 	<artifactId>document-upload</artifactId>
 	<version>1.0.0</version>
+	<packaging>jar</packaging>
 	<name>Document Handler :: Upload Document REST Service</name>
 	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
