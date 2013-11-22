@@ -1,3 +1,0 @@
-Latin Digraphs and Ligatures in ISO10646-1
-
-This is overwrite file.
