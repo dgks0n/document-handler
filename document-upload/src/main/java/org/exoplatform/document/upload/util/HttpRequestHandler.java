@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.exoplatform.document.upload.Document;
 
@@ -32,7 +33,7 @@ import org.exoplatform.document.upload.Document;
 public interface HttpRequestHandler {
 
 	/**
-	 * Parse document from HTTP servlet request.
+	 * Just handle one file upload in this handler, developer can extend to support multi-files upload
 	 * 
 	 * @param request
 	 * @return
@@ -41,14 +42,14 @@ public interface HttpRequestHandler {
 	 * @deprecated Use {@link #parseHttpRequest(HttpServletRequest)} instead for
 	 */
 	@Deprecated
-	public List<Document> parseUploadMultipart(HttpServletRequest request) throws FileUploadException, IllegalArgumentException, IOException;
+	public List<Document> parseUploadMultipart(HttpServletRequest request) throws SizeLimitExceededException, FileUploadException, IOException;
 	
 	/**
-	 * Parse document(s) from HTTP servlet request.
+	 * Just handle one file upload in this handler, developer can extend to support multi-files upload 
 	 * 
 	 * @param request
 	 * @return
 	 * @throws FileUploadException 
 	 */
-	public List<Document> parseHttpRequest(HttpServletRequest request) throws FileUploadException, IllegalArgumentException, IOException;
+	public List<Document> parseHttpRequest(HttpServletRequest request) throws SizeLimitExceededException, FileUploadException, IOException;
 }

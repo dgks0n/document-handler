@@ -29,6 +29,7 @@ import javax.ws.rs.core.Response;
 
 import net.arnx.jsonic.JSON;
 
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.exoplatform.document.upload.Document;
 import org.exoplatform.document.upload.util.UploadMultipartHandler;
@@ -62,12 +63,12 @@ public class UploadDocumentService {
     List<Document> documents = null;
     try {
       documents = uploadMultipartHandler.parseHttpRequest(request);
-    } catch (IllegalArgumentException illarge) {
-      logger.error("HTTP servlet request is null.", illarge);
-    } catch (IOException ex) {
-      logger.error("Error encountered while uploading file.", ex);
+    } catch (SizeLimitExceededException slee) {
+      logger.error(slee.getMessage(), slee);
     } catch (FileUploadException fue) {
-      logger.error("Could not parse multipart servlet request", fue);
+      logger.error(fue.getMessage(), fue);
+    } catch (IOException ioe) {
+      logger.error("An IO exception has occurred while reading the properties file", ioe);
     }
     
     if (documents.size() > 0) {
