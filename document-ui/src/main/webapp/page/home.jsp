@@ -77,6 +77,33 @@
                   </div>
                 </div>
               </div>
+              
+              <!-- Documents View Pane -->
+              <table class="uiViewPaneContent">
+                <tbody>
+                  <tr>
+                    <td class="uiViewPaneList">
+                      <div class="uiBannerBox uiDensityTiny" style="height: 0px;"></div>
+                      <div id="uiViewManager">
+                        <div class="uiDocListView" style="height: 201px;">
+                          <div class="uiDocListViewInner viewInfoVisible" style="height: 201px;">
+                            <!-- Navigation Bar -->
+                            <div class="uiDocListViewFixedContainer uiDensityTiny" style="width: 1026px;">
+                              <div class="uiFolderPathContainer uiDocumentContainer" style="-webkit-user-select: none;">
+                                <div class="uiInlineBlock uiFolderPathFolder uiFolderPathElement" id=":36.folder.0AFFRuQEFr06pUk9PVA" tabindex="0">My Drive</div>
+                                <div class="uiInlineBlock uiFolderPathSeparatorIcon"></div>
+                                <div class="uiInlineBlock uiFolderPathFolder uiFolderCurrentElement" id=":36.folder.0B1FRuQEFr06pMW9MRWRhZW1Sc3c">01. Scrum Template</div>
+                              </div>
+                            </div>
+                            <!-- Contents -->
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </td>
         </tr>

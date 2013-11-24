@@ -1,16 +1,15 @@
 $(function() {
 	'use strict';
 	
-	var _menuVertical = $('.uiMenuBlockVertical');
 	$('.uiCreationPane').on('click', 'div.uiJFKButtonNarrow', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
 		
 		// Show Upload File(s) Menu
-		_menuVertical.css({top: 144, left: 106, display: 'block'});
+		$('.uiMenuBlockVertical').css({top: 144, left: 106, display: 'block'});
 	});
 	
-	_menuVertical.on('click', '.uiMenuItem', function(event) {
+	$('.uiMenuBlockVertical').on('click', '.uiMenuItem', function(event) {
 		$('input[type="file"]').click();
 	});
 	
@@ -28,11 +27,11 @@ $(function() {
 		add: function(event, data) {
 			var fileItem = data.files[0];
 			var fileType = fileItem.name ? fileItem.name : fileItem;
-			if ($(this).acceptFileTypes(fileType)) {
+			if ($.acceptFileTypes(fileType)) {
 				data.submit();
 			} else {
-				message('Not Supported File Format', 
-						'Cannot upload the file. The format (' + $(this).fileExtension(fileType) + ') is not supported.');
+				$.showError('Not Supported File Format', 
+						'Cannot upload the file. The format (' + $.fileExtension(fileType) + ') is not supported.');
 				return false;
 			}
 		},
@@ -40,13 +39,12 @@ $(function() {
 			console.log(data.textStatus, data.result);
 		},
 		fail: function(event, data) {
-			// Throw error message
-			message(data.errorThrown, data.jqXHR.responseJSON.message);
+			$.showError(data.errorThrown, data.jqXHR.responseJSON.message);
 		}
 	});
 	
-	
-	$.fn.extend({
+	// Customize jQuery
+	$.extend({
 		fileExtension: function(fileItem) {
 			var fileExt = "";
 			if (fileItem) {
@@ -63,13 +61,12 @@ $(function() {
 			}
 			
 			return isAcceptFiletypes;
+		},
+		showError: function(title, errorMessage) {
+			BootstrapDialog.show({
+		        title: title,
+		        message: errorMessage
+		    });
 		}
 	});
 });
-
-function message(title, errorMessage) {
-	BootstrapDialog.show({
-        title: title,
-        message: errorMessage
-    });
-};

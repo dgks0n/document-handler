@@ -9,7 +9,7 @@
 <!--[if (gte IE 8)&(lt IE 10)]>
 <script type="text/javascript" src="script/cors/jquery.xdr-transport.js"></script>
 <![endif]-->
-<script type="text/javascript" src="script/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="script/bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="script/prettify/run_prettify.js"></script>
 <script type="text/javascript" src="script/bootstrap-dialog/bootstrap-dialog.js"></script>
 <script type="text/javascript" src="script/common.js"></script>

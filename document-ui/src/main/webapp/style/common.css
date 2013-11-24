@@ -441,3 +441,92 @@ td, .uiToolbarItemNew,.uiToolbarItemNewUpload {
 	border: 1px solid #992a1b;
 	border-top: 1px solid #992a1b
 }
+
+/* ~~ Documents View Pane ~~ */
+.uiViewPaneContent {
+	width: 100%;
+  border-collapse: collapse;
+}
+.uiViewPaneList {
+	padding: 0;
+	vertical-align: top;
+	width: 100%;
+}
+.fixedMargin div.uiBannerBox {
+	padding-right: 30px;
+}
+
+.uiBannerBox.uiDensityTiny {
+	padding: 0 16px;
+}
+
+.doclist, .uiDocListView, .doclistview-ie, .uiDocListViewInner, .doclistview-inner-ie, .doclistview-child-inner, .doclistview-child-inner-ie {
+  position: relative;
+}
+.doclist, .uiDocListView, .doclistview-ie, .uiDocListViewInner, .doclistview-inner-ie, .doclistview-child-inner, .doclistview-child-inner-ie {
+	cursor: default;
+	margin: 0;
+	outline: none;
+}
+
+.uiDocListViewInner, .doclistview-inner-ie {
+  background-color: #fff;
+}
+
+.fixedMargin .uiDocListViewFixedContainer.density-normal, .fixedMargin .uiDocListViewFixedContainer.density-small, .fixedMargin .uiDocListViewFixedContainer.uiDensityTiny {
+  margin-right: 30px;
+}
+.uiDocListViewFixedContainer.uiDensityTiny {
+  margin: 0 16px;
+}
+.uiDocListViewFixedContainer {
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1;
+}
+
+.uiFolderPathContainer {
+	background-color: #fff;
+	border-bottom: 1px solid #ebebeb;
+	color: #777;
+	font-size: 11px;
+	height: 26px;
+	line-height: 26px;
+	outline: none;
+	overflow: hidden;
+	padding-left: 2px;
+	text-align: top;
+	white-space: nowrap;
+	z-index: 1;
+}
+
+.uiInlineBlock {
+	position: relative;
+	display: -moz-inline-box;
+	display: inline-block;
+}
+
+.uiFolderPathElement {
+	cursor: pointer;
+}
+
+.uiFolderPathFolder {
+	vertical-align: top;
+}
+
+.uiFolderPathSeparatorIcon {
+	background-image: url(https://ssl.gstatic.com/docs/doclist/images/icons_35.png);
+	background-position: -1598px 8px!important;
+	background-repeat: no-repeat;
+	height: 16px;
+	-moz-opacity: .55;
+	-khtml-opacity: .55;
+	opacity: .55;
+	filter: alpha(opacity=55);
+	width: 20px;
+}
+.uiFolderCurrentElement {
+	font-weight: bold;
+}
