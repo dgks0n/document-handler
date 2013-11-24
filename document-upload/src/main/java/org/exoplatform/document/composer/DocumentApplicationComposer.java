@@ -36,12 +36,14 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
 	@Override
 	protected void doComposeApplication(MutablePicoContainer container, ServletContext servletContext) {
-		container.addComponent(UploadMultipartHandler.class);
-		container.addComponent(UploadDocumentService.class);
+		// And adding component in apllication scope container minds one instance of 
+	  // component per web application.
 	}
 	
 	@Override
 	protected void doComposeRequest(MutablePicoContainer container) {
+	  // Adding component in request scope container minds new instance of 
+	  // components will be created for each request.
 		container.addComponent(CodepageDetectorProxy.class);
 		container.addComponent(CharsetPrinter.class);
 		container.addComponent(CodepageProcessor.class);
@@ -49,6 +51,9 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
 	@Override
 	protected void doComposeSession(MutablePicoContainer container) {
-		
+	  // Adding component is session scope container minds one instance of 
+	  // component per HTTP session.
+	  container.addComponent(UploadMultipartHandler.class);
+    container.addComponent(UploadDocumentService.class);
 	}
 }

@@ -13,8 +13,8 @@
 <meta http-equiv="expires" content="0">    
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document Handler</title>
-<link type="text/css" rel="stylesheet" href="style/common.css">
-<%@include file="headerScript.jsp" %>
+<%@include file="common/headerStyle.jsp" %>
+<%@include file="common/headerScript.jsp" %>
 </head>
 <body>
 <div id="uiGlobal" class="uiGlobal">
@@ -98,9 +98,7 @@
       </span>
     </div>
   </div>
-  <form id="formupload" action="" method="POST" enctype="multipart/form-data">
-    <input type="file" name="files[]" multiple style="height: 0px; visibility: hidden; position: absolute; -webkit-user-select: none; width: 182px; font-size: inherit;">
-  </form>
+  <input type="file" name="files[]" multiple style="height: 0px; visibility: hidden; position: absolute; -webkit-user-select: none; width: 182px; font-size: inherit;">
 </div>
 </body>
 </html>

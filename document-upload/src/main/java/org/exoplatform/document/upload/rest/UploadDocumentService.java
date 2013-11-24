@@ -17,6 +17,8 @@
 package org.exoplatform.document.upload.rest;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +31,7 @@ import javax.ws.rs.core.Response;
 
 import net.arnx.jsonic.JSON;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.exoplatform.document.upload.Document;
@@ -43,7 +46,12 @@ import org.slf4j.LoggerFactory;
  * @version UploadDocumentService.java Nov 7, 2013
  */
 @Path("/document-service/document")
-public class UploadDocumentService {
+public class UploadDocumentService implements Serializable {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -2858971360376069291L;
 
   private static final Logger logger = LoggerFactory.getLogger(UploadDocumentService.class);
   
@@ -59,26 +67,39 @@ public class UploadDocumentService {
   @Path(UploadDocumentService.WS_UPLOAD_PATH)
   @Produces(MediaType.APPLICATION_JSON)
   public Response uploadFile(@Context HttpServletRequest request) {
-    String responseText;
-    List<Document> documents = null;
+    String responseText = null;
+    String message = null;
+    List<Document> documents = new ArrayList<Document>();
     try {
       documents = uploadMultipartHandler.parseHttpRequest(request);
+      if (CollectionUtils.isNotEmpty(documents)) {
+        responseText = JSON.encode(documents.get(0));
+        return Response.ok(responseText).build();
+      } else {
+        message = "An IO exception has occurred while reading the properties file";
+        responseText = "{\"error\":\"" + 2015
+            + "\",\"message\":\"" + message + "\"}";
+      }
     } catch (SizeLimitExceededException slee) {
-      logger.error(slee.getMessage(), slee);
-    } catch (FileUploadException fue) {
-      logger.error(fue.getMessage(), fue);
-    } catch (IOException ioe) {
-      logger.error("An IO exception has occurred while reading the properties file", ioe);
-    }
-    
-    if (documents.size() > 0) {
-      responseText = JSON.encode(documents.get(0));
-    } else {
+      message = slee.getMessage();
       responseText = "{\"error\":\"" + 2013
-          + "\",\"message\":\"" + "Error encountered while uploading file."
-          + "\"}";
+          + "\",\"message\":\"" + message + "\"}";
+      
+      logger.error(message, slee);
+    } catch (FileUploadException fue) {
+      message = fue.getMessage();
+      responseText = "{\"error\":\"" + 2014
+          + "\",\"message\":\"" + message + "\"}";
+      
+      logger.error(message, fue);
+    } catch (IOException ioe) {
+      message = "An IO exception has occurred while reading the properties file";
+      responseText = "{\"error\":\"" + 2015
+          + "\",\"message\":\"" + message + "\"}";
+      
+      logger.error(message, ioe);
     }
     
-    return Response.ok(responseText).build();
+    return Response.status(Response.Status.BAD_REQUEST).entity(responseText).build();
   }
 }

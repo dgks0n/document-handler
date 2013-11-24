@@ -20,9 +20,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +34,7 @@ import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
 import org.exoplatform.document.upload.Document;
 import org.exoplatform.document.util.FilePathUtils;
 import org.exoplatform.document.util.FileUtils;
@@ -47,7 +48,12 @@ import org.slf4j.LoggerFactory;
  *          
  * @version UploadMultipartHandler.java Nov 7, 2013
  */
-public class UploadMultipartHandler implements HttpRequestHandler {
+public class UploadMultipartHandler implements HttpRequestHandler, Serializable {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -1664049902177579191L;
 
   /** . */
 	private static final Logger logger = LoggerFactory.getLogger(UploadMultipartHandler.class);
@@ -59,8 +65,6 @@ public class UploadMultipartHandler implements HttpRequestHandler {
    * or else if will be hold in memory. 
    */
 	protected static final int MEMORY_CACHE_SIZE = 4 * 1024;
-	
-	protected List<Document> documents;
 	
 	/* (non-Javadoc)
 	 * @see org.exoplatform.document.upload.util.UploadMultipartPlugin#parseUploadMultipart(javax.servlet.http.HttpServletRequest)
@@ -79,16 +83,14 @@ public class UploadMultipartHandler implements HttpRequestHandler {
 			logger.info("Parse file item form HTTP servlet request.");
 		}
 		
-		// http://pic.dhe.ibm.com/infocenter/btt/v7r1/index.jsp?topic=%2Fcom.ibm.btt.dev_tools.doc_7.1%2Fdoc%2Ftasks%2Fxuied%2F2.3.1f_bindingdatatofileuploadwidgets.html
 		Document document = null;
+		List<Document> documents = new ArrayList<Document>();
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (isMultipart) {
-		  documents = new ArrayList<Document>();
-		  
 		  // Create a factory for disk-based file items
 	    DiskFileItemFactory factory = new DiskFileItemFactory();
 	    
-	    //config the memory cache, if above the cache, the file data will be 
+	    //configuration the memory cache, if above the cache, the file data will be 
       // saved on cache folder 
 	    factory.setSizeThreshold(MEMORY_CACHE_SIZE);
 	    
@@ -104,19 +106,18 @@ public class UploadMultipartHandler implements HttpRequestHandler {
 	      List<FileItem> items = upload.parseRequest(request);
 	      Iterator<FileItem> iterator = items.iterator();
 	      
-	      logger.info("To create specified sub-folder under " + FilePathUtils.ROOT_PATH + " top-level folder");
 	      FileUtils.forceMkdir(FilePathUtils.RESOURCE_PATH);
+	      logger.info("To create specified sub-folder under " + FilePathUtils.ROOT_PATH + " top-level folder");
 	      while (iterator.hasNext()) {
 	        FileItem fileItem = iterator.next();
 	        if (!fileItem.isFormField()) {
-	          document = Document.getInstance();
-	          document.setFilename(fileItem.getName());
-	          document.setContentType(fileItem.getContentType());
-	          document.setSize(fileItem.getSize());
-	          
 	          // Write file items to disk-based
-	          String absolutePath = writeFiles(fileItem, document.getFilename());
+	          String absolutePath = writeFiles(fileItem, fileItem.getName());
 	          if (StringUtils.isNotEmpty(absolutePath)) {
+	            document = Document.getInstance();
+	            document.setFilename(fileItem.getName());
+	            document.setContentType(fileItem.getContentType());
+	            document.setSize(fileItem.getSize());
 	            // Sets specified local path
 	            document.setUrl(absolutePath);
 	            document.setReadOnly(false);
@@ -139,9 +140,8 @@ public class UploadMultipartHandler implements HttpRequestHandler {
 	          }
 	        }
 	      }
-	      return documents;
       } catch (SizeLimitExceededException slee) {
-        throw new SizeLimitExceededException("The request was rejected because its size exceeds the configured maximum");
+        throw new SizeLimitExceededException("The request was rejected because its size exceeds (" + slee.getActualSize() + "bytes) the configured maximum (" + slee.getPermittedSize() + "bytes)");
       } catch (FileUploadException fue) {
         throw new FileUploadException("Upload file stream was been cancelled", fue.getCause());
       } finally {
@@ -150,15 +150,13 @@ public class UploadMultipartHandler implements HttpRequestHandler {
       }
 		}
 		
-		documents = Collections.<Document>emptyList();
 		return documents;
 	}
 	
 	private String writeFiles(FileItem fileItem, String fileName) throws IOException {
 	  String absolutePath = null;
-	  
 	  int lastIndexOf = fileName.lastIndexOf("\\");
-	  if (lastIndexOf >= 0) {
+	  if (lastIndexOf < 0) {
 	    lastIndexOf += 1;
 	  }
 	  File file = new File(FilePathUtils.RESOURCE_PATH + File.separator + fileName.substring(lastIndexOf));
@@ -171,9 +169,9 @@ public class UploadMultipartHandler implements HttpRequestHandler {
       outputStream.write(buffer, 0, length);
     }
     
-    // colse stream 
-    outputStream.close();
-    inputStream.close();
+    // Close stream 
+    IOUtils.closeQuietly(outputStream);
+    IOUtils.closeQuietly(inputStream);
     
     absolutePath = file.getAbsolutePath();
     return absolutePath;

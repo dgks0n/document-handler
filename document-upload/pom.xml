@@ -35,33 +35,11 @@
 			<artifactId>detect-charsets</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		
-<!-- 		<dependency> -->
-<!-- 			<groupId>opensymphony</groupId> -->
-<!-- 			<artifactId>oscore</artifactId> -->
-<!-- 			<version>2.2.4</version> -->
-<!-- 		</dependency> -->
-		
 		<dependency>
 			<groupId>org.everrest</groupId>
 			<artifactId>everrest-core</artifactId>
 			<version>1.1.3</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.ws.rs</groupId> -->
-<!-- 			<artifactId>javax.ws.rs-api</artifactId> -->
-<!-- 			<version>2.0-m09</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.mail</groupId> -->
-<!-- 			<artifactId>mail</artifactId> -->
-<!-- 			<version>1.4.7</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.annotation</groupId> -->
-<!-- 			<artifactId>jsr250-api</artifactId> -->
-<!-- 			<version>1.0</version> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.everrest</groupId>
 			<artifactId>everrest-integration-picocontainer</artifactId>

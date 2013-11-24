@@ -22,7 +22,12 @@
 	<listener>
 		<listener-class>org.picocontainer.web.PicoServletContainerListener</listener-class>
 	</listener>
+	
+	<listener>
+    <listener-class>org.picocontainer.web.webwork2.WebWork2PicoServletContainerListener</listener-class>
+  </listener>
 
+  <!-- Everrest Servlet -->
 	<servlet>
 		<servlet-name>EverrestServlet</servlet-name>
 		<servlet-class>org.everrest.core.servlet.EverrestServlet</servlet-class>
@@ -31,6 +36,16 @@
 		<servlet-name>EverrestServlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Webwork -->
+	<servlet>
+    <servlet-name>ServletDispatcher</servlet-name>
+    <servlet-class>com.opensymphony.webwork.dispatcher.ServletDispatcher</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletDispatcher</servlet-name>
+    <url-pattern>*.htm</url-pattern>
+  </servlet-mapping>
 
 	<!-- Parser Home Page URL Redirect -->
 	<servlet>
