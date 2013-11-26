@@ -22,9 +22,9 @@ import java.util.Date;
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version DocumentProducer.java Nov 1, 2013
+ * @version IDocument.java Nov 1, 2013
  */
-public interface DocumentProducer {
+public interface IDocument {
 
 	/**
 	 * The ETag of the document.

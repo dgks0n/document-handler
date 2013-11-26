@@ -21,14 +21,14 @@ import java.io.Serializable;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Entity.java Oct 31, 2013
- *
+ * 
  */
 public interface Entity<I extends Serializable> extends Serializable {
 
-	/**
-	 * Get Entity's Id
-	 * 
-	 * @return an Entity's Id
-	 */
-	public I getId();
+  /**
+   * Get Entity's Id
+   * 
+   * @return an Entity's Id
+   */
+  public I getId();
 }

@@ -16,42 +16,19 @@
  */
 package org.exoplatform.document.entity;
 
-import java.io.Serializable;
+import javax.persistence.MappedSuperclass;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version EntityProducer.java Oct 31, 2013
+ * @version NumericIdentity.java Nov 26, 2013
  *
  */
-public interface EntityProducer<I extends Serializable> {
+@MappedSuperclass
+public abstract class NumericIdentity extends AbstractEntity<Long> {
 
-	/**
-	 * Removes a parent from an entity
-	 * 
-	 * @param fileId : The ID of the entity
-	 * @param folderId : The ID of the parent
-	 */
-	public void deleteEntity(String fileId, String folderId);
-	
-	/**
-	 * Gets a specific parent reference
-	 * 
-	 * @param fileId : The ID of the entity
-	 * @param parentid : The ID of the parent
-	 */
-	public void findEntity(String fileId, String parentid);
-	
-	/**
-	 * Adds a parent folder for a file (entity)
-	 * 
-	 * @param fileId : The ID of the entity
-	 */
-	public void insertEntity(String fileId);
-	
-	/**
-	 * Lists a file's parents
-	 * 
-	 * @param fileId  : The ID of the entity
-	 */
-	public void findParentsOfEntity(String fileId);
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 6310887535955696899L;
+
 }

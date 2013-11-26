@@ -21,26 +21,21 @@ package org.exoplatform.document.entity;
  * @version Label.java Oct 31, 2013
  *
  */
-public class Label extends AbstractEntity<String> {
+public class Label extends StringIdentity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4457310329075840843L;
 
-	// Whether this file is starred by the user.
 	private boolean starred;
 	
-	// 
 	private boolean hidden;
 	
-	// Whether this file has been trashed.
 	private boolean trashed;
 	
-	// Whether viewers are prevented from downloading this file.
 	private boolean restricted;
 	
-	// Whether this file has been viewed by this user.
 	private boolean viewed;
 
 	/**

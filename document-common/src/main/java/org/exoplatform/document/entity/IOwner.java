@@ -14,15 +14,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.common.dao;
-
-import com.googlecode.genericdao.dao.DAOUtil;
+package org.exoplatform.document.entity;
 
 /**
- * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version HibernateTransactionUtil.java Nov 6, 2013
- *
+ * Created by The eXo Platform SAS
+ * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
+ *          
+ * @version IOwner.java Nov 1, 2013
  */
-public class HibernateTransactionUtil extends DAOUtil {
+public interface IOwner {
 
+	/**
+	 * Get display name of the Owner
+	 * 
+	 * @return a plain text name
+	 */
+	public String getDisplayName();
 }

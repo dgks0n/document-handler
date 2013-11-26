@@ -34,9 +34,9 @@ import com.googlecode.genericdao.search.SearchResult;
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version HibernateManagerProvider.java Nov 5, 2013
+ * @version HibernateManager.java Nov 5, 2013
  */
-public interface HibernateManagerProvider<T, ID extends Serializable> {
+public interface HibernateManager<T, ID extends Serializable> {
 	
 	/**
 	 * <p>

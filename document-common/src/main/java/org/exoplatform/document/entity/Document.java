@@ -25,46 +25,29 @@ import java.util.Date;
  *          
  * @version Document.java Nov 1, 2013
  */
-public class Document<I extends Serializable> extends BaseEntity<I> implements DocumentProducer {
+public class Document<I extends Serializable> extends BaseEntity<I> implements IDocument {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -868279763726156941L;
-	
-	// ETag of the file.
+
 	private String[] etag;
 	
-	// The MIME type of the file. 
-	// This is only mutable on update when uploading new content. 
-	// This field can be left blank, and the mimetype will be determined from the uploaded content's MIME type.
 	private String mimeType;
 	
-	// Last time this file was modified by anyone (formatted RFC 3339 timestamp). 
-	// This is only mutable on update when the setModifiedDate parameter is set.
 	private Date modifiedDate;
 	
-	// Short lived download URL for the file. 
-	// This is only populated for files with content stored in Drive.
 	private String downloadUrl;
 	
-	// The original filename if the file was uploaded manually, or the original title if the file was inserted through the API.
-	// Note that renames of the title will not change the original filename. 
-	// This will only be populated on files with content stored in Drive.
 	private String originalFilename;	
 	
-	// An MD5 checksum for the content of this file. 
-	// This is populated only for files with content stored in Drive.
 	private String md5Checksum;
 	
-	// The size of the file in bytes. 
-	// This is only populated for files with content stored in Drive.
 	private long fileSize;
 	
-	// Name of the last user to modify this file.
 	private String lastModifyingUserName;
 	
-	// The last user to modify this file.
 	private Owner lastModifyingUser;
 	
 	public Document() {

@@ -21,14 +21,13 @@ package org.exoplatform.document.entity;
  * @version Picture.java Oct 31, 2013
  *
  */
-public class Picture extends AbstractEntity<String> {
+public class Picture extends StringIdentity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1190891511410189743L;
 
-	// A URL that points to a profile picture of this user.
 	private String url;
 
 	/**

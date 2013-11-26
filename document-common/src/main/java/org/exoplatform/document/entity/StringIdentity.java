@@ -16,43 +16,19 @@
  */
 package org.exoplatform.document.entity;
 
+import javax.persistence.MappedSuperclass;
 
 /**
- * Created by The eXo Platform SAS
- * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
- * @version OwnerEntity.java Nov 1, 2013
+ * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
+ * @version StringIdentity.java Nov 26, 2013
+ *
  */
-public class OwnerEntity extends AbstractEntity<String> implements OwnerProducer {
+@MappedSuperclass
+public abstract class StringIdentity extends AbstractEntity<String> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1033877984805774048L;
-	
-	// A plain text displayable name for this user.
-	private String displayName;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -5631565396943682169L;
 
-	
-	public OwnerEntity() {
-	}
-
-	public OwnerEntity(String displayName) {
-		this.displayName = displayName;
-	}
-
-	/**
-	 * @return the displayName
-	 */
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	/**
-	 * @param displayName the displayName to set
-	 */
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-	
 }

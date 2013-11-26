@@ -21,17 +21,15 @@ package org.exoplatform.document.entity;
  * @version Thumbnail.java Oct 31, 2013
  *
  */
-public class Thumbnail extends AbstractEntity<String> {
+public class Thumbnail extends StringIdentity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5149103349382724837L;
 
-	// The URL-safe Base64 encoded bytes of the thumbnail image.
 	private byte[] image;
 	
-	// The MIME type of the thumbnail.
 	private String mimeType;
 
 	/**

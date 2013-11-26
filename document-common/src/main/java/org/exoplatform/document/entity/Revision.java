@@ -32,24 +32,14 @@ public class Revision extends Document<String> {
 	 */
 	private static final long serialVersionUID = 6612421643350781170L;
 	
-	// Whether this revision is pinned to prevent automatic purging. 
-	// This will only be populated and can only be modified on files with content stored in Drive which are not Google Docs. 
-	// Revisions can also be pinned when they are created through the drive.files.insert/update/copy by using the pinned query parameter.
 	private boolean pinned;
 	
-	// Whether this revision is published. 
-	// This is only populated and can only be modified for Google Docs.
 	private boolean published;
 	
-	// Whether subsequent revisions will be automatically republished. 
-	// This is only populated and can only be modified for Google Docs.
 	private boolean publishAuto;
 	
-	// Whether this revision is published outside the domain. 
-	// This is only populated and can only be modified for Google Docs.
 	private boolean publishedOutsideDomain;
 	
-	// A link to the published revision.
 	private String publishedLink;
 
 	/**

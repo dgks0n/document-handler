@@ -28,10 +28,8 @@ public class Parent extends BaseEntity<String> {
 	 */
 	private static final long serialVersionUID = -9174189865264723277L;
 
-	// A link to the parent.
 	private String parentLink;
 	
-	// Whether or not the parent is the root folder.
 	private boolean isRoot;
 
 	public Parent() {

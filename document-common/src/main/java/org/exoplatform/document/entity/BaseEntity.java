@@ -30,10 +30,8 @@ public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<
 	 */
 	private static final long serialVersionUID = 311072933487708402L;
 
-	// This is always drive#parentReference.
 	private String kind;
 	
-	// A link back to this reference.
 	private String selfLink;
 
 	public BaseEntity() {

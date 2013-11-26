@@ -28,7 +28,6 @@ public class Children extends BaseEntity<String> {
 	 */
 	private static final long serialVersionUID = 3338144206955937089L;
 
-	// A link to the child.
 	private String childLink;
 
 	/**
