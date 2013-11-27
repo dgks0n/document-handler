@@ -16,11 +16,17 @@
  */
 package org.exoplatform.document.entity;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
+import org.exoplatform.document.constant.TBLOwner;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Owner.java Oct 31, 2013
  *
  */
+@MappedSuperclass
 public class Owner extends StringIdentity implements IOwner {
 
 	/**
@@ -28,14 +34,19 @@ public class Owner extends StringIdentity implements IOwner {
 	 */
 	private static final long serialVersionUID = 5870864171015175044L;
 
+	@Column(name = TBLOwner.KIND)
 	private String kind;
 	
+	@Column(name = TBLOwner.DISPLAY_NAME)
 	private String displayName;
 
+	@Column(name = TBLOwner.PICTURE)
 	private Picture picture;
 	
+	@Column(name = TBLOwner.IS_AUTHENTICATED_USER)
 	private boolean isAuthenticatedUser;
 	
+	@Column(name = TBLOwner.PERMISSION_ID)
 	private String permissionId;
 
   /**

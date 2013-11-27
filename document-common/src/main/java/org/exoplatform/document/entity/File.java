@@ -16,7 +16,7 @@
  */
 package org.exoplatform.document.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ import java.util.List;
  * @version File.java Oct 31, 2013
  *
  */
-public class File extends Document<String> {
+public class File extends Document {
 
 	/**
 	 * 
@@ -37,9 +37,9 @@ public class File extends Document<String> {
 	
 	private Label label;
 	
-	private Date createdDate;
+	private Calendar createdDate;
 	
-	private Date modifiedByMeDate;
+	private Calendar modifiedByMeDate;
 	
 	private String fileExtension;
 	
@@ -49,7 +49,7 @@ public class File extends Document<String> {
 	
 	private Label labelOfFile;
 	
-	private Date sharedWithMeDate;
+	private Calendar sharedWithMeDate;
 	
 	private List parents;
 	
@@ -63,7 +63,7 @@ public class File extends Document<String> {
 	
 	private String thumbnailLink;
 	
-	private Date lastViewedByMeDate;
+	private Calendar lastViewedByMeDate;
 	
 	private String webContentLink;
 	
@@ -125,11 +125,11 @@ public class File extends Document<String> {
 	 * @param copyable
 	 */
 	public File(String title, String description, Label label,
-			Date createdDate, Date modifiedByMeDate, String fileExtension,
+			Calendar createdDate, Calendar modifiedByMeDate, String fileExtension,
 			String alternateLink, String embedLink, Label labelOfFile,
-			Date sharedWithMeDate, List parents, long quotaBytesUsed,
+			Calendar sharedWithMeDate, List parents, long quotaBytesUsed,
 			List ownerNames, boolean editable, boolean writersCanShare,
-			String thumbnailLink, Date lastViewedByMeDate,
+			String thumbnailLink, Calendar lastViewedByMeDate,
 			String webContentLink, boolean explicitlyTrashed,
 			Thumbnail thumbnail, String webViewLink, String iconLink,
 			boolean shared, List owners, boolean appDataContents,
@@ -210,28 +210,28 @@ public class File extends Document<String> {
 	/**
 	 * @return the createdDate
 	 */
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
 		return createdDate;
 	}
 
 	/**
 	 * @param createdDate the createdDate to set
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
 		this.createdDate = createdDate;
 	}
 
 	/**
 	 * @return the modifiedByMeDate
 	 */
-	public Date getModifiedByMeDate() {
+	public Calendar getModifiedByMeDate() {
 		return modifiedByMeDate;
 	}
 
 	/**
 	 * @param modifiedByMeDate the modifiedByMeDate to set
 	 */
-	public void setModifiedByMeDate(Date modifiedByMeDate) {
+	public void setModifiedByMeDate(Calendar modifiedByMeDate) {
 		this.modifiedByMeDate = modifiedByMeDate;
 	}
 
@@ -294,14 +294,14 @@ public class File extends Document<String> {
 	/**
 	 * @return the sharedWithMeDate
 	 */
-	public Date getSharedWithMeDate() {
+	public Calendar getSharedWithMeDate() {
 		return sharedWithMeDate;
 	}
 
 	/**
 	 * @param sharedWithMeDate the sharedWithMeDate to set
 	 */
-	public void setSharedWithMeDate(Date sharedWithMeDate) {
+	public void setSharedWithMeDate(Calendar sharedWithMeDate) {
 		this.sharedWithMeDate = sharedWithMeDate;
 	}
 
@@ -392,14 +392,14 @@ public class File extends Document<String> {
 	/**
 	 * @return the lastViewedByMeDate
 	 */
-	public Date getLastViewedByMeDate() {
+	public Calendar getLastViewedByMeDate() {
 		return lastViewedByMeDate;
 	}
 
 	/**
 	 * @param lastViewedByMeDate the lastViewedByMeDate to set
 	 */
-	public void setLastViewedByMeDate(Date lastViewedByMeDate) {
+	public void setLastViewedByMeDate(Calendar lastViewedByMeDate) {
 		this.lastViewedByMeDate = lastViewedByMeDate;
 	}
 

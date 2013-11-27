@@ -16,6 +16,7 @@
  */
 package org.exoplatform.document.entity;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -45,7 +46,7 @@ public interface IDocument {
 	 * 
 	 * @return modified time
 	 */
-	public Date getModifiedDate();
+	public Calendar getModifiedDate();
 	
 	/**
 	 * Short term download URL for the file. 

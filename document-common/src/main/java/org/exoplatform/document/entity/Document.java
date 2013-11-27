@@ -16,8 +16,14 @@
  */
 package org.exoplatform.document.entity;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
+
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.exoplatform.document.constant.TBLDocument;
 
 /**
  * Created by The eXo Platform SAS
@@ -25,36 +31,47 @@ import java.util.Date;
  *          
  * @version Document.java Nov 1, 2013
  */
-public class Document<I extends Serializable> extends BaseEntity<I> implements IDocument {
+@MappedSuperclass
+public class Document extends BaseEntity<String> implements IDocument {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -868279763726156941L;
 
-	private String[] etag;
+	@Column(name = TBLDocument.ETAG)
+	protected String[] etag;
 	
-	private String mimeType;
+	@Column(name = TBLDocument.MIME_TYPE)
+	protected String mimeType;
 	
-	private Date modifiedDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = TBLDocument.MODIFIED_DATE)
+	protected Calendar modifiedDate;
 	
-	private String downloadUrl;
+	@Column(name = TBLDocument.DOWNLOAD_URL)
+	protected String downloadUrl;
 	
-	private String originalFilename;	
+	@Column(name = TBLDocument.ORIGINAL_FILENAME)
+	protected String originalFilename;	
 	
-	private String md5Checksum;
+	@Column(name = TBLDocument.MD5_CHECKSUM)
+	protected String md5Checksum;
 	
-	private long fileSize;
+	@Column(name = TBLDocument.FILE_SIZE)
+	protected long fileSize;
 	
-	private String lastModifyingUserName;
+	@Column(name = TBLDocument.LAST_MODIFYING_USERNAME)
+	protected String lastModifyingUserName;
 	
-	private Owner lastModifyingUser;
+	@Column(name = TBLDocument.LAST_MODIFYING_USER)
+	protected Owner lastModifyingUser;
 	
 	public Document() {
 		super();
 	}
 	
-	public Document(String kind, String selfLink, String[] etag, String mimeType, Date modifiedDate,
+	public Document(String kind, String selfLink, String[] etag, String mimeType, Calendar modifiedDate,
 			String downloadUrl, String originalFilename, String md5Checksum,
 			long fileSize, String lastModifyingUserName, Owner lastModifyingUser) {
 		super(kind, selfLink);
@@ -103,14 +120,14 @@ public class Document<I extends Serializable> extends BaseEntity<I> implements I
 	 * @see org.exoplatform.document.entity.DocumentPlugin#getModifiedDate()
 	 */
 	@Override
-	public Date getModifiedDate() {
+	public Calendar getModifiedDate() {
 		return modifiedDate;
 	}
 	
 	/**
 	 * @param modifiedDate the modifiedDate to set
 	 */
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Calendar modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 

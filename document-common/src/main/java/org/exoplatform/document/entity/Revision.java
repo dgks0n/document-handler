@@ -16,7 +16,7 @@
  */
 package org.exoplatform.document.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 
 
 /**
@@ -25,7 +25,7 @@ import java.util.Date;
  *          
  * @version Revision.java Nov 1, 2013
  */
-public class Revision extends Document<String> {
+public class Revision extends Document {
 
 	/**
 	 * 
@@ -50,7 +50,7 @@ public class Revision extends Document<String> {
 	}
 
 	public Revision(String kind, String selfLink, String[] etag, String mimeType, 
-			Date modifiedDate, String downloadUrl, String originalFilename, String md5Checksum, 
+			Calendar modifiedDate, String downloadUrl, String originalFilename, String md5Checksum, 
 			long fileSize, String lastModifyingUserName, Owner lastModifyingUser, boolean pinned, 
 			boolean published, boolean publishAuto, boolean publishedOutsideDomain, String publishedLink) {
 		super(kind, selfLink, etag, mimeType, modifiedDate, downloadUrl, 

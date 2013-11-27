@@ -18,11 +18,17 @@ package org.exoplatform.document.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
+import org.exoplatform.document.constant.TBLEntity;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version BaseEntity.java Oct 31, 2013
  *
  */
+@MappedSuperclass
 public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<I> {
 
 	/**
@@ -30,9 +36,11 @@ public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<
 	 */
 	private static final long serialVersionUID = 311072933487708402L;
 
-	private String kind;
+	@Column(name = TBLEntity.KIND)
+	protected String kind;
 	
-	private String selfLink;
+	@Column(name = TBLEntity.SELF_KIND)
+	protected String selfLink;
 
 	public BaseEntity() {
 	}

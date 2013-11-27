@@ -14,38 +14,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity;
-
-import java.io.Serializable;
-
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+package org.exoplatform.document.constant;
 
 /**
- * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version AbstractEntity.java Oct 31, 2013
- * 
+ * Created by The eXo Platform SAS
+ * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
+ *          
+ * @version TBLOwner.java Nov 27, 2013
  */
-@MappedSuperclass
-public abstract class AbstractEntity<I extends Serializable> implements Entity<I> {
+public class TBLOwner {
 
-  /**
-	 * 
-	 */
-  private static final long serialVersionUID = 6475766928065560033L;
-
-  /**
-   * ID of Object Entity
-   */
-  @Id
-  protected I id;
-
-  public void setId(I id) {
-    this.id = id;
-  }
-
-  @Override
-  public I getId() {
-    return id;
-  }
+  public static final String TBLOwner = "";
+  
+  public static final String KIND = "kind";
+  public static final String DISPLAY_NAME = "display_name";
+  public static final String PICTURE = "picture";
+  public static final String IS_AUTHENTICATED_USER = "is_authenticated_user";
+  public static final String PERMISSION_ID = "permission_id";
 }
