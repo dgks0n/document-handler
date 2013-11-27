@@ -16,11 +16,23 @@
  */
 package org.exoplatform.document.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.exoplatform.document.constant.TBLEntity;
+import org.exoplatform.document.constant.TBLThumbnail;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Thumbnail.java Oct 31, 2013
  *
  */
+@Entity
+@Table(name = TBLThumbnail.TBL_NAME,
+    uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
 public class Thumbnail extends StringIdentity {
 
 	/**
@@ -28,23 +40,17 @@ public class Thumbnail extends StringIdentity {
 	 */
 	private static final long serialVersionUID = 5149103349382724837L;
 
+	@Lob
+	@Column(name = TBLThumbnail.IMAGE, nullable = false)
 	private byte[] image;
 	
+	@Column(name = TBLThumbnail.MIME_TYPE)
 	private String mimeType;
 
 	/**
 	 * 
 	 */
 	public Thumbnail() {
-	}
-
-	/**
-	 * @param image
-	 * @param mimeType
-	 */
-	public Thumbnail(byte[] image, String mimeType) {
-		this.image = image;
-		this.mimeType = mimeType;
 	}
 
 	/**

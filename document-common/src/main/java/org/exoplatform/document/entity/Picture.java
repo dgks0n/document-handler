@@ -24,13 +24,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.exoplatform.document.constant.GenericGeneratorType;
-import org.exoplatform.document.constant.ParameterType;
 import org.exoplatform.document.constant.TBLEntity;
 import org.exoplatform.document.constant.TBLOwner;
 import org.exoplatform.document.constant.TBLPicture;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
@@ -50,29 +46,13 @@ public class Picture extends StringIdentity {
 	@Column(name = TBLPicture.URL, length = 1500)
 	private String url;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-  @PrimaryKeyJoinColumn
+	@OneToOne(mappedBy = TBLOwner.TBL_NAME)
 	private Owner owner;
 
 	/**
 	 * 
 	 */
 	public Picture() {
-	}
-	
-	/**
-	 * Mapped with Owner's Identity
-	 * 
-	 * (non-Javadoc)
-	 * @see org.exoplatform.document.entity.AbstractEntity#getId()
-	 */
-	@GenericGenerator(name = GenericGeneratorType.GENERATOR, 
-	    strategy = GenericGeneratorType.STRATEGY_FOREIGN, 
-	    parameters = @Parameter(name = ParameterType.PROPERTY, 
-	    value = TBLOwner.TBL_NAME))
-	@Override
-	public String getId() {
-	  return id;
 	}
 
   /**

@@ -20,7 +20,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -55,7 +57,7 @@ public class Document extends BaseEntityIdentity implements IDocument {
 	protected String downloadUrl;
 	
 	@Column(name = TBLDocument.ORIGINAL_FILENAME)
-	protected String originalFilename;	
+	protected String originalFilename;
 	
 	@Column(name = TBLDocument.MD5_CHECKSUM)
 	protected String md5Checksum;
@@ -66,7 +68,8 @@ public class Document extends BaseEntityIdentity implements IDocument {
 	@Column(name = TBLDocument.LAST_MODIFYING_USERNAME)
 	protected String lastModifyingUserName;
 	
-	@Column(name = TBLDocument.LAST_MODIFYING_USER)
+	@OneToOne
+	@JoinColumn(name = TBLDocument.LAST_MODIFYING_USER)
 	protected Owner lastModifyingUser;
 
   /**

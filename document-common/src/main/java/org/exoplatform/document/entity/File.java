@@ -19,11 +19,21 @@ package org.exoplatform.document.entity;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.exoplatform.document.constant.TBLEntity;
+import org.exoplatform.document.constant.TBLFile;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version File.java Oct 31, 2013
  *
  */
+@Entity
+@Table(name = TBLFile.TBL_NAME,
+    uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
 public class File extends Document {
 
 	/**
