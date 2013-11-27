@@ -23,8 +23,8 @@ import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
 import javax.servlet.ServletContext;
 
 import org.everrest.pico.EverrestComposer;
+import org.exoplatform.document.upload.handle.UploadMultipartHandler;
 import org.exoplatform.document.upload.rest.UploadDocumentService;
-import org.exoplatform.document.upload.util.UploadMultipartHandler;
 import org.picocontainer.MutablePicoContainer;
 
 /**

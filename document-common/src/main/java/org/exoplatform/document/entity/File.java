@@ -47,8 +47,6 @@ public class File extends Document {
 	
 	private String embedLink;
 	
-	private Label labelOfFile;
-	
 	private Calendar sharedWithMeDate;
 	
 	private List parents;
@@ -92,77 +90,6 @@ public class File extends Document {
 	 */
 	public File() {
 		super();
-	}
-
-	/**
-	 * @param title
-	 * @param description
-	 * @param label
-	 * @param createdDate
-	 * @param modifiedByMeDate
-	 * @param fileExtension
-	 * @param alternateLink
-	 * @param embedLink
-	 * @param labelOfFile
-	 * @param sharedWithMeDate
-	 * @param parents
-	 * @param quotaBytesUsed
-	 * @param ownerNames
-	 * @param editable
-	 * @param writersCanShare
-	 * @param thumbnailLink
-	 * @param lastViewedByMeDate
-	 * @param webContentLink
-	 * @param explicitlyTrashed
-	 * @param thumbnail
-	 * @param webViewLink
-	 * @param iconLink
-	 * @param shared
-	 * @param owners
-	 * @param appDataContents
-	 * @param defaultOpenWithLink
-	 * @param headRevisionId
-	 * @param copyable
-	 */
-	public File(String title, String description, Label label,
-			Calendar createdDate, Calendar modifiedByMeDate, String fileExtension,
-			String alternateLink, String embedLink, Label labelOfFile,
-			Calendar sharedWithMeDate, List parents, long quotaBytesUsed,
-			List ownerNames, boolean editable, boolean writersCanShare,
-			String thumbnailLink, Calendar lastViewedByMeDate,
-			String webContentLink, boolean explicitlyTrashed,
-			Thumbnail thumbnail, String webViewLink, String iconLink,
-			boolean shared, List owners, boolean appDataContents,
-			String defaultOpenWithLink, String headRevisionId, boolean copyable) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.label = label;
-		this.createdDate = createdDate;
-		this.modifiedByMeDate = modifiedByMeDate;
-		this.fileExtension = fileExtension;
-		this.alternateLink = alternateLink;
-		this.embedLink = embedLink;
-		this.labelOfFile = labelOfFile;
-		this.sharedWithMeDate = sharedWithMeDate;
-		this.parents = parents;
-		this.quotaBytesUsed = quotaBytesUsed;
-		this.ownerNames = ownerNames;
-		this.editable = editable;
-		this.writersCanShare = writersCanShare;
-		this.thumbnailLink = thumbnailLink;
-		this.lastViewedByMeDate = lastViewedByMeDate;
-		this.webContentLink = webContentLink;
-		this.explicitlyTrashed = explicitlyTrashed;
-		this.thumbnail = thumbnail;
-		this.webViewLink = webViewLink;
-		this.iconLink = iconLink;
-		this.shared = shared;
-		this.owners = owners;
-		this.appDataContents = appDataContents;
-		this.defaultOpenWithLink = defaultOpenWithLink;
-		this.headRevisionId = headRevisionId;
-		this.copyable = copyable;
 	}
 
 	/**
@@ -275,20 +202,6 @@ public class File extends Document {
 	 */
 	public void setEmbedLink(String embedLink) {
 		this.embedLink = embedLink;
-	}
-
-	/**
-	 * @return the labelOfFile
-	 */
-	public Label getLabelOfFile() {
-		return labelOfFile;
-	}
-
-	/**
-	 * @param labelOfFile the labelOfFile to set
-	 */
-	public void setLabelOfFile(Label labelOfFile) {
-		this.labelOfFile = labelOfFile;
 	}
 
 	/**
@@ -556,6 +469,5 @@ public class File extends Document {
 	public void setCopyable(boolean copyable) {
 		this.copyable = copyable;
 	}
-	
 	
 }

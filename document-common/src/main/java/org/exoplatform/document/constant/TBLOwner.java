@@ -24,11 +24,10 @@ package org.exoplatform.document.constant;
  */
 public class TBLOwner {
 
-  public static final String TBLOwner = "";
+  public static final String TBL_NAME = "owner";
   
   public static final String KIND = "kind";
   public static final String DISPLAY_NAME = "display_name";
-  public static final String PICTURE = "picture";
   public static final String IS_AUTHENTICATED_USER = "is_authenticated_user";
   public static final String PERMISSION_ID = "permission_id";
 }

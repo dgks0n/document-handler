@@ -16,11 +16,30 @@
  */
 package org.exoplatform.document.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.exoplatform.document.constant.GenericGeneratorType;
+import org.exoplatform.document.constant.ParameterType;
+import org.exoplatform.document.constant.TBLEntity;
+import org.exoplatform.document.constant.TBLOwner;
+import org.exoplatform.document.constant.TBLPicture;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Picture.java Oct 31, 2013
  *
  */
+@Entity
+@Table(name = TBLPicture.TBL_NAME, 
+    uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
 public class Picture extends StringIdentity {
 
 	/**
@@ -28,62 +47,59 @@ public class Picture extends StringIdentity {
 	 */
 	private static final long serialVersionUID = -1190891511410189743L;
 
+	@Column(name = TBLPicture.URL, length = 1500)
 	private String url;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+  @PrimaryKeyJoinColumn
+	private Owner owner;
 
 	/**
 	 * 
 	 */
 	public Picture() {
 	}
-
-	/**
-	 * @param url
-	 */
-	public Picture(String url) {
-		this.url = url;
-	}
-
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
-		return url;
-	}
-
-	/**
-	 * @param url the url to set
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + this.getId().hashCode();
-		result = prime * result + this.getUrl().hashCode();
-		return result;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		return this.getId().equals(((Picture) obj).getId())
-				&& this.getUrl().equals(((Picture) obj).getUrl());
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Picture [url=" + url + "]";
-	}
 	
+	/**
+	 * Mapped with Owner's Identity
+	 * 
+	 * (non-Javadoc)
+	 * @see org.exoplatform.document.entity.AbstractEntity#getId()
+	 */
+	@GenericGenerator(name = GenericGeneratorType.GENERATOR, 
+	    strategy = GenericGeneratorType.STRATEGY_FOREIGN, 
+	    parameters = @Parameter(name = ParameterType.PROPERTY, 
+	    value = TBLOwner.TBL_NAME))
+	@Override
+	public String getId() {
+	  return id;
+	}
+
+  /**
+   * @return the url
+   */
+  public String getUrl() {
+    return url;
+  }
+
+  /**
+   * @param url the url to set
+   */
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  /**
+   * @return the owner
+   */
+  public Owner getOwner() {
+    return owner;
+  }
+
+  /**
+   * @param owner the owner to set
+   */
+  public void setOwner(Owner owner) {
+    this.owner = owner;
+  }
 }

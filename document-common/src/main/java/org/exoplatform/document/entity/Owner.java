@@ -16,17 +16,25 @@
  */
 package org.exoplatform.document.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+import org.exoplatform.document.constant.TBLEntity;
 import org.exoplatform.document.constant.TBLOwner;
+import org.exoplatform.document.entity.plugin.IOwner;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Owner.java Oct 31, 2013
  *
  */
-@MappedSuperclass
+@Entity
+@Table(name = TBLOwner.TBL_NAME, uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
 public class Owner extends StringIdentity implements IOwner {
 
 	/**
@@ -34,20 +42,29 @@ public class Owner extends StringIdentity implements IOwner {
 	 */
 	private static final long serialVersionUID = 5870864171015175044L;
 
-	@Column(name = TBLOwner.KIND)
+	@Column(name = TBLOwner.KIND, length = 50)
 	private String kind;
 	
-	@Column(name = TBLOwner.DISPLAY_NAME)
+	@Column(name = TBLOwner.DISPLAY_NAME, length = 100)
 	private String displayName;
-
-	@Column(name = TBLOwner.PICTURE)
-	private Picture picture;
 	
-	@Column(name = TBLOwner.IS_AUTHENTICATED_USER)
+	@Column(name = TBLOwner.IS_AUTHENTICATED_USER, length = 1)
 	private boolean isAuthenticatedUser;
 	
-	@Column(name = TBLOwner.PERMISSION_ID)
+	@Column(name = TBLOwner.PERMISSION_ID, length = 100)
 	private String permissionId;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = TBLOwner.TBL_NAME, 
+	    cascade = CascadeType.ALL)
+  private Picture picture;
+	
+//	 { "id": "123456788", "name": "Joe Shmoe", 
+//	   "given_name": "Joe", "family_name": "Shmoe", 
+//	   "link": "https://plus.google.com/1234567788", 
+//	   "picture": "https://IMAGE_URL/photo.jpg", 
+//	   "gender": "male", "birthday": "0000-03-10", "locale": "en-GB"}
+	
+//	https://developers.google.com/resources/api-libraries/documentation/oauth2/v2/csharp/latest/classGoogle_1_1Apis_1_1Oauth2_1_1v2_1_1Data_1_1Userinfo.html
 
   /**
    * 

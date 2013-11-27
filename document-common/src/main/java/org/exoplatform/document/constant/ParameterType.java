@@ -14,21 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity;
-
-import java.io.Serializable;
+package org.exoplatform.document.constant;
 
 /**
- * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version Entity.java Oct 31, 2013
- * 
+ * Created by The eXo Platform SAS
+ * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
+ *          
+ * @version ParameterType.java Nov 27, 2013
  */
-public interface Entity<I extends Serializable> extends Serializable {
+public class ParameterType {
 
-  /**
-   * Get Entity's Id
-   * 
-   * @return an Entity's Id
-   */
-  public I getId();
+  public static final String PROPERTY = "property";
 }

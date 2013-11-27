@@ -35,7 +35,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.exoplatform.document.upload.Document;
-import org.exoplatform.document.upload.util.UploadMultipartHandler;
+import org.exoplatform.document.upload.handle.UploadMultipartHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

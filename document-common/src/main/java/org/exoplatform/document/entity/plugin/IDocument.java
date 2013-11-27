@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity;
+package org.exoplatform.document.entity.plugin;
 
 import java.util.Calendar;
-import java.util.Date;
+
+import org.exoplatform.document.entity.Owner;
 
 /**
  * Created by The eXo Platform SAS

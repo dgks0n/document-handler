@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.upload.util;
+package org.exoplatform.document.upload.handle;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,6 +36,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.exoplatform.document.upload.Document;
+import org.exoplatform.document.upload.plugin.HttpRequestHandler;
 import org.exoplatform.document.util.FilePathUtils;
 import org.exoplatform.document.util.FileUtils;
 import org.exoplatform.document.util.StringUtils;

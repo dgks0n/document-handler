@@ -16,9 +16,6 @@
  */
 package org.exoplatform.document.entity;
 
-import java.util.Calendar;
-
-
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
@@ -42,94 +39,150 @@ public class Revision extends Document {
 	
 	private String publishedLink;
 
-	/**
-	 * 
-	 */
-	public Revision() {
-		super();
-	}
+  /**
+   * 
+   */
+  public Revision() {
+    super();
+  }
 
-	public Revision(String kind, String selfLink, String[] etag, String mimeType, 
-			Calendar modifiedDate, String downloadUrl, String originalFilename, String md5Checksum, 
-			long fileSize, String lastModifyingUserName, Owner lastModifyingUser, boolean pinned, 
-			boolean published, boolean publishAuto, boolean publishedOutsideDomain, String publishedLink) {
-		super(kind, selfLink, etag, mimeType, modifiedDate, downloadUrl, 
-				originalFilename, md5Checksum, fileSize, lastModifyingUserName, lastModifyingUser);
-		this.pinned = pinned;
-		this.published = published;
-		this.publishAuto = publishAuto;
-		this.publishedOutsideDomain = publishedOutsideDomain;
-		this.publishedLink = publishedLink;
-	}
+  /**
+   * @param pinned
+   * @param published
+   * @param publishAuto
+   * @param publishedOutsideDomain
+   * @param publishedLink
+   */
+  public Revision(boolean pinned, boolean published, boolean publishAuto,
+      boolean publishedOutsideDomain, String publishedLink) {
+    super();
+    this.pinned = pinned;
+    this.published = published;
+    this.publishAuto = publishAuto;
+    this.publishedOutsideDomain = publishedOutsideDomain;
+    this.publishedLink = publishedLink;
+  }
 
-	/**
-	 * @return the pinned
-	 */
-	public boolean isPinned() {
-		return pinned;
-	}
+  /**
+   * @return the pinned
+   */
+  public boolean isPinned() {
+    return pinned;
+  }
 
-	/**
-	 * @param pinned the pinned to set
-	 */
-	public void setPinned(boolean pinned) {
-		this.pinned = pinned;
-	}
+  /**
+   * @param pinned the pinned to set
+   */
+  public void setPinned(boolean pinned) {
+    this.pinned = pinned;
+  }
 
-	/**
-	 * @return the published
-	 */
-	public boolean isPublished() {
-		return published;
-	}
+  /**
+   * @return the published
+   */
+  public boolean isPublished() {
+    return published;
+  }
 
-	/**
-	 * @param published the published to set
-	 */
-	public void setPublished(boolean published) {
-		this.published = published;
-	}
+  /**
+   * @param published the published to set
+   */
+  public void setPublished(boolean published) {
+    this.published = published;
+  }
 
-	/**
-	 * @return the publishAuto
-	 */
-	public boolean isPublishAuto() {
-		return publishAuto;
-	}
+  /**
+   * @return the publishAuto
+   */
+  public boolean isPublishAuto() {
+    return publishAuto;
+  }
 
-	/**
-	 * @param publishAuto the publishAuto to set
-	 */
-	public void setPublishAuto(boolean publishAuto) {
-		this.publishAuto = publishAuto;
-	}
+  /**
+   * @param publishAuto the publishAuto to set
+   */
+  public void setPublishAuto(boolean publishAuto) {
+    this.publishAuto = publishAuto;
+  }
 
-	/**
-	 * @return the publishedOutsideDomain
-	 */
-	public boolean isPublishedOutsideDomain() {
-		return publishedOutsideDomain;
-	}
+  /**
+   * @return the publishedOutsideDomain
+   */
+  public boolean isPublishedOutsideDomain() {
+    return publishedOutsideDomain;
+  }
 
-	/**
-	 * @param publishedOutsideDomain the publishedOutsideDomain to set
-	 */
-	public void setPublishedOutsideDomain(boolean publishedOutsideDomain) {
-		this.publishedOutsideDomain = publishedOutsideDomain;
-	}
+  /**
+   * @param publishedOutsideDomain the publishedOutsideDomain to set
+   */
+  public void setPublishedOutsideDomain(boolean publishedOutsideDomain) {
+    this.publishedOutsideDomain = publishedOutsideDomain;
+  }
 
-	/**
-	 * @return the publishedLink
-	 */
-	public String getPublishedLink() {
-		return publishedLink;
-	}
+  /**
+   * @return the publishedLink
+   */
+  public String getPublishedLink() {
+    return publishedLink;
+  }
 
-	/**
-	 * @param publishedLink the publishedLink to set
-	 */
-	public void setPublishedLink(String publishedLink) {
-		this.publishedLink = publishedLink;
-	}
-	
+  /**
+   * @param publishedLink the publishedLink to set
+   */
+  public void setPublishedLink(String publishedLink) {
+    this.publishedLink = publishedLink;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + (pinned ? 1231 : 1237);
+    result = prime * result + (publishAuto ? 1231 : 1237);
+    result = prime * result + (published ? 1231 : 1237);
+    result = prime * result
+        + ((publishedLink == null) ? 0 : publishedLink.hashCode());
+    result = prime * result + (publishedOutsideDomain ? 1231 : 1237);
+    return result;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (!(obj instanceof Revision)) {
+      return false;
+    }
+    Revision other = (Revision) obj;
+    if (pinned != other.pinned) {
+      return false;
+    }
+    if (publishAuto != other.publishAuto) {
+      return false;
+    }
+    if (published != other.published) {
+      return false;
+    }
+    if (publishedLink == null) {
+      if (other.publishedLink != null) {
+        return false;
+      }
+    } else if (!publishedLink.equals(other.publishedLink)) {
+      return false;
+    }
+    if (publishedOutsideDomain != other.publishedOutsideDomain) {
+      return false;
+    }
+    return true;
+  }
 }

@@ -14,20 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.entity;
+package org.exoplatform.document.constant;
 
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version IOwner.java Nov 1, 2013
+ * @version GenericGeneratorType.java Nov 27, 2013
  */
-public interface IOwner {
+public class GenericGeneratorType {
 
-	/**
-	 * Get display name of the Owner
-	 * 
-	 * @return a plain text name
-	 */
-	public String getDisplayName();
+  public static final String GENERATOR = "generator";
+  
+  public static final String STRATEGY_FOREIGN = "foreign";
 }

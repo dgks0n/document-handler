@@ -18,8 +18,12 @@ package org.exoplatform.document.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import org.exoplatform.document.constant.TBLEntity;
+import org.exoplatform.document.entity.plugin.Entity;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
@@ -38,6 +42,7 @@ public abstract class AbstractEntity<I extends Serializable> implements Entity<I
    * ID of Object Entity
    */
   @Id
+  @Column(name = TBLEntity.ID, unique = true, nullable = false)
   protected I id;
 
   public void setId(I id) {

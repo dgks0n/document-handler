@@ -42,14 +42,6 @@ public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<
 	@Column(name = TBLEntity.SELF_KIND)
 	protected String selfLink;
 
-	public BaseEntity() {
-	}
-
-	public BaseEntity(String kind, String selfLink) {
-		this.kind = kind;
-		this.selfLink = selfLink;
-	}
-
 	/**
 	 * @return the kind
 	 */
@@ -77,25 +69,4 @@ public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<
 	public void setSelfLink(String selfLink) {
 		this.selfLink = selfLink;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + this.getId().hashCode();
-		result = prime * result + this.getKind().hashCode();
-		return result;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		return this.getId().equals(((BaseEntity<I>) obj).getId());
-	}
-
 }

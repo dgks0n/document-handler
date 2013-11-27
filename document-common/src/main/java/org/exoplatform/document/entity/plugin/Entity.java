@@ -14,17 +14,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.constant;
+package org.exoplatform.document.entity.plugin;
+
+import java.io.Serializable;
 
 /**
- * Created by The eXo Platform SAS
- * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
- * @version TBLEntity.java Nov 27, 2013
+ * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
+ * @version Entity.java Oct 31, 2013
+ * 
  */
-public class TBLEntity {
+public interface Entity<I extends Serializable> extends Serializable {
 
-  public static final String ID = "id";
-  public static final String KIND = "kind";
-  public static final String SELF_KIND = "self_kind";
+  /**
+   * Get Entity's Id
+   * 
+   * @return an Entity's Id
+   */
+  public I getId();
 }

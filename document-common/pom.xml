@@ -79,16 +79,16 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- C3P0 -->
-        <dependency>
-	        <groupId>c3p0</groupId>
-	        <artifactId>c3p0</artifactId>
-	        <version>0.9.1.2</version>
-        </dependency>
-        
-        <!-- MySQL Connector/JDBC -->
-        <dependency>
+		<dependency>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+			<version>0.8.0.RELEASE</version>
+		</dependency>
+	
+		<!-- MySQL Connector/JDBC -->
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.26</version>

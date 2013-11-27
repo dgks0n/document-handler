@@ -9,6 +9,11 @@
 		<param-name>webapp-composer-class</param-name>
 		<param-value>org.exoplatform.document.composer.DocumentApplicationComposer</param-value>
 	</context-param>
+	
+	<context-param>
+	 <param-name>contextConfigLocation</param-name>
+	 <param-value>classpath*:spring-context.xml,classpath*:persistence.xml</param-value>
+	</context-param>
 
 	<filter>
 		<filter-name>EverrestPicoFilter</filter-name>
@@ -26,6 +31,14 @@
 	<listener>
     <listener-class>org.picocontainer.web.webwork2.WebWork2PicoServletContainerListener</listener-class>
   </listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
 
   <!-- Everrest Servlet -->
 	<servlet>

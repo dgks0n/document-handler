@@ -16,6 +16,7 @@
  */
 package org.exoplatform.document.entity;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.exoplatform.document.constant.TBLDocument;
+import org.exoplatform.document.entity.plugin.IDocument;
 
 /**
  * Created by The eXo Platform SAS
@@ -32,7 +34,7 @@ import org.exoplatform.document.constant.TBLDocument;
  * @version Document.java Nov 1, 2013
  */
 @MappedSuperclass
-public class Document extends BaseEntity<String> implements IDocument {
+public class Document extends BaseEntityIdentity implements IDocument {
 
 	/**
 	 * 
@@ -66,167 +68,263 @@ public class Document extends BaseEntity<String> implements IDocument {
 	
 	@Column(name = TBLDocument.LAST_MODIFYING_USER)
 	protected Owner lastModifyingUser;
-	
-	public Document() {
-		super();
-	}
-	
-	public Document(String kind, String selfLink, String[] etag, String mimeType, Calendar modifiedDate,
-			String downloadUrl, String originalFilename, String md5Checksum,
-			long fileSize, String lastModifyingUserName, Owner lastModifyingUser) {
-		super(kind, selfLink);
-		this.etag = etag;
-		this.mimeType = mimeType;
-		this.modifiedDate = modifiedDate;
-		this.downloadUrl = downloadUrl;
-		this.originalFilename = originalFilename;
-		this.md5Checksum = md5Checksum;
-		this.fileSize = fileSize;
-		this.lastModifyingUserName = lastModifyingUserName;
-		this.lastModifyingUser = lastModifyingUser;
-	}
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getEtag()
-	 */
-	@Override
-	public String[] getEtag() {
-		return etag;
-	}
-	
-	/**
-	 * @param etag the etag to set
-	 */
-	public void setEtag(String[] etag) {
-		this.etag = etag;
-	}
+  /**
+   * 
+   */
+  public Document() {
+    super();
+  }
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getMimeType()
-	 */
-	@Override
-	public String getMimeType() {
-		return mimeType;
-	}
-	
-	/**
-	 * @param mimeType the mimeType to set
-	 */
-	public void setMimeType(String mimeType) {
-		this.mimeType = mimeType;
-	}
+  /**
+   * @param etag
+   * @param mimeType
+   * @param modifiedDate
+   * @param downloadUrl
+   * @param originalFilename
+   * @param md5Checksum
+   * @param fileSize
+   * @param lastModifyingUserName
+   * @param lastModifyingUser
+   */
+  public Document(String[] etag, String mimeType, Calendar modifiedDate,
+      String downloadUrl, String originalFilename, String md5Checksum,
+      long fileSize, String lastModifyingUserName, Owner lastModifyingUser) {
+    super();
+    this.etag = etag;
+    this.mimeType = mimeType;
+    this.modifiedDate = modifiedDate;
+    this.downloadUrl = downloadUrl;
+    this.originalFilename = originalFilename;
+    this.md5Checksum = md5Checksum;
+    this.fileSize = fileSize;
+    this.lastModifyingUserName = lastModifyingUserName;
+    this.lastModifyingUser = lastModifyingUser;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getModifiedDate()
-	 */
-	@Override
-	public Calendar getModifiedDate() {
-		return modifiedDate;
-	}
-	
-	/**
-	 * @param modifiedDate the modifiedDate to set
-	 */
-	public void setModifiedDate(Calendar modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+  /**
+   * @return the etag
+   */
+  public String[] getEtag() {
+    return etag;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getDownloadUrl()
-	 */
-	@Override
-	public String getDownloadUrl() {
-		return downloadUrl;
-	}
-	
-	/**
-	 * @param downloadUrl the downloadUrl to set
-	 */
-	public void setDownloadUrl(String downloadUrl) {
-		this.downloadUrl = downloadUrl;
-	}
+  /**
+   * @param etag the etag to set
+   */
+  public void setEtag(String[] etag) {
+    this.etag = etag;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getOriginalFilename()
-	 */
-	@Override
-	public String getOriginalFilename() {
-		return originalFilename;
-	}
-	
-	/**
-	 * @param originalFilename the originalFilename to set
-	 */
-	public void setOriginalFilename(String originalFilename) {
-		this.originalFilename = originalFilename;
-	}
+  /**
+   * @return the mimeType
+   */
+  public String getMimeType() {
+    return mimeType;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getMd5Checksum()
-	 */
-	@Override
-	public String getMd5Checksum() {
-		return md5Checksum;
-	}
-	
-	/**
-	 * @param md5Checksum the md5Checksum to set
-	 */
-	public void setMd5Checksum(String md5Checksum) {
-		this.md5Checksum = md5Checksum;
-	}
+  /**
+   * @param mimeType the mimeType to set
+   */
+  public void setMimeType(String mimeType) {
+    this.mimeType = mimeType;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getFileSize()
-	 */
-	@Override
-	public long getFileSize() {
-		return fileSize;
-	}
-	
-	/**
-	 * @param fileSize the fileSize to set
-	 */
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
-	}
+  /**
+   * @return the modifiedDate
+   */
+  public Calendar getModifiedDate() {
+    return modifiedDate;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getLastModifyingUserName()
-	 */
-	@Override
-	public String getLastModifyingUserName() {
-		return lastModifyingUserName;
-	}
-	
-	/**
-	 * @param lastModifyingUserName the lastModifyingUserName to set
-	 */
-	public void setLastModifyingUserName(String lastModifyingUserName) {
-		this.lastModifyingUserName = lastModifyingUserName;
-	}
+  /**
+   * @param modifiedDate the modifiedDate to set
+   */
+  public void setModifiedDate(Calendar modifiedDate) {
+    this.modifiedDate = modifiedDate;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.exoplatform.document.entity.DocumentPlugin#getLastModifyingUser()
-	 */
-	@Override
-	public Owner getLastModifyingUser() {
-		return lastModifyingUser;
-	}
-	
-	/**
-	 * @param lastModifyingUser the lastModifyingUser to set
-	 */
-	public void setLastModifyingUser(Owner lastModifyingUser) {
-		this.lastModifyingUser = lastModifyingUser;
-	}
+  /**
+   * @return the downloadUrl
+   */
+  public String getDownloadUrl() {
+    return downloadUrl;
+  }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
+  /**
+   * @param downloadUrl the downloadUrl to set
+   */
+  public void setDownloadUrl(String downloadUrl) {
+    this.downloadUrl = downloadUrl;
+  }
+
+  /**
+   * @return the originalFilename
+   */
+  public String getOriginalFilename() {
+    return originalFilename;
+  }
+
+  /**
+   * @param originalFilename the originalFilename to set
+   */
+  public void setOriginalFilename(String originalFilename) {
+    this.originalFilename = originalFilename;
+  }
+
+  /**
+   * @return the md5Checksum
+   */
+  public String getMd5Checksum() {
+    return md5Checksum;
+  }
+
+  /**
+   * @param md5Checksum the md5Checksum to set
+   */
+  public void setMd5Checksum(String md5Checksum) {
+    this.md5Checksum = md5Checksum;
+  }
+
+  /**
+   * @return the fileSize
+   */
+  public long getFileSize() {
+    return fileSize;
+  }
+
+  /**
+   * @param fileSize the fileSize to set
+   */
+  public void setFileSize(long fileSize) {
+    this.fileSize = fileSize;
+  }
+
+  /**
+   * @return the lastModifyingUserName
+   */
+  public String getLastModifyingUserName() {
+    return lastModifyingUserName;
+  }
+
+  /**
+   * @param lastModifyingUserName the lastModifyingUserName to set
+   */
+  public void setLastModifyingUserName(String lastModifyingUserName) {
+    this.lastModifyingUserName = lastModifyingUserName;
+  }
+
+  /**
+   * @return the lastModifyingUser
+   */
+  public Owner getLastModifyingUser() {
+    return lastModifyingUser;
+  }
+
+  /**
+   * @param lastModifyingUser the lastModifyingUser to set
+   */
+  public void setLastModifyingUser(Owner lastModifyingUser) {
+    this.lastModifyingUser = lastModifyingUser;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result
+        + ((downloadUrl == null) ? 0 : downloadUrl.hashCode());
+    result = prime * result + Arrays.hashCode(etag);
+    result = prime * result + (int) (fileSize ^ (fileSize >>> 32));
+    result = prime * result
+        + ((lastModifyingUser == null) ? 0 : lastModifyingUser.hashCode());
+    result = prime
+        * result
+        + ((lastModifyingUserName == null) ? 0 : lastModifyingUserName
+            .hashCode());
+    result = prime * result
+        + ((md5Checksum == null) ? 0 : md5Checksum.hashCode());
+    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
+    result = prime * result
+        + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
+    result = prime * result
+        + ((originalFilename == null) ? 0 : originalFilename.hashCode());
+    return result;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof Document)) {
+      return false;
+    }
+    Document other = (Document) obj;
+    if (downloadUrl == null) {
+      if (other.downloadUrl != null) {
+        return false;
+      }
+    } else if (!downloadUrl.equals(other.downloadUrl)) {
+      return false;
+    }
+    if (!Arrays.equals(etag, other.etag)) {
+      return false;
+    }
+    if (fileSize != other.fileSize) {
+      return false;
+    }
+    if (lastModifyingUser == null) {
+      if (other.lastModifyingUser != null) {
+        return false;
+      }
+    } else if (!lastModifyingUser.equals(other.lastModifyingUser)) {
+      return false;
+    }
+    if (lastModifyingUserName == null) {
+      if (other.lastModifyingUserName != null) {
+        return false;
+      }
+    } else if (!lastModifyingUserName.equals(other.lastModifyingUserName)) {
+      return false;
+    }
+    if (md5Checksum == null) {
+      if (other.md5Checksum != null) {
+        return false;
+      }
+    } else if (!md5Checksum.equals(other.md5Checksum)) {
+      return false;
+    }
+    if (mimeType == null) {
+      if (other.mimeType != null) {
+        return false;
+      }
+    } else if (!mimeType.equals(other.mimeType)) {
+      return false;
+    }
+    if (modifiedDate == null) {
+      if (other.modifiedDate != null) {
+        return false;
+      }
+    } else if (!modifiedDate.equals(other.modifiedDate)) {
+      return false;
+    }
+    if (originalFilename == null) {
+      if (other.originalFilename != null) {
+        return false;
+      }
+    } else if (!originalFilename.equals(other.originalFilename)) {
+      return false;
+    }
+    return true;
+  }
 }

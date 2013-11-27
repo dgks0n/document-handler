@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.upload.util;
+package org.exoplatform.document.upload.plugin;
 
 import java.io.IOException;
 import java.util.List;
