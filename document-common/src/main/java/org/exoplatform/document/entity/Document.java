@@ -16,13 +16,13 @@
  */
 package org.exoplatform.document.entity;
 
-import java.util.Arrays;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -68,8 +68,8 @@ public class Document extends BaseEntityIdentity implements IDocument {
 	@Column(name = TBLDocument.LAST_MODIFYING_USERNAME, nullable = true, length = 500)
 	protected String lastModifyingUserName;
 	
-	@OneToOne
-	@JoinColumn(name = TBLDocument.LAST_MODIFYING_USER)
+	@ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = TBLDocument.LAST_MODIFYING_USER, nullable = false)
 	protected Owner lastModifyingUser;
 
   /**
@@ -77,32 +77,6 @@ public class Document extends BaseEntityIdentity implements IDocument {
    */
   public Document() {
     super();
-  }
-
-  /**
-   * @param etag
-   * @param mimeType
-   * @param modifiedDate
-   * @param downloadUrl
-   * @param originalFilename
-   * @param md5Checksum
-   * @param fileSize
-   * @param lastModifyingUserName
-   * @param lastModifyingUser
-   */
-  public Document(String[] etag, String mimeType, Calendar modifiedDate,
-      String downloadUrl, String originalFilename, String md5Checksum,
-      long fileSize, String lastModifyingUserName, Owner lastModifyingUser) {
-    super();
-    this.etag = etag;
-    this.mimeType = mimeType;
-    this.modifiedDate = modifiedDate;
-    this.downloadUrl = downloadUrl;
-    this.originalFilename = originalFilename;
-    this.md5Checksum = md5Checksum;
-    this.fileSize = fileSize;
-    this.lastModifyingUserName = lastModifyingUserName;
-    this.lastModifyingUser = lastModifyingUser;
   }
 
   /**
@@ -229,105 +203,5 @@ public class Document extends BaseEntityIdentity implements IDocument {
    */
   public void setLastModifyingUser(Owner lastModifyingUser) {
     this.lastModifyingUser = lastModifyingUser;
-  }
-
-  /* (non-Javadoc)
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-        + ((downloadUrl == null) ? 0 : downloadUrl.hashCode());
-    result = prime * result + Arrays.hashCode(etag);
-    result = prime * result + (int) (fileSize ^ (fileSize >>> 32));
-    result = prime * result
-        + ((lastModifyingUser == null) ? 0 : lastModifyingUser.hashCode());
-    result = prime
-        * result
-        + ((lastModifyingUserName == null) ? 0 : lastModifyingUserName
-            .hashCode());
-    result = prime * result
-        + ((md5Checksum == null) ? 0 : md5Checksum.hashCode());
-    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
-    result = prime * result
-        + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
-    result = prime * result
-        + ((originalFilename == null) ? 0 : originalFilename.hashCode());
-    return result;
-  }
-
-  /* (non-Javadoc)
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof Document)) {
-      return false;
-    }
-    Document other = (Document) obj;
-    if (downloadUrl == null) {
-      if (other.downloadUrl != null) {
-        return false;
-      }
-    } else if (!downloadUrl.equals(other.downloadUrl)) {
-      return false;
-    }
-    if (!Arrays.equals(etag, other.etag)) {
-      return false;
-    }
-    if (fileSize != other.fileSize) {
-      return false;
-    }
-    if (lastModifyingUser == null) {
-      if (other.lastModifyingUser != null) {
-        return false;
-      }
-    } else if (!lastModifyingUser.equals(other.lastModifyingUser)) {
-      return false;
-    }
-    if (lastModifyingUserName == null) {
-      if (other.lastModifyingUserName != null) {
-        return false;
-      }
-    } else if (!lastModifyingUserName.equals(other.lastModifyingUserName)) {
-      return false;
-    }
-    if (md5Checksum == null) {
-      if (other.md5Checksum != null) {
-        return false;
-      }
-    } else if (!md5Checksum.equals(other.md5Checksum)) {
-      return false;
-    }
-    if (mimeType == null) {
-      if (other.mimeType != null) {
-        return false;
-      }
-    } else if (!mimeType.equals(other.mimeType)) {
-      return false;
-    }
-    if (modifiedDate == null) {
-      if (other.modifiedDate != null) {
-        return false;
-      }
-    } else if (!modifiedDate.equals(other.modifiedDate)) {
-      return false;
-    }
-    if (originalFilename == null) {
-      if (other.originalFilename != null) {
-        return false;
-      }
-    } else if (!originalFilename.equals(other.originalFilename)) {
-      return false;
-    }
-    return true;
   }
 }

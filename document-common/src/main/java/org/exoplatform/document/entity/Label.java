@@ -16,11 +16,27 @@
  */
 package org.exoplatform.document.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.exoplatform.document.constant.TBLEntity;
+import org.exoplatform.document.constant.TBLLabel;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Label.java Oct 31, 2013
  *
  */
+@Entity
+@Table(name = TBLLabel.TBL_NAME, 
+    uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
 public class Label extends StringIdentity {
 
 	/**
@@ -28,15 +44,23 @@ public class Label extends StringIdentity {
 	 */
 	private static final long serialVersionUID = 4457310329075840843L;
 
+	@Column(name = TBLLabel.STARRED, nullable = true, length = 10)
 	private boolean starred;
 	
+	@Column(name = TBLLabel.HIDDEN, nullable = true, length = 10)
 	private boolean hidden;
 	
+	@Column(name = TBLLabel.TRASHED, nullable = true, length = 10)
 	private boolean trashed;
 	
+	@Column(name = TBLLabel.RESTRICTED, nullable = true, length = 10)
 	private boolean restricted;
 	
+	@Column(name = TBLLabel.VIEWED, nullable = true, length = 10)
 	private boolean viewed;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = TBLLabel.TBL_NAME)
+	private Set<File> files = new HashSet<File>();
 
 	/**
 	 * 
@@ -44,89 +68,87 @@ public class Label extends StringIdentity {
 	public Label() {
 	}
 
-	/**
-	 * @param starred
-	 * @param hidden
-	 * @param trashed
-	 * @param restricted
-	 * @param viewed
-	 */
-	public Label(boolean starred, boolean hidden, boolean trashed, boolean restricted, boolean viewed) {
-		this.starred = starred;
-		this.hidden = hidden;
-		this.trashed = trashed;
-		this.restricted = restricted;
-		this.viewed = viewed;
-	}
+  /**
+   * @return the starred
+   */
+  public boolean isStarred() {
+    return starred;
+  }
 
-	/**
-	 * @return the starred
-	 */
-	public boolean isStarred() {
-		return starred;
-	}
+  /**
+   * @param starred the starred to set
+   */
+  public void setStarred(boolean starred) {
+    this.starred = starred;
+  }
 
-	/**
-	 * @param starred the starred to set
-	 */
-	public void setStarred(boolean starred) {
-		this.starred = starred;
-	}
+  /**
+   * @return the hidden
+   */
+  public boolean isHidden() {
+    return hidden;
+  }
 
-	/**
-	 * @return the hidden
-	 */
-	public boolean isHidden() {
-		return hidden;
-	}
+  /**
+   * @param hidden the hidden to set
+   */
+  public void setHidden(boolean hidden) {
+    this.hidden = hidden;
+  }
 
-	/**
-	 * @param hidden the hidden to set
-	 */
-	public void setHidden(boolean hidden) {
-		this.hidden = hidden;
-	}
+  /**
+   * @return the trashed
+   */
+  public boolean isTrashed() {
+    return trashed;
+  }
 
-	/**
-	 * @return the trashed
-	 */
-	public boolean isTrashed() {
-		return trashed;
-	}
+  /**
+   * @param trashed the trashed to set
+   */
+  public void setTrashed(boolean trashed) {
+    this.trashed = trashed;
+  }
 
-	/**
-	 * @param trashed the trashed to set
-	 */
-	public void setTrashed(boolean trashed) {
-		this.trashed = trashed;
-	}
+  /**
+   * @return the restricted
+   */
+  public boolean isRestricted() {
+    return restricted;
+  }
 
-	/**
-	 * @return the restricted
-	 */
-	public boolean isRestricted() {
-		return restricted;
-	}
+  /**
+   * @param restricted the restricted to set
+   */
+  public void setRestricted(boolean restricted) {
+    this.restricted = restricted;
+  }
 
-	/**
-	 * @param restricted the restricted to set
-	 */
-	public void setRestricted(boolean restricted) {
-		this.restricted = restricted;
-	}
+  /**
+   * @return the viewed
+   */
+  public boolean isViewed() {
+    return viewed;
+  }
 
-	/**
-	 * @return the viewed
-	 */
-	public boolean isViewed() {
-		return viewed;
-	}
+  /**
+   * @param viewed the viewed to set
+   */
+  public void setViewed(boolean viewed) {
+    this.viewed = viewed;
+  }
 
-	/**
-	 * @param viewed the viewed to set
-	 */
-	public void setViewed(boolean viewed) {
-		this.viewed = viewed;
-	}
+  /**
+   * @return the files
+   */
+  public Set<File> getFiles() {
+    return files;
+  }
 
+  /**
+   * @param files the files to set
+   */
+  public void setFiles(Set<File> files) {
+    this.files = files;
+  }
 }

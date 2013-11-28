@@ -34,9 +34,7 @@ public class TBLFile {
   public static final String FILE_EXTENSION = "file_extension";
   public static final String ALTERNATE_LINK = "alternate_link";
   public static final String EMBED_LINK = "embed_link";
-  public static final String LABEL_OF_FILE = "";
   public static final String SHARED_WITH_ME_DATE = "shared_with_me_date";
-  public static final String PARENT = "";
   public static final String QUOTA_BYTES_USED = "quota_bytes_used";
   public static final String OWNER_NAME = "owner_names";
   public static final String EDITABLE = "editable";
@@ -49,7 +47,6 @@ public class TBLFile {
   public static final String WEB_VIEW_LINK = "web_view_link";
   public static final String ICON_LINK = "icon_link";
   public static final String SHARED = "shared";
-  public static final String OWNER = "";
   public static final String APPLICATION_DATA_CONTENT = "app_data_contents";
   public static final String DEFAULT_OPEN_WITH_LINK = "default_open_with_link";
   public static final String HEAD_REVISION_IDENTITY = "head_revision_id";

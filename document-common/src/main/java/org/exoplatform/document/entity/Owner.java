@@ -16,11 +16,16 @@
  */
 package org.exoplatform.document.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -77,6 +82,17 @@ public class Owner extends StringIdentity implements IOwner {
 	
 	@OneToOne(mappedBy = TBLFile.TBL_NAME)
   private File file;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = TBLOwner.TBL_NAME)
+	private Set<File> modifiedFiles = new HashSet<File>();
+	
+	/*
+   * Many - To - Many
+   * 
+   * One Owner has many File and one File has many Owner
+   */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = TBLOwner.TBL_NAME)
+	private Set<File> files = new HashSet<File>();
 
   /**
    * 
@@ -153,5 +169,61 @@ public class Owner extends StringIdentity implements IOwner {
    */
   public void setPicture(Picture picture) {
     this.picture = picture;
+  }
+
+  /**
+   * @return the accountInfor
+   */
+  public Account getAccountInfor() {
+    return accountInfor;
+  }
+
+  /**
+   * @param accountInfor the accountInfor to set
+   */
+  public void setAccountInfor(Account accountInfor) {
+    this.accountInfor = accountInfor;
+  }
+
+  /**
+   * @return the file
+   */
+  public File getFile() {
+    return file;
+  }
+
+  /**
+   * @param file the file to set
+   */
+  public void setFile(File file) {
+    this.file = file;
+  }
+
+  /**
+   * @return the modifiedFiles
+   */
+  public Set<File> getModifiedFiles() {
+    return modifiedFiles;
+  }
+
+  /**
+   * @param modifiedFiles the modifiedFiles to set
+   */
+  public void setModifiedFiles(Set<File> modifiedFiles) {
+    this.modifiedFiles = modifiedFiles;
+  }
+
+  /**
+   * @return the files
+   */
+  public Set<File> getFiles() {
+    return files;
+  }
+
+  /**
+   * @param files the files to set
+   */
+  public void setFiles(Set<File> files) {
+    this.files = files;
   }
 }
