@@ -20,16 +20,15 @@ package org.exoplatform.document.constant;
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version TBLOwner.java Nov 27, 2013
+ * @version TBLRevision.java Nov 28, 2013
  */
-public class TBLOwner {
+public class TBLRevision {
 
-  public static final String TBL_NAME = "owner";
+  public static final String TBL_NAME = "revision";
   
-  public static final String KIND = "kind";
-  public static final String DISPLAY_NAME = "display_name";
-  public static final String IS_AUTHENTICATED_USER = "is_authenticated_user";
-  public static final String PERMISSION_ID = "permission_id";
-  public static final String PICTURE = "picture";
-  public static final String ACCOUNT_INFOR = "account_infor";
+  public static final String PINNED = "pinned";
+  public static final String PUBLISHED = "published";
+  public static final String PUBLISH_AUTO = "publish_auto";
+  public static final String PUBLISHED_OUTSIDE_DOMAIN = "published_outside_domain";
+  public static final String PUBLISHED_LINK = "published_link";
 }

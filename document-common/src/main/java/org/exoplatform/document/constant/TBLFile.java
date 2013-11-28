@@ -45,7 +45,7 @@ public class TBLFile {
   public static final String LAST_VIEWED_BY_ME_DATE = "last_viewed_by_me_date";
   public static final String WEB_CONTENT_LINK = "web_content_link";
   public static final String EXPLICITLY_TRASHED = "explicitly_trashed";
-  public static final String THUMBNAIL = "";
+  public static final String THUMBNAIL = "thumbnail";
   public static final String WEB_VIEW_LINK = "web_view_link";
   public static final String ICON_LINK = "icon_link";
   public static final String SHARED = "shared";

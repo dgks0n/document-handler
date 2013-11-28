@@ -16,16 +16,13 @@
  */
 package org.exoplatform.document.entity;
 
-import java.util.Calendar;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.exoplatform.document.constant.TBLEntity;
@@ -60,54 +57,23 @@ public class Owner extends StringIdentity implements IOwner {
 	@Column(name = TBLOwner.PERMISSION_ID, length = 100)
 	private String permissionId;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	/*
+	 * One - To - One
+	 * 
+	 * One Owner has only one Picture and one Picture has only one Owner
+	 */
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = TBLOwner.PICTURE)
   private Picture picture;
 	
-	@Column(name = TBLOwner.GIVE_NAME, length = 100)
-	private String giveName;
-	
-	@Column(name = TBLOwner.FAMILY_NAME, length = 100)
-	private String familyName;
-	
-	@Column(name = TBLOwner.EMAIL_ADDRESS, length = 100)
-	private String emailAddress;
-	
-	@Column(name = TBLOwner.LINK)
-	private String link;
-	
-	@Column(name = TBLOwner.GENDER)
-	private String gender;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = TBLOwner.BIRTH_DAY)
-	private Calendar birthday;
-	
-	@Column(name = TBLOwner.LOCALE, length = 50)
-	private String locale;
-	
-	@Column(name = TBLOwner.VERIFIED_EMAIL, length = 5)
-	private boolean verifiedEmail;
-	
-	@Column(name = TBLOwner.PASSWORD, length = 500)
-	private String password;
-	
-	@Column(name = TBLOwner.TIME_ZONE, length = 50)
-	private String timeZone;
-	
-	@Column(name = TBLOwner.DESCRIPTION, length = 1000)
-	private String description;
-	
-	@Column(name = TBLOwner.LANGUAGE, length = 50)
-	private String language;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = TBLOwner.CREATED_DATE)
-	private Calendar createdDate;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = TBLOwner.MODIFIED_DATE)
-	private Calendar modifiedDate;
+	/*
+   * One - To - One
+   * 
+   * One Owner has only one Owner's detail and one Owner's detail has only one Owner
+   */
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @JoinColumn(name = TBLOwner.ACCOUNT_INFOR)
+	private Account accountInfor;
 	
 	@OneToOne(mappedBy = TBLFile.TBL_NAME)
   private File file;
@@ -187,237 +153,5 @@ public class Owner extends StringIdentity implements IOwner {
    */
   public void setPicture(Picture picture) {
     this.picture = picture;
-  }
-
-  /**
-   * @return the giveName
-   */
-  public String getGiveName() {
-    return giveName;
-  }
-
-  /**
-   * @param giveName the giveName to set
-   */
-  public void setGiveName(String giveName) {
-    this.giveName = giveName;
-  }
-
-  /**
-   * @return the familyName
-   */
-  public String getFamilyName() {
-    return familyName;
-  }
-
-  /**
-   * @param familyName the familyName to set
-   */
-  public void setFamilyName(String familyName) {
-    this.familyName = familyName;
-  }
-
-  /**
-   * @return the emailAddress
-   */
-  public String getEmailAddress() {
-    return emailAddress;
-  }
-
-  /**
-   * @param emailAddress the emailAddress to set
-   */
-  public void setEmailAddress(String emailAddress) {
-    this.emailAddress = emailAddress;
-  }
-
-  /**
-   * @return the link
-   */
-  public String getLink() {
-    return link;
-  }
-
-  /**
-   * @param link the link to set
-   */
-  public void setLink(String link) {
-    this.link = link;
-  }
-
-  /**
-   * @return the gender
-   */
-  public String getGender() {
-    return gender;
-  }
-
-  /**
-   * @param gender the gender to set
-   */
-  public void setGender(String gender) {
-    this.gender = gender;
-  }
-
-  /**
-   * @return the birthday
-   */
-  public Calendar getBirthday() {
-    return birthday;
-  }
-
-  /**
-   * @param birthday the birthday to set
-   */
-  public void setBirthday(Calendar birthday) {
-    this.birthday = birthday;
-  }
-
-  /**
-   * @return the locale
-   */
-  public String getLocale() {
-    return locale;
-  }
-
-  /**
-   * @param locale the locale to set
-   */
-  public void setLocale(String locale) {
-    this.locale = locale;
-  }
-
-  /**
-   * @return the verifiedEmail
-   */
-  public boolean isVerifiedEmail() {
-    return verifiedEmail;
-  }
-
-  /**
-   * @param verifiedEmail the verifiedEmail to set
-   */
-  public void setVerifiedEmail(boolean verifiedEmail) {
-    this.verifiedEmail = verifiedEmail;
-  }
-
-  /**
-   * @return the password
-   */
-  public String getPassword() {
-    return password;
-  }
-
-  /**
-   * @param password the password to set
-   */
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  /**
-   * @return the timeZone
-   */
-  public String getTimeZone() {
-    return timeZone;
-  }
-
-  /**
-   * @param timeZone the timeZone to set
-   */
-  public void setTimeZone(String timeZone) {
-    this.timeZone = timeZone;
-  }
-
-  /**
-   * @return the description
-   */
-  public String getDescription() {
-    return description;
-  }
-
-  /**
-   * @param description the description to set
-   */
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  /**
-   * @return the language
-   */
-  public String getLanguage() {
-    return language;
-  }
-
-  /**
-   * @param language the language to set
-   */
-  public void setLanguage(String language) {
-    this.language = language;
-  }
-
-  /**
-   * @return the createdDate
-   */
-  public Calendar getCreatedDate() {
-    return createdDate;
-  }
-
-  /**
-   * @param createdDate the createdDate to set
-   */
-  public void setCreatedDate(Calendar createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  /**
-   * @return the modifiedDate
-   */
-  public Calendar getModifiedDate() {
-    return modifiedDate;
-  }
-
-  /**
-   * @param modifiedDate the modifiedDate to set
-   */
-  public void setModifiedDate(Calendar modifiedDate) {
-    this.modifiedDate = modifiedDate;
-  }
-
-  /* (non-Javadoc)
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
-    result = prime * result
-        + ((createdDate == null) ? 0 : createdDate.hashCode());
-    result = prime * result
-        + ((description == null) ? 0 : description.hashCode());
-    result = prime * result
-        + ((displayName == null) ? 0 : displayName.hashCode());
-    result = prime * result
-        + ((emailAddress == null) ? 0 : emailAddress.hashCode());
-    result = prime * result
-        + ((familyName == null) ? 0 : familyName.hashCode());
-    result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-    result = prime * result + ((giveName == null) ? 0 : giveName.hashCode());
-    result = prime * result + (isAuthenticatedUser ? 1231 : 1237);
-    result = prime * result + ((kind == null) ? 0 : kind.hashCode());
-    result = prime * result + ((language == null) ? 0 : language.hashCode());
-    result = prime * result + ((link == null) ? 0 : link.hashCode());
-    result = prime * result + ((locale == null) ? 0 : locale.hashCode());
-    result = prime * result
-        + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
-    result = prime * result + ((password == null) ? 0 : password.hashCode());
-    result = prime * result
-        + ((permissionId == null) ? 0 : permissionId.hashCode());
-    result = prime * result + ((picture == null) ? 0 : picture.hashCode());
-    result = prime * result + ((timeZone == null) ? 0 : timeZone.hashCode());
-    result = prime * result + (verifiedEmail ? 1231 : 1237);
-    return result;
   }
 }

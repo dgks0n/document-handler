@@ -36,10 +36,10 @@ public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<
 	 */
 	private static final long serialVersionUID = 311072933487708402L;
 
-	@Column(name = TBLEntity.KIND)
+	@Column(name = TBLEntity.KIND, length = 50)
 	protected String kind;
 	
-	@Column(name = TBLEntity.SELF_KIND)
+	@Column(name = TBLEntity.SELF_LINK, length = 1500)
 	protected String selfLink;
 
 	/**

@@ -44,7 +44,7 @@ public class Thumbnail extends StringIdentity {
 	@Column(name = TBLThumbnail.IMAGE, nullable = false)
 	private byte[] image;
 	
-	@Column(name = TBLThumbnail.MIME_TYPE)
+	@Column(name = TBLThumbnail.MIME_TYPE, nullable = true, length = 250)
 	private String mimeType;
 
 	/**

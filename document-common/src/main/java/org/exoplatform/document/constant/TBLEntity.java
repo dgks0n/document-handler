@@ -26,5 +26,5 @@ public class TBLEntity {
 
   public static final String ID = "id";
   public static final String KIND = "kind";
-  public static final String SELF_KIND = "self_kind";
+  public static final String SELF_LINK = "self_link";
 }

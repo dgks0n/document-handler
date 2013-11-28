@@ -18,14 +18,10 @@ package org.exoplatform.document.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.exoplatform.document.constant.TBLEntity;
-import org.exoplatform.document.constant.TBLOwner;
 import org.exoplatform.document.constant.TBLPicture;
 
 /**
@@ -45,9 +41,6 @@ public class Picture extends StringIdentity {
 
 	@Column(name = TBLPicture.URL, length = 1500)
 	private String url;
-	
-	@OneToOne(mappedBy = TBLOwner.TBL_NAME)
-	private Owner owner;
 
 	/**
 	 * 
@@ -67,19 +60,5 @@ public class Picture extends StringIdentity {
    */
   public void setUrl(String url) {
     this.url = url;
-  }
-
-  /**
-   * @return the owner
-   */
-  public Owner getOwner() {
-    return owner;
-  }
-
-  /**
-   * @param owner the owner to set
-   */
-  public void setOwner(Owner owner) {
-    this.owner = owner;
   }
 }

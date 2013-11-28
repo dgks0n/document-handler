@@ -46,26 +46,26 @@ public class Document extends BaseEntityIdentity implements IDocument {
 	@Column(name = TBLDocument.ETAG)
 	protected String[] etag;
 	
-	@Column(name = TBLDocument.MIME_TYPE)
+	@Column(name = TBLDocument.MIME_TYPE, nullable = true, length = 250)
 	protected String mimeType;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = TBLDocument.MODIFIED_DATE)
 	protected Calendar modifiedDate;
 	
-	@Column(name = TBLDocument.DOWNLOAD_URL)
+	@Column(name = TBLDocument.DOWNLOAD_URL, nullable = false, length = 1500)
 	protected String downloadUrl;
 	
-	@Column(name = TBLDocument.ORIGINAL_FILENAME)
+	@Column(name = TBLDocument.ORIGINAL_FILENAME, nullable = false, length = 500)
 	protected String originalFilename;
 	
-	@Column(name = TBLDocument.MD5_CHECKSUM)
+	@Column(name = TBLDocument.MD5_CHECKSUM, nullable = true)
 	protected String md5Checksum;
 	
-	@Column(name = TBLDocument.FILE_SIZE)
+	@Column(name = TBLDocument.FILE_SIZE, nullable = false)
 	protected long fileSize;
 	
-	@Column(name = TBLDocument.LAST_MODIFYING_USERNAME)
+	@Column(name = TBLDocument.LAST_MODIFYING_USERNAME, nullable = true, length = 500)
 	protected String lastModifyingUserName;
 	
 	@OneToOne

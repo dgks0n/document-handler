@@ -16,12 +16,30 @@
  */
 package org.exoplatform.document.entity;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.exoplatform.document.constant.TBLEntity;
+import org.exoplatform.document.constant.TBLFile;
+import org.exoplatform.document.constant.TBLRevision;
+
 /**
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
  * @version Revision.java Nov 1, 2013
  */
+@Entity
+@Table(name = TBLRevision.TBL_NAME,
+    uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
 public class Revision extends Document {
 
 	/**
@@ -29,38 +47,30 @@ public class Revision extends Document {
 	 */
 	private static final long serialVersionUID = 6612421643350781170L;
 	
+	@Column(name = TBLRevision.PINNED, length = 10)
 	private boolean pinned;
 	
+	@Column(name = TBLRevision.PUBLISHED, length = 10)
 	private boolean published;
 	
+	@Column(name = TBLRevision.PUBLISH_AUTO, length = 10)
 	private boolean publishAuto;
 	
+	@Column(name = TBLRevision.PUBLISHED_OUTSIDE_DOMAIN, length = 10)
 	private boolean publishedOutsideDomain;
 	
+	@Column(name = TBLRevision.PUBLISHED_LINK, length = 1500)
 	private String publishedLink;
+	
+	@OneToMany(cascade = {CascadeType.ALL})
+	@JoinColumn(name = TBLFile.HEAD_REVISION_IDENTITY)
+	private List<File> files;
 
   /**
    * 
    */
   public Revision() {
     super();
-  }
-
-  /**
-   * @param pinned
-   * @param published
-   * @param publishAuto
-   * @param publishedOutsideDomain
-   * @param publishedLink
-   */
-  public Revision(boolean pinned, boolean published, boolean publishAuto,
-      boolean publishedOutsideDomain, String publishedLink) {
-    super();
-    this.pinned = pinned;
-    this.published = published;
-    this.publishAuto = publishAuto;
-    this.publishedOutsideDomain = publishedOutsideDomain;
-    this.publishedLink = publishedLink;
   }
 
   /**
@@ -133,6 +143,20 @@ public class Revision extends Document {
     this.publishedLink = publishedLink;
   }
 
+  /**
+   * @return the files
+   */
+  public List<File> getFiles() {
+    return files;
+  }
+
+  /**
+   * @param files the files to list
+   */
+  public void setFiles(List<File> files) {
+    this.files = files;
+  }
+
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
    */
@@ -140,6 +164,7 @@ public class Revision extends Document {
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
+    result = prime * result + ((files == null) ? 0 : files.hashCode());
     result = prime * result + (pinned ? 1231 : 1237);
     result = prime * result + (publishAuto ? 1231 : 1237);
     result = prime * result + (published ? 1231 : 1237);
@@ -147,42 +172,5 @@ public class Revision extends Document {
         + ((publishedLink == null) ? 0 : publishedLink.hashCode());
     result = prime * result + (publishedOutsideDomain ? 1231 : 1237);
     return result;
-  }
-
-  /* (non-Javadoc)
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    if (!(obj instanceof Revision)) {
-      return false;
-    }
-    Revision other = (Revision) obj;
-    if (pinned != other.pinned) {
-      return false;
-    }
-    if (publishAuto != other.publishAuto) {
-      return false;
-    }
-    if (published != other.published) {
-      return false;
-    }
-    if (publishedLink == null) {
-      if (other.publishedLink != null) {
-        return false;
-      }
-    } else if (!publishedLink.equals(other.publishedLink)) {
-      return false;
-    }
-    if (publishedOutsideDomain != other.publishedOutsideDomain) {
-      return false;
-    }
-    return true;
   }
 }
