@@ -14,30 +14,29 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.util.exception;
+package org.exoplatform.document.exception;
 
 /**
- * Created by The eXo Platform SAS
- * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
- * @version FileUtilsException.java Oct 30, 2013
+ * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
+ * @version ServiceException.java Nov 30, 2013
+ *
  */
-public class DuplicateFileException extends Exception {
+public class ServiceException extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -768823848042491626L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 8518994238851350059L;
 
   /**
    * Constructs a new exception with {@code null} as its detail message. The
    * cause is not initialized, and may subsequently be initialized by a call to
    * {@link #initCause}.
    */
-  public DuplicateFileException() {
+  public ServiceException() {
     super();
   }
-
+  
   /**
    * Constructs a new exception with the specified detail message. The cause is
    * not initialized, and may subsequently be initialized by a call to
@@ -47,10 +46,10 @@ public class DuplicateFileException extends Exception {
    *          The detail message which is saved for later retrieval by the
    *          {@link #getMessage()} method.
    */
-  public DuplicateFileException(final String message) {
+  public ServiceException(final String message) {
     super(message);
   }
-
+  
   /**
    * Constructs a new exception with the specified cause and a detail message of
    * <code>(cause==null ?
@@ -64,10 +63,10 @@ public class DuplicateFileException extends Exception {
    *          indicates that the cause is nonexistent or unknown.
    * @since 1.4
    */
-  public DuplicateFileException(final Throwable cause) {
+  public ServiceException(final Throwable cause) {
     super(cause);
   }
-
+  
   /**
    * Constructs a new exception with the specified detail message and cause.
    * <p>
@@ -83,7 +82,7 @@ public class DuplicateFileException extends Exception {
    *          indicates that the cause is nonexistent or unknown.
    * @since 1.4
    */
-  public DuplicateFileException(final String message, final Throwable cause) {
+  public ServiceException(final String message, final Throwable cause) {
     super(message, cause);
   }
 }

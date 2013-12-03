@@ -61,4 +61,12 @@ public class Picture extends StringIdentity {
   public void setUrl(String url) {
     this.url = url;
   }
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "picture [url=" + url + ", id=" + id + "]";
+  }
 }

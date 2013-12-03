@@ -18,15 +18,18 @@ package org.exoplatform.document.entity;
 
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.exoplatform.document.constant.TBLDocument;
+import org.exoplatform.document.constant.TBLEntity;
 import org.exoplatform.document.entity.plugin.IDocument;
 
 /**
@@ -43,6 +46,7 @@ public class Document extends BaseEntityIdentity implements IDocument {
 	 */
 	private static final long serialVersionUID = -868279763726156941L;
 
+	@Lob
 	@Column(name = TBLDocument.ETAG)
 	protected String[] etag;
 	
@@ -68,8 +72,8 @@ public class Document extends BaseEntityIdentity implements IDocument {
 	@Column(name = TBLDocument.LAST_MODIFYING_USERNAME, nullable = true, length = 500)
 	protected String lastModifyingUserName;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = TBLDocument.LAST_MODIFYING_USER, nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = TBLDocument.LAST_MODIFYING_USER, referencedColumnName = TBLEntity.ID)
 	protected Owner lastModifyingUser;
 
   /**

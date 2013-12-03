@@ -16,8 +16,7 @@
  */
 package org.exoplatform.document.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,6 +29,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.exoplatform.document.constant.TBLDocument;
 import org.exoplatform.document.constant.TBLEntity;
 import org.exoplatform.document.constant.TBLFile;
 import org.exoplatform.document.constant.TBLOwner;
@@ -67,7 +67,7 @@ public class Owner extends StringIdentity implements IOwner {
 	 * 
 	 * One Owner has only one Picture and one Picture has only one Owner
 	 */
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = TBLOwner.PICTURE)
   private Picture picture;
 	
@@ -76,23 +76,22 @@ public class Owner extends StringIdentity implements IOwner {
    * 
    * One Owner has only one Owner's detail and one Owner's detail has only one Owner
    */
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = TBLOwner.ACCOUNT_INFOR)
 	private Account accountInfor;
-	
-	@OneToOne(mappedBy = TBLFile.TBL_NAME)
-  private File file;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = TBLOwner.TBL_NAME)
-	private Set<File> modifiedFiles = new HashSet<File>();
 	
 	/*
    * Many - To - Many
    * 
    * One Owner has many File and one File has many Owner
    */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = TBLOwner.TBL_NAME)
-	private Set<File> files = new HashSet<File>();
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, 
+	    fetch = FetchType.LAZY, mappedBy = TBLFile.OWNERS)
+	private List<File> filesOfOwner;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+	    mappedBy = TBLDocument.MAPPEDBY_LAST_MODIFYING_USER)
+  private List<File> lastModifyingFiles;
 
   /**
    * 
@@ -186,44 +185,30 @@ public class Owner extends StringIdentity implements IOwner {
   }
 
   /**
-   * @return the file
+   * @return the filesOfOwner
    */
-  public File getFile() {
-    return file;
+  public List<File> getFilesOfOwner() {
+    return filesOfOwner;
   }
 
   /**
-   * @param file the file to set
+   * @param filesOfOwner the filesOfOwner to set
    */
-  public void setFile(File file) {
-    this.file = file;
+  public void setFilesOfOwner(List<File> filesOfOwner) {
+    this.filesOfOwner = filesOfOwner;
   }
 
   /**
-   * @return the modifiedFiles
+   * @return the lastModifyingFiles
    */
-  public Set<File> getModifiedFiles() {
-    return modifiedFiles;
+  public List<File> getLastModifyingFiles() {
+    return lastModifyingFiles;
   }
 
   /**
-   * @param modifiedFiles the modifiedFiles to set
+   * @param lastModifyingFiles the lastModifyingFiles to set
    */
-  public void setModifiedFiles(Set<File> modifiedFiles) {
-    this.modifiedFiles = modifiedFiles;
-  }
-
-  /**
-   * @return the files
-   */
-  public Set<File> getFiles() {
-    return files;
-  }
-
-  /**
-   * @param files the files to set
-   */
-  public void setFiles(Set<File> files) {
-    this.files = files;
+  public void setLastModifyingFiles(List<File> lastModifyingFiles) {
+    this.lastModifyingFiles = lastModifyingFiles;
   }
 }

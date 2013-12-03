@@ -16,9 +16,9 @@
  */
 package org.exoplatform.document.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -59,8 +59,9 @@ public class Label extends StringIdentity {
 	@Column(name = TBLLabel.VIEWED, nullable = true, length = 10)
 	private boolean viewed;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = TBLLabel.TBL_NAME)
-	private Set<File> files = new HashSet<File>();
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, 
+	    mappedBy = TBLLabel.MAPPEDBY_LABLE_OF_FILE)
+	private List<File> files;
 
 	/**
 	 * 
@@ -141,14 +142,14 @@ public class Label extends StringIdentity {
   /**
    * @return the files
    */
-  public Set<File> getFiles() {
+  public List<File> getFiles() {
     return files;
   }
 
   /**
    * @param files the files to set
    */
-  public void setFiles(Set<File> files) {
+  public void setFiles(List<File> files) {
     this.files = files;
   }
 }

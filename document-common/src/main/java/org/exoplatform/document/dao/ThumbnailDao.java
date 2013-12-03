@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.constant;
+package org.exoplatform.document.dao;
+
+import org.exoplatform.common.dao.HibernateManager;
+import org.exoplatform.document.entity.Thumbnail;
 
 /**
- * Created by The eXo Platform SAS
- * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
- * @version GenericGeneratorType.java Nov 27, 2013
+ * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
+ * @version ThumbnailDao.java Nov 30, 2013
+ *
  */
-public class GenericGeneratorType {
+public interface ThumbnailDao extends HibernateManager<Thumbnail, String> {
 
-  public static final String GENERATOR = "generator";
-  
-  public static final String STRATEGY_FOREIGN = "foreign";
+  public static final String REPOSITORY_ID = "thumbnailDao";
 }

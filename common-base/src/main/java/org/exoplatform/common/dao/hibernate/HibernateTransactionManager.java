@@ -25,12 +25,13 @@ import java.util.Map;
 
 import javax.persistence.NonUniqueResultException;
 
-import org.exoplatform.common.dao.SearchCriterion;
+import org.exoplatform.common.dao.search.SearchCriterion;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.googlecode.genericdao.search.ISearch;
 import com.googlecode.genericdao.search.SearchResult;
@@ -48,28 +49,31 @@ import com.googlecode.genericdao.search.hibernate.HibernateSearchProcessor;
 public class HibernateTransactionManager {
 
   private HibernateSearchProcessor searchProcessor;
-
+  
+  @Autowired(required = true)
   private SessionFactory sessionFactory;
 
   private HibernateMetadataUtil metadataUtil;
 
   /**
-   * Construction Dependency Injection
+   * Create new instance for hibernate transaction manager
+   * 
+   * @param sessionFactory
+   *          - The SessionFactory property is annotated for automatic resource injection
    */
-  public HibernateTransactionManager(SessionFactory sessionFactory) {
+  public void setSessionFactory(SessionFactory sessionFactory) {
     this.sessionFactory = sessionFactory;
-    // Get instance of...
-    searchProcessor = HibernateSearchProcessor.getInstanceForSessionFactory(sessionFactory);
-    metadataUtil = HibernateMetadataUtil.getInstanceForSessionFactory(sessionFactory);
+    this.searchProcessor = HibernateSearchProcessor.getInstanceForSessionFactory(sessionFactory);
+    this.metadataUtil = HibernateMetadataUtil.getInstanceForSessionFactory(sessionFactory);
   }
 
   /**
    * Get the current Hibernate session
    * 
-   * @return a session
+   * @return the current hibernate session
    */
   protected Session getSession() {
-    return this.sessionFactory.getCurrentSession();
+    return sessionFactory.getCurrentSession();
   }
 
   /**

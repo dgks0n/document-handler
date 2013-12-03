@@ -19,6 +19,8 @@ package org.exoplatform.common.dao.util;
 import com.googlecode.genericdao.dao.DAOUtil;
 
 /**
+ * Utility methods for Hibernate Genereic DAO.
+ * 
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version HibernateTransactionUtil.java Nov 6, 2013
  *

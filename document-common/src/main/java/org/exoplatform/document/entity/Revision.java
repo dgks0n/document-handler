@@ -21,6 +21,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -61,7 +62,7 @@ public class Revision extends Document {
 	@Column(name = TBLRevision.PUBLISHED_LINK, length = 1500)
 	private String publishedLink;
 	
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = TBLFile.HEAD_REVISION_IDENTITY)
 	private List<File> files;
 

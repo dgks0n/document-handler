@@ -42,7 +42,8 @@ public abstract class AbstractEntity<I extends Serializable> implements Entity<I
    * ID of Object Entity
    */
   @Id
-  @Column(name = TBLEntity.ID, unique = true, nullable = false, length = 100)
+  @Column(name = TBLEntity.ID, unique = true, 
+      nullable = false, length = 100)
   protected I id;
 
   public void setId(I id) {

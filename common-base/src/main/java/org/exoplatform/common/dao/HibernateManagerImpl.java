@@ -21,6 +21,7 @@ import java.lang.reflect.Array;
 import java.util.List;
 
 import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
+import org.exoplatform.common.dao.search.SearchCriterion;
 import org.exoplatform.common.dao.util.HibernateTransactionUtil;
 import org.hibernate.SessionFactory;
 
@@ -46,10 +47,6 @@ import com.googlecode.genericdao.search.SearchResult;
 public class HibernateManagerImpl<T, ID extends Serializable> extends HibernateTransactionManager implements HibernateManager<T, ID> {
 	
 	protected Class<T> persistentClass = (Class<T>) HibernateTransactionUtil.getTypeArguments(HibernateManagerImpl.class, this.getClass()).get(0);
-	
-	public HibernateManagerImpl(SessionFactory sessionFactory) {
-		super(sessionFactory);
-	}
 
 	@Override
 	public T find(ID id) {

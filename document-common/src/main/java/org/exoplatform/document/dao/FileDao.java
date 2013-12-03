@@ -14,22 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.constant;
+package org.exoplatform.document.dao;
+
+import org.exoplatform.common.dao.HibernateManager;
+import org.exoplatform.document.entity.File;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version TBLLabel.java Nov 28, 2013
+ * @version FileDao.java Nov 30, 2013
  *
  */
-public class TBLLabel {
-  
-  public static final String TBL_NAME = "lable";
-  
-  public static final String STARRED = "starred";
-  public static final String HIDDEN = "hidden";
-  public static final String TRASHED = "trashed";
-  public static final String RESTRICTED = "restricted";
-  public static final String VIEWED = "viewed";
-  
-  public static final String MAPPEDBY_LABLE_OF_FILE = "lableOfFile";
+public interface FileDao extends HibernateManager<File, String> {
+
+  public static final String REPOSITORY_ID = "fileDao";
 }

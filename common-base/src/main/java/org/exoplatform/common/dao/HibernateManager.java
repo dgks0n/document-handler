@@ -19,6 +19,8 @@ package org.exoplatform.common.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.exoplatform.common.dao.search.SearchCriterion;
+
 import com.googlecode.genericdao.search.SearchResult;
 
 /**

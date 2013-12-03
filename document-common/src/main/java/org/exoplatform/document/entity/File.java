@@ -17,8 +17,7 @@
 package org.exoplatform.document.entity;
 
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,6 +25,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -60,8 +60,9 @@ public class File extends Document {
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = TBLFile.LABEL, nullable = false)
-	private Label label;
+	@JoinColumn(name = TBLFile.LABEL_OF_FILE, referencedColumnName = TBLEntity.ID,
+	    insertable = false, updatable = false)
+	private Label lableOfFile;
 	
 	@Temporal(TemporalType.TIMESTAMP)
   @Column(name = TBLFile.CREATED_DATE)
@@ -89,6 +90,7 @@ public class File extends Document {
 	@Column(name = TBLFile.QUOTA_BYTES_USED)
 	private long quotaBytesUsed;
 	
+	@Lob
 	@Column(name = TBLFile.OWNER_NAME)
 	private String[] ownerNames;
 	
@@ -116,8 +118,8 @@ public class File extends Document {
    * 
    * One File has only one Thumbnail and one Thumbnail has only one File
    */
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  @JoinColumn(name = TBLFile.THUMBNAIL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = TBLFile.THUMBNAIL, referencedColumnName = TBLEntity.ID)
 	private Thumbnail thumbnail;
 	
 	@Column(name = TBLFile.WEB_VIEW_LINK, nullable = true, length = 1500)
@@ -129,13 +131,19 @@ public class File extends Document {
 	@Column(name = TBLFile.SHARED, length = 10)
 	private boolean shared;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	/*
+   * Many - To - Many
+   * 
+   * One Owner has many File and one File has many Owner
+   */
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, 
+	    fetch = FetchType.LAZY)
   @JoinTable(name = TBLOwnerFile.TBL_NAME, joinColumns = {
-      @JoinColumn(name = TBLOwnerFile.OWNER_ID, nullable = false, updatable = false)}, 
+      @JoinColumn(name = TBLOwnerFile.OWNER_ID, referencedColumnName = TBLEntity.ID)}, 
       inverseJoinColumns = { 
-          @JoinColumn(name = TBLOwnerFile.FILE_ID, nullable = false, updatable = false) 
+          @JoinColumn(name = TBLOwnerFile.FILE_ID, referencedColumnName = TBLEntity.ID) 
       })
-	private Set<Owner> owners = new HashSet<Owner>();
+	private List<Owner> owners;
 	
 	@Column(name = TBLFile.APPLICATION_DATA_CONTENT, length = 10)
 	private boolean appDataContents;
@@ -143,7 +151,7 @@ public class File extends Document {
 	@Column(name = TBLFile.DEFAULT_OPEN_WITH_LINK, nullable = true, length = 1500)
 	private String defaultOpenWithLink;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = TBLFile.HEAD_REVISION_IDENTITY, insertable = false, 
       updatable = false, nullable = false)
 	private Revision revision;
@@ -187,17 +195,17 @@ public class File extends Document {
   }
 
   /**
-   * @return the label
+   * @return the lableOfFile
    */
-  public Label getLabel() {
-    return label;
+  public Label getLableOfFile() {
+    return lableOfFile;
   }
 
   /**
-   * @param label the label to set
+   * @param lableOfFile the lableOfFile to set
    */
-  public void setLabel(Label label) {
-    this.label = label;
+  public void setLableOfFile(Label lableOfFile) {
+    this.lableOfFile = lableOfFile;
   }
 
   /**
@@ -455,14 +463,14 @@ public class File extends Document {
   /**
    * @return the owners
    */
-  public Set<Owner> getOwners() {
+  public List<Owner> getOwners() {
     return owners;
   }
 
   /**
    * @param owners the owners to set
    */
-  public void setOwners(Set<Owner> owners) {
+  public void setOwners(List<Owner> owners) {
     this.owners = owners;
   }
 

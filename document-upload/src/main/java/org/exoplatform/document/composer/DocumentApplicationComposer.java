@@ -20,11 +20,29 @@ import info.monitorenter.cpdetector.CharsetPrinter;
 import info.monitorenter.cpdetector.CodepageProcessor;
 import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
 
+import javax.mail.Session;
 import javax.servlet.ServletContext;
 
 import org.everrest.pico.EverrestComposer;
+import org.exoplatform.document.dao.AccountDao;
+import org.exoplatform.document.dao.FileDao;
+import org.exoplatform.document.dao.LabelDao;
+import org.exoplatform.document.dao.OwnerDao;
+import org.exoplatform.document.dao.PictureDao;
+import org.exoplatform.document.dao.RevisionDao;
+import org.exoplatform.document.dao.ThumbnailDao;
+import org.exoplatform.document.dao.impl.AccountDaoImpl;
+import org.exoplatform.document.dao.impl.FileDaoImpl;
+import org.exoplatform.document.dao.impl.LabelDaoImpl;
+import org.exoplatform.document.dao.impl.OwnerDaoImpl;
+import org.exoplatform.document.dao.impl.PictureDaoImpl;
+import org.exoplatform.document.dao.impl.RevisionDaoImpl;
+import org.exoplatform.document.dao.impl.ThumbnailDaoImpl;
+import org.exoplatform.document.service.PictureService;
+import org.exoplatform.document.service.impl.PictureServiceImpl;
 import org.exoplatform.document.upload.handle.UploadMultipartHandler;
 import org.exoplatform.document.upload.rest.UploadDocumentService;
+import org.hibernate.SessionFactory;
 import org.picocontainer.MutablePicoContainer;
 
 /**
@@ -36,14 +54,17 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
 	@Override
 	protected void doComposeApplication(MutablePicoContainer container, ServletContext servletContext) {
-		// And adding component in apllication scope container minds one instance of 
-	  // component per web application.
+	  container.addComponent(AccountDao.class, AccountDaoImpl.class); 
+	  container.addComponent(ThumbnailDao.class, ThumbnailDaoImpl.class);
+	  container.addComponent(RevisionDao.class, RevisionDaoImpl.class);
+	  container.addComponent(PictureDao.class, PictureDaoImpl.class);
+	  container.addComponent(OwnerDao.class, OwnerDaoImpl.class);
+	  container.addComponent(LabelDao.class, LabelDaoImpl.class);
+	  container.addComponent(FileDao.class, FileDaoImpl.class);
 	}
 	
 	@Override
 	protected void doComposeRequest(MutablePicoContainer container) {
-	  // Adding component in request scope container minds new instance of 
-	  // components will be created for each request.
 		container.addComponent(CodepageDetectorProxy.class);
 		container.addComponent(CharsetPrinter.class);
 		container.addComponent(CodepageProcessor.class);
@@ -51,9 +72,10 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
 	@Override
 	protected void doComposeSession(MutablePicoContainer container) {
-	  // Adding component is session scope container minds one instance of 
-	  // component per HTTP session.
 	  container.addComponent(UploadMultipartHandler.class);
     container.addComponent(UploadDocumentService.class);
+    
+    // Add services component
+    container.addComponent(PictureService.class, PictureServiceImpl.class);
 	}
 }

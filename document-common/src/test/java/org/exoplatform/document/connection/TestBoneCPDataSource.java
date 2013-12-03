@@ -47,7 +47,7 @@ public class TestBoneCPDataSource {
     BoneCPConfig config = new BoneCPConfig(); // create a new configuration object
     config.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/document?createDatabaseIfNotExist=true&autoReconnect=true&useUnicode=true&characterEncoding=UTF-8");
     config.setUsername("root"); // set the username
-    config.setPassword("exo"); // set the password
+    config.setPassword("admin"); // set the password
 
     BoneCP connectionPool = null;
     Connection connection = null;

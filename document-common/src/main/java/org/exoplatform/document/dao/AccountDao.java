@@ -14,15 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.constant;
+package org.exoplatform.document.dao;
+
+import org.exoplatform.common.dao.HibernateManager;
+import org.exoplatform.document.entity.Account;
 
 /**
- * Created by The eXo Platform SAS
- * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
- * @version ParameterType.java Nov 27, 2013
+ * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
+ * @version AccountDao.java Nov 30, 2013
+ *
  */
-public class ParameterType {
+public interface AccountDao extends HibernateManager<Account, String> {
 
-  public static final String PROPERTY = "property";
+  public static final String REPOSITORY_ID = "accountDao";
 }

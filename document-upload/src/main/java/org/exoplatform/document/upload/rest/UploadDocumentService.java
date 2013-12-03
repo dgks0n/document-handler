@@ -34,6 +34,8 @@ import net.arnx.jsonic.JSON;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
+import org.exoplatform.document.exception.ServiceException;
+import org.exoplatform.document.service.PictureService;
 import org.exoplatform.document.upload.Document;
 import org.exoplatform.document.upload.handle.UploadMultipartHandler;
 import org.slf4j.Logger;
@@ -58,9 +60,12 @@ public class UploadDocumentService implements Serializable {
   private static final String WS_UPLOAD_PATH = "/upload";
 
   private UploadMultipartHandler uploadMultipartHandler;
+  
+  private PictureService pictureService;
 
-  public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler) {
+  public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler, PictureService pictureService) {
     this.uploadMultipartHandler = uploadMultipartHandler;
+    this.pictureService = pictureService;
   }
 
   @POST
@@ -73,6 +78,12 @@ public class UploadDocumentService implements Serializable {
     try {
       documents = uploadMultipartHandler.parseHttpRequest(request);
       if (CollectionUtils.isNotEmpty(documents)) {
+        // Storage within DB
+        try {
+          pictureService.createByURL(documents.get(0).getUrl());
+        } catch (ServiceException e) {
+          e.printStackTrace();
+        }
         responseText = JSON.encode(documents.get(0));
         return Response.ok(responseText).build();
       } else {

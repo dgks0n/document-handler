@@ -33,4 +33,6 @@ public class TBLDocument {
   public static final String FILE_SIZE = "file_size";
   public static final String LAST_MODIFYING_USERNAME = "last_modifying_username";
   public static final String LAST_MODIFYING_USER = "last_modifying_user";
+  
+  public static final String MAPPEDBY_LAST_MODIFYING_USER = "lastModifyingUser";
 }

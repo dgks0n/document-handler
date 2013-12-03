@@ -28,7 +28,7 @@ public class TBLFile {
   
   public static final String TITLE = "title";
   public static final String DESCRIPTION = "description";
-  public static final String LABEL = "labels";
+  public static final String LABEL_OF_FILE = "label_of_file";
   public static final String CREATED_DATE = "created_date";
   public static final String MODIFIED_BY_ME_DATE = "modified_by_me_date";
   public static final String FILE_EXTENSION = "file_extension";
@@ -37,6 +37,7 @@ public class TBLFile {
   public static final String SHARED_WITH_ME_DATE = "shared_with_me_date";
   public static final String QUOTA_BYTES_USED = "quota_bytes_used";
   public static final String OWNER_NAME = "owner_names";
+  public static final String OWNERS = "owners";
   public static final String EDITABLE = "editable";
   public static final String WRITER_SCAN_SHARE = "writers_can_share";
   public static final String THUMBNAIL_LINK = "thumbnail_link";

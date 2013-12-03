@@ -14,22 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.constant;
+package org.exoplatform.document.persistence;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.picocontainer.persistence.hibernate.ConfigurableSessionFactory;
+import org.picocontainer.persistence.hibernate.annotations.ConstructableAnnotationConfiguration;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version TBLLabel.java Nov 28, 2013
+ * @version HibernateSessionFactory.java Dec 2, 2013
  *
  */
-public class TBLLabel {
+public class HibernateSessionFactory {
+
+  private static final String HIBERNATE_CONFIGURATION_PATH = "/hibernate.cfg.xml";
   
-  public static final String TBL_NAME = "lable";
+  private static SessionFactory sessionFactory;
   
-  public static final String STARRED = "starred";
-  public static final String HIDDEN = "hidden";
-  public static final String TRASHED = "trashed";
-  public static final String RESTRICTED = "restricted";
-  public static final String VIEWED = "viewed";
-  
-  public static final String MAPPEDBY_LABLE_OF_FILE = "lableOfFile";
+  public static SessionFactory getInstanceOfSessionFactory() {
+    Configuration configuration = new ConstructableAnnotationConfiguration(HIBERNATE_CONFIGURATION_PATH);
+    sessionFactory = new ConfigurableSessionFactory(configuration);
+    return sessionFactory;
+  }
 }
