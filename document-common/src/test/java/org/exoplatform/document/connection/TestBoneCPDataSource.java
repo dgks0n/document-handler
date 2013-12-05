@@ -35,7 +35,7 @@ import com.jolbox.bonecp.BoneCPConfig;
  */
 public class TestBoneCPDataSource {
 
-  @Test
+//  @Test
   public void testBoneCPCManual() {
 
     try {

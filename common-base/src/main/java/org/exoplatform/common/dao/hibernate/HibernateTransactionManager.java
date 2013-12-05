@@ -26,12 +26,11 @@ import java.util.Map;
 import javax.persistence.NonUniqueResultException;
 
 import org.exoplatform.common.dao.search.SearchCriterion;
+import org.exoplatform.common.session.factory.HibernateSessionFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.googlecode.genericdao.search.ISearch;
 import com.googlecode.genericdao.search.SearchResult;
@@ -48,12 +47,11 @@ import com.googlecode.genericdao.search.hibernate.HibernateSearchProcessor;
  */
 public class HibernateTransactionManager {
 
-  private HibernateSearchProcessor searchProcessor;
+  private final HibernateSessionFactory hibernateSessionFactory;
   
-  @Autowired(required = true)
-  private SessionFactory sessionFactory;
-
-  private HibernateMetadataUtil metadataUtil;
+  private final HibernateSearchProcessor searchProcessor;
+  
+  private final HibernateMetadataUtil metadataUtil;
 
   /**
    * Create new instance for hibernate transaction manager
@@ -61,10 +59,10 @@ public class HibernateTransactionManager {
    * @param sessionFactory
    *          - The SessionFactory property is annotated for automatic resource injection
    */
-  public void setSessionFactory(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
-    this.searchProcessor = HibernateSearchProcessor.getInstanceForSessionFactory(sessionFactory);
-    this.metadataUtil = HibernateMetadataUtil.getInstanceForSessionFactory(sessionFactory);
+  public HibernateTransactionManager(HibernateSessionFactory hibernateSessionFactory) {
+    this.hibernateSessionFactory = hibernateSessionFactory;
+    this.searchProcessor = HibernateSearchProcessor.getInstanceForSessionFactory(hibernateSessionFactory.getSessionFactory());
+    this.metadataUtil = HibernateMetadataUtil.getInstanceForSessionFactory(hibernateSessionFactory.getSessionFactory());
   }
 
   /**
@@ -72,8 +70,8 @@ public class HibernateTransactionManager {
    * 
    * @return the current hibernate session
    */
-  protected Session getSession() {
-    return sessionFactory.getCurrentSession();
+  public Session getSession() {
+    return hibernateSessionFactory.getCurrentSession();
   }
 
   /**
@@ -93,7 +91,7 @@ public class HibernateTransactionManager {
    * 
    * @return The id of the newly saved entity.
    */
-  protected Serializable _saveEntity(Object entity) {
+  public Serializable _saveEntity(Object entity) {
     return getSession().save(entity);
   }
 
@@ -106,7 +104,7 @@ public class HibernateTransactionManager {
    * 
    * @param entities
    */
-  protected void _saveEntities(Object... entities) {
+  public void _saveEntities(Object... entities) {
     for (Object entity : entities) {
       _saveEntity(entity);
     }
@@ -135,7 +133,7 @@ public class HibernateTransactionManager {
    * 
    * @param entity
    */
-  protected void _saveOrUpdateEntity(Object entity) {
+  public void _saveOrUpdateEntity(Object entity) {
     getSession().saveOrUpdate(entity);
   }
 
@@ -147,7 +145,7 @@ public class HibernateTransactionManager {
    * 
    * @return <code>true</code> if _save(); <code>false</code> if _update().
    */
-  protected boolean _saveOrUpdateIsNewEntity(Object entity) {
+  public boolean _saveOrUpdateIsNewEntity(Object entity) {
     if (entity == null) {
       throw new IllegalArgumentException("attempt to saveOrUpdate with null entity");
     }
@@ -156,8 +154,7 @@ public class HibernateTransactionManager {
     if (getSession().contains(entity))
       return false;
 
-    if (serializable == null || (new Long(0)).equals(serializable)
-        || !_isExists(entity)) {
+    if (serializable == null || (new Long(0)).equals(serializable) || !_isExists(entity)) {
       _saveEntity(entity);
       return true;
     } else {
@@ -177,7 +174,7 @@ public class HibernateTransactionManager {
    *         <code>_update()</code>d.
    * 
    */
-  protected boolean[] _saveOrUpdateIsNewEntities(Object... entities) {
+  public boolean[] _saveOrUpdateIsNewEntities(Object... entities) {
     Boolean[] exists = new Boolean[entities.length];
     // if an entity is contained in the session, it exists; if it has no id,
     // it does not exist
@@ -199,11 +196,8 @@ public class HibernateTransactionManager {
     Map<Class<?>, List<Integer>> mayExist = new HashMap<Class<?>, List<Integer>>();
     for (int i = 0; i < entities.length; i++) {
       if (exists[i] == null) {
-        Class<?> entityClass = metadataUtil.getUnproxiedClass(entities[i]); // Get
-                                                                            // the
-                                                                            // real
-                                                                            // entity
-                                                                            // class
+        // Get the real entity class
+        Class<?> entityClass = metadataUtil.getUnproxiedClass(entities[i]);
         List<Integer> list = mayExist.get(entityClass);
         if (list == null) {
           list = new ArrayList<Integer>();
@@ -256,7 +250,7 @@ public class HibernateTransactionManager {
    * is generated by the datastore so that the id can be determined. With
    * <code>persist</code> this call may not occur until flush time.
    */
-  protected void _persistEntities(Object... entities) {
+  public void _persistEntities(Object... entities) {
     for (Object entity : entities) {
       getSession().persist(entity);
     }
@@ -269,7 +263,7 @@ public class HibernateTransactionManager {
    * @return <code>true</code> if the object is found in the datastore and
    *         deleted, <code>false</code> if the item is not found.
    */
-  protected boolean _deleteEntityById(Class<?> type, Serializable id) {
+  public boolean _deleteEntityById(Class<?> type, Serializable id) {
     if (id != null) {
       type = metadataUtil.getUnproxiedClass(type); // Get the real entity class
       Object entity = getSession().get(type, id);
@@ -285,7 +279,7 @@ public class HibernateTransactionManager {
    * Remove all the entities of the given type from the datastore that have one
    * of these ids.
    */
-  protected void _deleteEntityById(Class<?> type, Serializable... ids) {
+  public void _deleteEntityById(Class<?> type, Serializable... ids) {
     type = metadataUtil.getUnproxiedClass(type); // Get the real entity class
     Criteria criteria = getSession().createCriteria(type);
     criteria.add(Restrictions.in("id", ids));
@@ -300,7 +294,7 @@ public class HibernateTransactionManager {
    * @return <code>true</code> if the object is found in the datastore and
    *         removed, <code>false</code> if the item is not found.
    */
-  protected boolean _deleteEntity(Object entity) {
+  public boolean _deleteEntity(Object entity) {
     if (entity != null) {
       Serializable id = metadataUtil.getId(entity);
       if (id != null) {
@@ -317,7 +311,7 @@ public class HibernateTransactionManager {
   /**
    * Remove the specified entities from the datastore.
    */
-  protected void _deleteEntities(Object... entities) {
+  public void _deleteEntities(Object... entities) {
     for (Object entity : entities) {
       if (entity != null) {
         getSession().delete(entity);
@@ -330,7 +324,7 @@ public class HibernateTransactionManager {
    * identifier, or null if there is no such persistent instance.
    * <code>get()</code> always hits the database immediately.
    */
-  protected <T> T _getEntity(Class<T> type, Serializable id) {
+  public <T> T _getEntity(Class<T> type, Serializable id) {
     type = metadataUtil.getUnproxiedClass(type); // Get the real entity class
     return (T) getSession().get(type, id);
   }
@@ -345,7 +339,7 @@ public class HibernateTransactionManager {
    * <p>
    * <code>get()</code> always hits the database immediately.
    */
-  protected <T> T[] _getEntities(Class<T> type, Serializable... ids) {
+  public <T> T[] _getEntities(Class<T> type, Serializable... ids) {
     type = metadataUtil.getUnproxiedClass(type); // Get the real entity class
     Criteria criteria = getSession().createCriteria(type);
     criteria.add(Restrictions.in("id", ids));
@@ -378,7 +372,7 @@ public class HibernateTransactionManager {
    * It also allows multiple instances to be loaded as a batch if batch-size is
    * defined for the class mapping.
    */
-  protected <T> T _loadEntity(Class<T> type, Serializable id) {
+  public <T> T _loadEntity(Class<T> type, Serializable id) {
     type = metadataUtil.getUnproxiedClass(type); // Get the real entity class
     return (T) getSession().load(type, id);
   }
@@ -394,7 +388,7 @@ public class HibernateTransactionManager {
    * 
    * @see #_loadEntity(Class, Serializable)
    */
-  protected <T> T[] _loadEntities(Class<T> type, Serializable... ids) {
+  public <T> T[] _loadEntities(Class<T> type, Serializable... ids) {
     type = metadataUtil.getUnproxiedClass(type); // Get the real entity class
     Object[] retVal = (Object[]) Array.newInstance(type, ids.length);
     for (int i = 0; i < ids.length; i++) {
@@ -410,14 +404,14 @@ public class HibernateTransactionManager {
    * given transient instance. Throw an unrecoverable exception if there is no
    * matching database row.
    */
-  protected void _loadEntity(Object transientEntity, Serializable id) {
+  public void _loadEntity(Object transientEntity, Serializable id) {
     getSession().load(transientEntity, id);
   }
 
   /**
    * Get a list of all the objects of the specified class.
    */
-  protected <T> List<T> _allEnties(Class<T> type) {
+  public <T> List<T> _allEnties(Class<T> type) {
     type = metadataUtil.getUnproxiedClass(type); // Get the real entityclass
     return getSession().createCriteria(type).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
   }
@@ -437,7 +431,7 @@ public class HibernateTransactionManager {
    * object is already persistent, but it also doesn't make the given object
    * persistent; it just copies over the values to the datastore.
    */
-  protected void _updateEntity(Object... transientEntities) {
+  public void _updateEntity(Object... transientEntities) {
     for (Object entity : transientEntities) {
       getSession().update(entity);
     }
@@ -461,7 +455,7 @@ public class HibernateTransactionManager {
    * object is already persistent, but it also doesn't make the given object
    * persistent; it just copies over the values to the datastore.
    */
-  protected <T> T _mergeEntity(T entity) {
+  public <T> T _mergeEntity(T entity) {
     return (T) getSession().merge(entity);
   }
 
@@ -471,7 +465,7 @@ public class HibernateTransactionManager {
    * 
    * @see SearchCriterion
    */
-  protected List _searchEntity(SearchCriterion parameters) {
+  public List _searchEntity(SearchCriterion parameters) {
     if (parameters == null) {
       throw new NullPointerException("Search is null.");
     }
@@ -488,7 +482,7 @@ public class HibernateTransactionManager {
    * Also, if the search object has a different search class than what is
    * specified, an exception is thrown.
    */
-  protected List _searchEntity(Class<?> searchClass, SearchCriterion parameters) {
+  public List _searchEntity(Class<?> searchClass, SearchCriterion parameters) {
     if (parameters == null) {
       throw new NullPointerException("Search is null.");
     }
@@ -509,7 +503,7 @@ public class HibernateTransactionManager {
    * 
    * @see SearchCriterion
    */
-  protected int _countEntity(SearchCriterion parameters) {
+  public int _countEntity(SearchCriterion parameters) {
     if (parameters == null) {
       throw new NullPointerException("Search is null.");
     }
@@ -526,7 +520,7 @@ public class HibernateTransactionManager {
    * if the search object has a different search class than what is specified,
    * an exception is thrown.
    */
-  protected int _countEntity(Class<?> searchClass, SearchCriterion parameters) {
+  public int _countEntity(Class<?> searchClass, SearchCriterion parameters) {
     if (parameters == null) {
       throw new NullPointerException("Search is null.");
     }
@@ -544,7 +538,7 @@ public class HibernateTransactionManager {
   /**
    * Returns the number of instances of this class in the datastore.
    */
-  protected int _countEntity(Class<?> type) {
+  public int _countEntity(Class<?> type) {
     List counts = getSession().createQuery("select count(_it_) from " + metadataUtil.get(type).getEntityName() + " _it_").list();
     int sum = 0;
     for (Object count : counts) {
@@ -560,7 +554,7 @@ public class HibernateTransactionManager {
    * 
    * @see ISearch
    */
-  protected SearchResult _searchAndCountEntity(SearchCriterion parameters) {
+  public SearchResult _searchAndCountEntity(SearchCriterion parameters) {
     if (parameters == null) {
       throw new NullPointerException("Search is null.");
     }
@@ -577,8 +571,7 @@ public class HibernateTransactionManager {
    * object. Also, if the search object has a different search class than what
    * is specified, an exception is thrown.
    */
-  protected SearchResult _searchAndCountEntity(Class<?> searchClass,
-      SearchCriterion parameters) {
+  public SearchResult _searchAndCountEntity(Class<?> searchClass, SearchCriterion parameters) {
     if (parameters == null) {
       throw new NullPointerException("Search is null.");
     }
@@ -597,7 +590,7 @@ public class HibernateTransactionManager {
   /**
    * Search for a single result using the given parameters.
    */
-  protected Object _searchUniqueEntity(SearchCriterion parameters)
+  public Object _searchUniqueEntity(SearchCriterion parameters)
       throws NonUniqueResultException {
     if (parameters == null) {
       throw new NullPointerException("Search is null.");
@@ -615,7 +608,7 @@ public class HibernateTransactionManager {
    * object. Also, if the search object has a different search class than what
    * is specified, an exception is thrown.
    */
-  protected Object _searchUniqueEntity(Class<?> searchClass,
+  public Object _searchUniqueEntity(Class<?> searchClass,
       SearchCriterion parameters) {
     if (parameters == null) {
       throw new NullPointerException("Search is null.");
@@ -634,34 +627,34 @@ public class HibernateTransactionManager {
   /**
    * Returns true if the object is connected to the current hibernate session.
    */
-  protected boolean _sessionContains(Object o) {
+  public boolean _sessionContains(Object o) {
     return getSession().contains(o);
   }
 
   /**
    * Flushes changes in the hibernate cache to the datastore.
    */
-  protected void _flush() {
+  public void _flush() {
     getSession().flush();
   }
 
   /**
    * Refresh the content of the given entity from the current datastore state.
    */
-  protected void _refreshEntities(Object... entities) {
+  public void _refreshEntities(Object... entities) {
     for (Object entity : entities) {
       getSession().refresh(entity);
     }
   }
 
-  protected boolean _isExists(Object entity) {
+  public boolean _isExists(Object entity) {
     if (getSession().contains(entity)) {
       return true;
     }
     return _isExists(entity.getClass(), metadataUtil.getId(entity));
   }
 
-  protected boolean _isExists(Class<?> type, Serializable id) {
+  public boolean _isExists(Class<?> type, Serializable id) {
     if (type == null) {
       throw new NullPointerException("Type is null.");
     }
@@ -675,12 +668,11 @@ public class HibernateTransactionManager {
     return query.list().size() == 1;
   }
 
-  protected boolean[] _isExists(Class<?> type, Serializable... ids) {
+  public boolean[] _isExists(Class<?> type, Serializable... ids) {
     if (type == null) {
       throw new NullPointerException("Type is null.");
     }
     type = metadataUtil.getUnproxiedClass(type); // Get the real entity class
-
     boolean[] ret = new boolean[ids.length];
     // we can't use "id in (:ids)" because some databases do not support
     // this for compound ids.

@@ -23,7 +23,6 @@ import java.util.List;
 import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.exoplatform.common.dao.search.SearchCriterion;
 import org.exoplatform.common.dao.util.HibernateTransactionUtil;
-import org.hibernate.SessionFactory;
 
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
@@ -44,33 +43,45 @@ import com.googlecode.genericdao.search.SearchResult;
  *          
  * @version HibernateManagerImpl.java Nov 6, 2013
  */
-public class HibernateManagerImpl<T, ID extends Serializable> extends HibernateTransactionManager implements HibernateManager<T, ID> {
-	
-	protected Class<T> persistentClass = (Class<T>) HibernateTransactionUtil.getTypeArguments(HibernateManagerImpl.class, this.getClass()).get(0);
+public class HibernateManagerImpl<T, ID extends Serializable> implements HibernateManager<T, ID> {
 
-	@Override
+	private final HibernateTransactionManager transactionManager;
+	
+	private final Class<T> persistentClass;
+	
+	/**
+	 * Create new instance for hibernate transaction manager
+	 * 
+   * @param transactionManager
+   */
+	public HibernateManagerImpl(HibernateTransactionManager transactionManager) {
+    this.transactionManager = transactionManager;
+    this.persistentClass = (Class<T>) HibernateTransactionUtil.getTypeArguments(HibernateManagerImpl.class, this.getClass()).get(0);
+  }
+
+  @Override
 	public T find(ID id) {
-		return _getEntity(persistentClass, id);
+		return transactionManager._getEntity(persistentClass, id);
 	}
 
 	@Override
 	public T[] find(ID... ids) {
-		return _getEntities(persistentClass, ids);
+		return transactionManager._getEntities(persistentClass, ids);
 	}
 
 	@Override
 	public T getReference(ID id) {
-		return _loadEntity(persistentClass, id);
+		return transactionManager._loadEntity(persistentClass, id);
 	}
 
 	@Override
 	public T[] getReferences(ID... ids) {
-		return _loadEntities(persistentClass, ids);
+		return transactionManager._loadEntities(persistentClass, ids);
 	}
 
 	@Override
 	public void persist(T... entities) {
-		_persistEntities(entities);
+	  transactionManager._persistEntities(entities);
 	}
 
 	@Override
@@ -79,7 +90,7 @@ public class HibernateManagerImpl<T, ID extends Serializable> extends HibernateT
 			throw new IllegalArgumentException("Object class does not match dao type.");
 		}
 		
-		return _getEntity(persistentClass, _saveEntity(entity));
+		return transactionManager._getEntity(persistentClass, transactionManager._saveEntity(entity));
 	}
 
 	@Override
@@ -93,27 +104,27 @@ public class HibernateManagerImpl<T, ID extends Serializable> extends HibernateT
 
 	@Override
 	public boolean remove(T entity) {
-		return _deleteEntity(entity);
+		return transactionManager._deleteEntity(entity);
 	}
 
 	@Override
 	public void remove(T... entities) {
-		_deleteEntities(entities);
+	  transactionManager._deleteEntities(entities);
 	}
 
 	@Override
 	public boolean removeById(ID id) {
-		return _deleteEntityById(persistentClass, id);
+		return transactionManager._deleteEntityById(persistentClass, id);
 	}
 
 	@Override
 	public void removeByIds(ID... ids) {
-		_deleteEntityById(persistentClass, ids);
+	  transactionManager._deleteEntityById(persistentClass, ids);
 	}
 
 	@Override
 	public List<T> findAll() {
-		return _allEnties(persistentClass);
+		return transactionManager._allEnties(persistentClass);
 	}
 
 	@Override
@@ -121,12 +132,12 @@ public class HibernateManagerImpl<T, ID extends Serializable> extends HibernateT
 		if (parameters == null) {
 			return (List<RT>) findAll();
 		}
-		return _searchEntity(persistentClass, parameters);
+		return transactionManager._searchEntity(persistentClass, parameters);
 	}
 
 	@Override
 	public <RT> RT searchUnique(SearchCriterion parameters) {
-		return (RT) _searchUniqueEntity(persistentClass, parameters);
+		return (RT) transactionManager._searchUniqueEntity(persistentClass, parameters);
 	}
 
 	@Override
@@ -134,7 +145,7 @@ public class HibernateManagerImpl<T, ID extends Serializable> extends HibernateT
 		if (parameters == null) {
 			parameters = (SearchCriterion) new Search();
 		}
-		return _countEntity(persistentClass, parameters);
+		return transactionManager._countEntity(persistentClass, parameters);
 	}
 
 	@Override
@@ -145,33 +156,33 @@ public class HibernateManagerImpl<T, ID extends Serializable> extends HibernateT
 			result.setTotalCount(result.getResult().size());
 			return result;
 		}
-		return _searchAndCountEntity(persistentClass, parameters);
+		return transactionManager._searchAndCountEntity(persistentClass, parameters);
 	}
 
 	@Override
 	public boolean isAttached(T entity) {
-		return _sessionContains(entity);
+		return transactionManager._sessionContains(entity);
 	}
 
 	@Override
 	@Deprecated
 	public boolean isConnected(Object object) {
-		return _sessionContains(object);
+		return transactionManager._sessionContains(object);
 	}
 
 	@Override
 	public void refresh(T... entities) {
-		_refreshEntities(entities);
+	  transactionManager._refreshEntities(entities);
 	}
 
 	@Override
 	public void flush() {
-		_flush();
+	  transactionManager._flush();
 	}
 
 	@Override
 	public T merge(T entity) {
-		return _mergeEntity(entity);
+		return transactionManager._mergeEntity(entity);
 	}
 
 }

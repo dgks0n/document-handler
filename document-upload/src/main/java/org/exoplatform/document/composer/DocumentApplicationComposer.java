@@ -20,10 +20,12 @@ import info.monitorenter.cpdetector.CharsetPrinter;
 import info.monitorenter.cpdetector.CodepageProcessor;
 import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
 
-import javax.mail.Session;
 import javax.servlet.ServletContext;
 
 import org.everrest.pico.EverrestComposer;
+import org.exoplatform.common.dao.HibernateManagerImpl;
+import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
+import org.exoplatform.common.session.factory.HibernateSessionFactory;
 import org.exoplatform.document.dao.AccountDao;
 import org.exoplatform.document.dao.FileDao;
 import org.exoplatform.document.dao.LabelDao;
@@ -42,7 +44,6 @@ import org.exoplatform.document.service.PictureService;
 import org.exoplatform.document.service.impl.PictureServiceImpl;
 import org.exoplatform.document.upload.handle.UploadMultipartHandler;
 import org.exoplatform.document.upload.rest.UploadDocumentService;
-import org.hibernate.SessionFactory;
 import org.picocontainer.MutablePicoContainer;
 
 /**
@@ -54,6 +55,10 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
 	@Override
 	protected void doComposeApplication(MutablePicoContainer container, ServletContext servletContext) {
+	  container.addComponent(HibernateSessionFactory.class);
+	  container.addComponent(HibernateTransactionManager.class);
+	  container.addComponent(HibernateManagerImpl.class);
+	  
 	  container.addComponent(AccountDao.class, AccountDaoImpl.class); 
 	  container.addComponent(ThumbnailDao.class, ThumbnailDaoImpl.class);
 	  container.addComponent(RevisionDao.class, RevisionDaoImpl.class);

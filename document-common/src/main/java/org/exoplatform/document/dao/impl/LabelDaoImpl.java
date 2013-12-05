@@ -17,6 +17,7 @@
 package org.exoplatform.document.dao.impl;
 
 import org.exoplatform.common.dao.HibernateManagerImpl;
+import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.exoplatform.document.dao.LabelDao;
 import org.exoplatform.document.entity.Label;
 import org.springframework.stereotype.Repository;
@@ -27,9 +28,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @version LabelDaoImpl.java Nov 30, 2013
  *
  */
-@Repository(LabelDao.REPOSITORY_ID)
-@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+//@Repository(LabelDao.REPOSITORY_ID)
+//@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class LabelDaoImpl extends HibernateManagerImpl<Label, String> implements LabelDao {
 
+  public LabelDaoImpl(HibernateTransactionManager transactionManager) {
+    super(transactionManager);
+  }
 
 }

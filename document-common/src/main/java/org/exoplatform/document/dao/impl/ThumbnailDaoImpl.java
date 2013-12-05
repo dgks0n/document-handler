@@ -17,6 +17,7 @@
 package org.exoplatform.document.dao.impl;
 
 import org.exoplatform.common.dao.HibernateManagerImpl;
+import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.exoplatform.document.dao.ThumbnailDao;
 import org.exoplatform.document.entity.Thumbnail;
 import org.springframework.stereotype.Repository;
@@ -28,9 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @version ThumbnailDaoImpl.java Nov 30, 2013
  *
  */
-@Repository(ThumbnailDao.REPOSITORY_ID)
-@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+//@Repository(ThumbnailDao.REPOSITORY_ID)
+//@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class ThumbnailDaoImpl extends HibernateManagerImpl<Thumbnail, String> implements ThumbnailDao {
 
+  public ThumbnailDaoImpl(HibernateTransactionManager transactionManager) {
+    super(transactionManager);
+  }
 
 }

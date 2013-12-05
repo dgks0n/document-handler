@@ -17,6 +17,7 @@
 package org.exoplatform.document.dao.impl;
 
 import org.exoplatform.common.dao.HibernateManagerImpl;
+import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.exoplatform.document.dao.RevisionDao;
 import org.exoplatform.document.entity.Revision;
 import org.springframework.stereotype.Repository;
@@ -28,9 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @version RevisionDaoImpl.java Nov 30, 2013
  *
  */
-@Repository(RevisionDao.REPOSITORY_ID)
-@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+//@Repository(RevisionDao.REPOSITORY_ID)
+//@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class RevisionDaoImpl extends HibernateManagerImpl<Revision, String> implements RevisionDao {
 
+  public RevisionDaoImpl(HibernateTransactionManager transactionManager) {
+    super(transactionManager);
+  }
 
 }
