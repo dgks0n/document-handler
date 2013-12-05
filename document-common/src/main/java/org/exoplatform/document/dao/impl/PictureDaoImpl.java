@@ -20,17 +20,12 @@ import org.exoplatform.common.dao.HibernateManagerImpl;
 import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.exoplatform.document.dao.PictureDao;
 import org.exoplatform.document.entity.Picture;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version PictureDaoImpl.java Nov 30, 2013
  *
  */
-//@Repository(PictureDao.REPOSITORY_ID)
-//@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 public class PictureDaoImpl extends HibernateManagerImpl<Picture, String> implements PictureDao {
 
   public PictureDaoImpl(HibernateTransactionManager transactionManager) {

@@ -55,9 +55,12 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
 	@Override
 	protected void doComposeApplication(MutablePicoContainer container, ServletContext servletContext) {
-	  container.addComponent(HibernateSessionFactory.class);
-	  container.addComponent(HibernateTransactionManager.class);
-	  container.addComponent(HibernateManagerImpl.class);
+//	  container.addComponent(HibernateSessionFactory.class);
+//	  container.addComponent(HibernateTransactionManager.class);
+//	  container.addComponent(HibernateManagerImpl.class);
+	  
+	  container.addComponent(UploadMultipartHandler.class);
+    container.addComponent(UploadDocumentService.class);
 	  
 	  container.addComponent(AccountDao.class, AccountDaoImpl.class); 
 	  container.addComponent(ThumbnailDao.class, ThumbnailDaoImpl.class);
@@ -66,6 +69,9 @@ public class DocumentApplicationComposer extends EverrestComposer {
 	  container.addComponent(OwnerDao.class, OwnerDaoImpl.class);
 	  container.addComponent(LabelDao.class, LabelDaoImpl.class);
 	  container.addComponent(FileDao.class, FileDaoImpl.class);
+	  
+	  // Add services component
+    container.addComponent(PictureService.class, PictureServiceImpl.class);
 	}
 	
 	@Override
@@ -77,10 +83,8 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
 	@Override
 	protected void doComposeSession(MutablePicoContainer container) {
-	  container.addComponent(UploadMultipartHandler.class);
-    container.addComponent(UploadDocumentService.class);
-    
-    // Add services component
-    container.addComponent(PictureService.class, PictureServiceImpl.class);
+	  container.addComponent(HibernateSessionFactory.class);
+    container.addComponent(HibernateTransactionManager.class);
+    container.addComponent(HibernateManagerImpl.class);
 	}
 }

@@ -20,17 +20,12 @@ import org.exoplatform.common.dao.HibernateManagerImpl;
 import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.exoplatform.document.dao.OwnerDao;
 import org.exoplatform.document.entity.Owner;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version OwnerDaoImpl.java Nov 30, 2013
  *
  */
-//@Repository(OwnerDao.REPOSITORY_ID)
-//@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class OwnerDaoImpl extends HibernateManagerImpl<Owner, String> implements OwnerDao {
 
   public OwnerDaoImpl(HibernateTransactionManager transactionManager) {

@@ -20,17 +20,12 @@ import org.exoplatform.common.dao.HibernateManagerImpl;
 import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.exoplatform.document.dao.AccountDao;
 import org.exoplatform.document.entity.Account;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version AccountDaoImpl.java Nov 30, 2013
  *
  */
-//@Repository(AccountDao.REPOSITORY_ID)
-//@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class AccountDaoImpl extends HibernateManagerImpl<Account, String> implements AccountDao {
 
   public AccountDaoImpl(HibernateTransactionManager transactionManager) {

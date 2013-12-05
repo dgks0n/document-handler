@@ -13,24 +13,35 @@
 	<name>Document Handler :: Hibernate Generic DAO</name>
 	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.googlecode.genericdao</groupId> -->
+<!-- 			<artifactId>dao-hibernate</artifactId> -->
+<!-- 			<version>1.2.0</version> -->
+<!-- 		</dependency> -->
 		<dependency>
-	        <groupId>com.googlecode.genericdao</groupId>
-	        <artifactId>dao-hibernate</artifactId>
-	        <version>1.2.0</version>
+			<groupId>com.googlecode.genericdao</groupId>
+			<artifactId>search-hibernate</artifactId>
+			<version>1.2.0</version>
 		</dependency>
 		
 		<!-- PicoContainer Persistence Hibernate -->
-    <dependency>
-      <groupId>org.picocontainer.persistence</groupId>
-      <artifactId>picocontainer-persistence</artifactId>
-      <version>2.2</version>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.picocontainer.persistence</groupId>
-      <artifactId>picocontainer-persistence-hibernate</artifactId>
-      <version>2.2</version>
-    </dependency>
+<!--     <dependency> -->
+<!--       <groupId>org.picocontainer.persistence</groupId> -->
+<!--       <artifactId>picocontainer-persistence</artifactId> -->
+<!--       <version>2.2</version> -->
+<!--       <type>pom</type> -->
+<!--     </dependency> -->
+<!--     <dependency> -->
+<!--       <groupId>org.picocontainer.persistence</groupId> -->
+<!--       <artifactId>picocontainer-persistence-hibernate</artifactId> -->
+<!--       <version>2.2</version> -->
+<!--     </dependency> -->
+		<dependency>
+			<groupId>org.picocontainer</groupId>
+			<artifactId>picocontainer</artifactId>
+			<version>2.14.3</version>
+		</dependency>
+            
     
 		<dependency>
 			<groupId>junit</groupId>
@@ -40,4 +51,11 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>sonatype-oss-repo</id>
+			<name>Sonatype Open Source maven snapshot repo</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
 </project>

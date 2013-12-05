@@ -32,14 +32,6 @@
     <listener-class>org.picocontainer.web.webwork2.WebWork2PicoServletContainerListener</listener-class>
   </listener>
 
-<!-- 	<listener> -->
-<!-- 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
-<!-- 	</listener> -->
-	
-<!-- 	<listener> -->
-<!-- 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class> -->
-<!-- 	</listener> -->
-
   <!-- Everrest Servlet -->
 	<servlet>
 		<servlet-name>EverrestServlet</servlet-name>

@@ -23,8 +23,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.picocontainer.Disposable;
-import org.picocontainer.PicoCompositionException;
-import org.picocontainer.persistence.hibernate.annotations.ConstructableAnnotationConfiguration;
 
 /**
  * Created by The eXo Platform SAS
@@ -40,12 +38,12 @@ public final class HibernateSessionFactory implements Disposable {
   
   public HibernateSessionFactory() {
     try {
-      Configuration configuration = new ConstructableAnnotationConfiguration();
+      Configuration configuration = new Configuration();
       configuration.configure();
       serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
       sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     } catch (HibernateException he) {
-      throw new PicoCompositionException(he);
+      throw new HibernateException(he);
     }
   }
   
@@ -65,11 +63,10 @@ public final class HibernateSessionFactory implements Disposable {
     return sessionFactory.openSession();
   }
 
-  /**
-   * Clears the session factory when the container is disposed.
-   */
   @Override
   public void dispose() {
+    // Clears the session factory 
+    // when the container is disposed.
     close();
   }
   
