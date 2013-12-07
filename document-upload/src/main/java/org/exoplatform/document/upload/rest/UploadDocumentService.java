@@ -50,18 +50,13 @@ import org.slf4j.LoggerFactory;
 @Path("/document-service/document")
 public class UploadDocumentService implements Serializable {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = -2858971360376069291L;
 
   private static final Logger logger = LoggerFactory.getLogger(UploadDocumentService.class);
   
-  private static final String WS_UPLOAD_PATH = "/upload";
-
-  private UploadMultipartHandler uploadMultipartHandler;
+  private final UploadMultipartHandler uploadMultipartHandler;
   
-  private PictureService pictureService;
+  private final PictureService pictureService;
 
   public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler, PictureService pictureService) {
     this.uploadMultipartHandler = uploadMultipartHandler;
@@ -69,7 +64,7 @@ public class UploadDocumentService implements Serializable {
   }
 
   @POST
-  @Path(UploadDocumentService.WS_UPLOAD_PATH)
+  @Path("/upload")
   @Produces(MediaType.APPLICATION_JSON)
   public Response uploadFile(@Context HttpServletRequest request) {
     String responseText = null;
@@ -78,36 +73,32 @@ public class UploadDocumentService implements Serializable {
     try {
       documents = uploadMultipartHandler.parseHttpRequest(request);
       if (CollectionUtils.isNotEmpty(documents)) {
-        // Storage within DB
-        try {
-          pictureService.createByURL(documents.get(0).getUrl());
-        } catch (ServiceException e) {
-          e.printStackTrace();
-        }
-        responseText = JSON.encode(documents.get(0));
-        return Response.ok(responseText).build();
+        pictureService.createByURL(documents.get(0).getUrl());
+        return Response.ok(JSON.encode(documents.get(0))).build();
       } else {
-        message = "An IO exception has occurred while reading the properties file";
+        message = "IO exception has occurred while reading the properties file";
         responseText = "{\"error\":\"" + 2015
             + "\",\"message\":\"" + message + "\"}";
       }
+    } catch (ServiceException se) {
+      message = "Couldn't insert [url: \"" + documents.get(0).getUrl() + "\"] to database";
+      responseText = "{\"error\":\"" + 2016
+          + "\",\"message\":\"" + message + "\"}";
+      logger.error(message, se);
     } catch (SizeLimitExceededException slee) {
       message = slee.getMessage();
       responseText = "{\"error\":\"" + 2013
           + "\",\"message\":\"" + message + "\"}";
-      
       logger.error(message, slee);
     } catch (FileUploadException fue) {
       message = fue.getMessage();
       responseText = "{\"error\":\"" + 2014
           + "\",\"message\":\"" + message + "\"}";
-      
       logger.error(message, fue);
     } catch (IOException ioe) {
       message = "An IO exception has occurred while reading the properties file";
       responseText = "{\"error\":\"" + 2015
           + "\",\"message\":\"" + message + "\"}";
-      
       logger.error(message, ioe);
     }
     

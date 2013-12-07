@@ -28,259 +28,264 @@ import org.exoplatform.language.message.Message;
  */
 public class NGramTokenizer {
 
-	private static final String NGRAM_LATIN1_EXCLUDED = "NGramTokenizer.LATIN1_EXCLUDE";
-	private static final String LATIN1_EXCLUDED = Message.getMessage(NGRAM_LATIN1_EXCLUDED);
-	
-	private StringBuffer _ngrams;
-	private boolean _capitalWord;
-	private static HashMap<Character, Character> cjkKanjiNormalizations;
-	public static final int N_GRAM = 3;
-	
-	private static NGramTokenizer nGramTokenizer;
-	
-	/**
-     * CJK Kanji Normalization Mapping
-     */
-    private static final String[] CJK_KANJI_NORMALIZATION = {
-        Message.getMessage("NGramTokenizer.KANJI_1_0"),
-        Message.getMessage("NGramTokenizer.KANJI_1_2"),
-        Message.getMessage("NGramTokenizer.KANJI_1_4"),
-        Message.getMessage("NGramTokenizer.KANJI_1_8"),
-        Message.getMessage("NGramTokenizer.KANJI_1_11"),
-        Message.getMessage("NGramTokenizer.KANJI_1_12"),
-        Message.getMessage("NGramTokenizer.KANJI_1_13"),
-        Message.getMessage("NGramTokenizer.KANJI_1_14"),
-        Message.getMessage("NGramTokenizer.KANJI_1_16"),
-        Message.getMessage("NGramTokenizer.KANJI_1_18"),
-        Message.getMessage("NGramTokenizer.KANJI_1_22"),
-        Message.getMessage("NGramTokenizer.KANJI_1_27"),
-        Message.getMessage("NGramTokenizer.KANJI_1_29"),
-        Message.getMessage("NGramTokenizer.KANJI_1_31"),
-        Message.getMessage("NGramTokenizer.KANJI_1_35"),
-        Message.getMessage("NGramTokenizer.KANJI_2_0"),
-        Message.getMessage("NGramTokenizer.KANJI_2_1"),
-        Message.getMessage("NGramTokenizer.KANJI_2_4"),
-        Message.getMessage("NGramTokenizer.KANJI_2_9"),
-        Message.getMessage("NGramTokenizer.KANJI_2_10"),
-        Message.getMessage("NGramTokenizer.KANJI_2_11"),
-        Message.getMessage("NGramTokenizer.KANJI_2_12"),
-        Message.getMessage("NGramTokenizer.KANJI_2_13"),
-        Message.getMessage("NGramTokenizer.KANJI_2_15"),
-        Message.getMessage("NGramTokenizer.KANJI_2_16"),
-        Message.getMessage("NGramTokenizer.KANJI_2_18"),
-        Message.getMessage("NGramTokenizer.KANJI_2_21"),
-        Message.getMessage("NGramTokenizer.KANJI_2_22"),
-        Message.getMessage("NGramTokenizer.KANJI_2_23"),
-        Message.getMessage("NGramTokenizer.KANJI_2_28"),
-        Message.getMessage("NGramTokenizer.KANJI_2_29"),
-        Message.getMessage("NGramTokenizer.KANJI_2_30"),
-        Message.getMessage("NGramTokenizer.KANJI_2_31"),
-        Message.getMessage("NGramTokenizer.KANJI_2_32"),
-        Message.getMessage("NGramTokenizer.KANJI_2_35"),
-        Message.getMessage("NGramTokenizer.KANJI_2_36"),
-        Message.getMessage("NGramTokenizer.KANJI_2_37"),
-        Message.getMessage("NGramTokenizer.KANJI_2_38"),
-        Message.getMessage("NGramTokenizer.KANJI_3_1"),
-        Message.getMessage("NGramTokenizer.KANJI_3_2"),
-        Message.getMessage("NGramTokenizer.KANJI_3_3"),
-        Message.getMessage("NGramTokenizer.KANJI_3_4"),
-        Message.getMessage("NGramTokenizer.KANJI_3_5"),
-        Message.getMessage("NGramTokenizer.KANJI_3_8"),
-        Message.getMessage("NGramTokenizer.KANJI_3_9"),
-        Message.getMessage("NGramTokenizer.KANJI_3_11"),
-        Message.getMessage("NGramTokenizer.KANJI_3_12"),
-        Message.getMessage("NGramTokenizer.KANJI_3_13"),
-        Message.getMessage("NGramTokenizer.KANJI_3_15"),
-        Message.getMessage("NGramTokenizer.KANJI_3_16"),
-        Message.getMessage("NGramTokenizer.KANJI_3_18"),
-        Message.getMessage("NGramTokenizer.KANJI_3_19"),
-        Message.getMessage("NGramTokenizer.KANJI_3_22"),
-        Message.getMessage("NGramTokenizer.KANJI_3_23"),
-        Message.getMessage("NGramTokenizer.KANJI_3_27"),
-        Message.getMessage("NGramTokenizer.KANJI_3_29"),
-        Message.getMessage("NGramTokenizer.KANJI_3_30"),
-        Message.getMessage("NGramTokenizer.KANJI_3_31"),
-        Message.getMessage("NGramTokenizer.KANJI_3_32"),
-        Message.getMessage("NGramTokenizer.KANJI_3_35"),
-        Message.getMessage("NGramTokenizer.KANJI_3_36"),
-        Message.getMessage("NGramTokenizer.KANJI_3_37"),
-        Message.getMessage("NGramTokenizer.KANJI_3_38"),
-        Message.getMessage("NGramTokenizer.KANJI_4_0"),
-        Message.getMessage("NGramTokenizer.KANJI_4_9"),
-        Message.getMessage("NGramTokenizer.KANJI_4_10"),
-        Message.getMessage("NGramTokenizer.KANJI_4_16"),
-        Message.getMessage("NGramTokenizer.KANJI_4_17"),
-        Message.getMessage("NGramTokenizer.KANJI_4_18"),
-        Message.getMessage("NGramTokenizer.KANJI_4_22"),
-        Message.getMessage("NGramTokenizer.KANJI_4_24"),
-        Message.getMessage("NGramTokenizer.KANJI_4_28"),
-        Message.getMessage("NGramTokenizer.KANJI_4_34"),
-        Message.getMessage("NGramTokenizer.KANJI_4_39"),
-        Message.getMessage("NGramTokenizer.KANJI_5_10"),
-        Message.getMessage("NGramTokenizer.KANJI_5_11"),
-        Message.getMessage("NGramTokenizer.KANJI_5_12"),
-        Message.getMessage("NGramTokenizer.KANJI_5_13"),
-        Message.getMessage("NGramTokenizer.KANJI_5_14"),
-        Message.getMessage("NGramTokenizer.KANJI_5_18"),
-        Message.getMessage("NGramTokenizer.KANJI_5_26"),
-        Message.getMessage("NGramTokenizer.KANJI_5_29"),
-        Message.getMessage("NGramTokenizer.KANJI_5_34"),
-        Message.getMessage("NGramTokenizer.KANJI_5_39"),
-        Message.getMessage("NGramTokenizer.KANJI_6_0"),
-        Message.getMessage("NGramTokenizer.KANJI_6_3"),
-        Message.getMessage("NGramTokenizer.KANJI_6_9"),
-        Message.getMessage("NGramTokenizer.KANJI_6_10"),
-        Message.getMessage("NGramTokenizer.KANJI_6_11"),
-        Message.getMessage("NGramTokenizer.KANJI_6_12"),
-        Message.getMessage("NGramTokenizer.KANJI_6_16"),
-        Message.getMessage("NGramTokenizer.KANJI_6_18"),
-        Message.getMessage("NGramTokenizer.KANJI_6_20"),
-        Message.getMessage("NGramTokenizer.KANJI_6_21"),
-        Message.getMessage("NGramTokenizer.KANJI_6_22"),
-        Message.getMessage("NGramTokenizer.KANJI_6_23"),
-        Message.getMessage("NGramTokenizer.KANJI_6_25"),
-        Message.getMessage("NGramTokenizer.KANJI_6_28"),
-        Message.getMessage("NGramTokenizer.KANJI_6_29"),
-        Message.getMessage("NGramTokenizer.KANJI_6_30"),
-        Message.getMessage("NGramTokenizer.KANJI_6_32"),
-        Message.getMessage("NGramTokenizer.KANJI_6_34"),
-        Message.getMessage("NGramTokenizer.KANJI_6_35"),
-        Message.getMessage("NGramTokenizer.KANJI_6_37"),
-        Message.getMessage("NGramTokenizer.KANJI_6_39"),
-        Message.getMessage("NGramTokenizer.KANJI_7_0"),
-        Message.getMessage("NGramTokenizer.KANJI_7_3"),
-        Message.getMessage("NGramTokenizer.KANJI_7_6"),
-        Message.getMessage("NGramTokenizer.KANJI_7_7"),
-        Message.getMessage("NGramTokenizer.KANJI_7_9"),
-        Message.getMessage("NGramTokenizer.KANJI_7_11"),
-        Message.getMessage("NGramTokenizer.KANJI_7_12"),
-        Message.getMessage("NGramTokenizer.KANJI_7_13"),
-        Message.getMessage("NGramTokenizer.KANJI_7_16"),
-        Message.getMessage("NGramTokenizer.KANJI_7_18"),
-        Message.getMessage("NGramTokenizer.KANJI_7_19"),
-        Message.getMessage("NGramTokenizer.KANJI_7_20"),
-        Message.getMessage("NGramTokenizer.KANJI_7_21"),
-        Message.getMessage("NGramTokenizer.KANJI_7_23"),
-        Message.getMessage("NGramTokenizer.KANJI_7_25"),
-        Message.getMessage("NGramTokenizer.KANJI_7_28"),
-        Message.getMessage("NGramTokenizer.KANJI_7_29"),
-        Message.getMessage("NGramTokenizer.KANJI_7_32"),
-        Message.getMessage("NGramTokenizer.KANJI_7_33"),
-        Message.getMessage("NGramTokenizer.KANJI_7_35"),
-        Message.getMessage("NGramTokenizer.KANJI_7_37"),
-    };
-    
-	static {
-		cjkKanjiNormalizations = new HashMap<Character, Character>();
-		for (String cjkKanjis : CJK_KANJI_NORMALIZATION) {
-			char representative = cjkKanjis.charAt(0);
-			for (int i = 0; i < cjkKanjis.length(); ++i) {
-				cjkKanjiNormalizations.put(cjkKanjis.charAt(i), representative);
-			}
-		}
-	}
-	
-	public NGramTokenizer() {
-        _ngrams = new StringBuffer(" ");
-        _capitalWord = false;
+  private static final String NGRAM_LATIN1_EXCLUDED = "NGramTokenizer.LATIN1_EXCLUDE";
+  private static final String LATIN1_EXCLUDED = Message.getMessage(NGRAM_LATIN1_EXCLUDED);
+
+  private StringBuffer _ngrams;
+  private boolean _capitalWord;
+  private static HashMap<Character, Character> cjkKanjiNormalizations;
+  public static final int N_GRAM = 3;
+
+  private static NGramTokenizer nGramTokenizer;
+
+  /**
+   * CJK Kanji Normalization Mapping
+   */
+  private static final String[] CJK_KANJI_NORMALIZATION = {
+      Message.getMessage("NGramTokenizer.KANJI_1_0"),
+      Message.getMessage("NGramTokenizer.KANJI_1_2"),
+      Message.getMessage("NGramTokenizer.KANJI_1_4"),
+      Message.getMessage("NGramTokenizer.KANJI_1_8"),
+      Message.getMessage("NGramTokenizer.KANJI_1_11"),
+      Message.getMessage("NGramTokenizer.KANJI_1_12"),
+      Message.getMessage("NGramTokenizer.KANJI_1_13"),
+      Message.getMessage("NGramTokenizer.KANJI_1_14"),
+      Message.getMessage("NGramTokenizer.KANJI_1_16"),
+      Message.getMessage("NGramTokenizer.KANJI_1_18"),
+      Message.getMessage("NGramTokenizer.KANJI_1_22"),
+      Message.getMessage("NGramTokenizer.KANJI_1_27"),
+      Message.getMessage("NGramTokenizer.KANJI_1_29"),
+      Message.getMessage("NGramTokenizer.KANJI_1_31"),
+      Message.getMessage("NGramTokenizer.KANJI_1_35"),
+      Message.getMessage("NGramTokenizer.KANJI_2_0"),
+      Message.getMessage("NGramTokenizer.KANJI_2_1"),
+      Message.getMessage("NGramTokenizer.KANJI_2_4"),
+      Message.getMessage("NGramTokenizer.KANJI_2_9"),
+      Message.getMessage("NGramTokenizer.KANJI_2_10"),
+      Message.getMessage("NGramTokenizer.KANJI_2_11"),
+      Message.getMessage("NGramTokenizer.KANJI_2_12"),
+      Message.getMessage("NGramTokenizer.KANJI_2_13"),
+      Message.getMessage("NGramTokenizer.KANJI_2_15"),
+      Message.getMessage("NGramTokenizer.KANJI_2_16"),
+      Message.getMessage("NGramTokenizer.KANJI_2_18"),
+      Message.getMessage("NGramTokenizer.KANJI_2_21"),
+      Message.getMessage("NGramTokenizer.KANJI_2_22"),
+      Message.getMessage("NGramTokenizer.KANJI_2_23"),
+      Message.getMessage("NGramTokenizer.KANJI_2_28"),
+      Message.getMessage("NGramTokenizer.KANJI_2_29"),
+      Message.getMessage("NGramTokenizer.KANJI_2_30"),
+      Message.getMessage("NGramTokenizer.KANJI_2_31"),
+      Message.getMessage("NGramTokenizer.KANJI_2_32"),
+      Message.getMessage("NGramTokenizer.KANJI_2_35"),
+      Message.getMessage("NGramTokenizer.KANJI_2_36"),
+      Message.getMessage("NGramTokenizer.KANJI_2_37"),
+      Message.getMessage("NGramTokenizer.KANJI_2_38"),
+      Message.getMessage("NGramTokenizer.KANJI_3_1"),
+      Message.getMessage("NGramTokenizer.KANJI_3_2"),
+      Message.getMessage("NGramTokenizer.KANJI_3_3"),
+      Message.getMessage("NGramTokenizer.KANJI_3_4"),
+      Message.getMessage("NGramTokenizer.KANJI_3_5"),
+      Message.getMessage("NGramTokenizer.KANJI_3_8"),
+      Message.getMessage("NGramTokenizer.KANJI_3_9"),
+      Message.getMessage("NGramTokenizer.KANJI_3_11"),
+      Message.getMessage("NGramTokenizer.KANJI_3_12"),
+      Message.getMessage("NGramTokenizer.KANJI_3_13"),
+      Message.getMessage("NGramTokenizer.KANJI_3_15"),
+      Message.getMessage("NGramTokenizer.KANJI_3_16"),
+      Message.getMessage("NGramTokenizer.KANJI_3_18"),
+      Message.getMessage("NGramTokenizer.KANJI_3_19"),
+      Message.getMessage("NGramTokenizer.KANJI_3_22"),
+      Message.getMessage("NGramTokenizer.KANJI_3_23"),
+      Message.getMessage("NGramTokenizer.KANJI_3_27"),
+      Message.getMessage("NGramTokenizer.KANJI_3_29"),
+      Message.getMessage("NGramTokenizer.KANJI_3_30"),
+      Message.getMessage("NGramTokenizer.KANJI_3_31"),
+      Message.getMessage("NGramTokenizer.KANJI_3_32"),
+      Message.getMessage("NGramTokenizer.KANJI_3_35"),
+      Message.getMessage("NGramTokenizer.KANJI_3_36"),
+      Message.getMessage("NGramTokenizer.KANJI_3_37"),
+      Message.getMessage("NGramTokenizer.KANJI_3_38"),
+      Message.getMessage("NGramTokenizer.KANJI_4_0"),
+      Message.getMessage("NGramTokenizer.KANJI_4_9"),
+      Message.getMessage("NGramTokenizer.KANJI_4_10"),
+      Message.getMessage("NGramTokenizer.KANJI_4_16"),
+      Message.getMessage("NGramTokenizer.KANJI_4_17"),
+      Message.getMessage("NGramTokenizer.KANJI_4_18"),
+      Message.getMessage("NGramTokenizer.KANJI_4_22"),
+      Message.getMessage("NGramTokenizer.KANJI_4_24"),
+      Message.getMessage("NGramTokenizer.KANJI_4_28"),
+      Message.getMessage("NGramTokenizer.KANJI_4_34"),
+      Message.getMessage("NGramTokenizer.KANJI_4_39"),
+      Message.getMessage("NGramTokenizer.KANJI_5_10"),
+      Message.getMessage("NGramTokenizer.KANJI_5_11"),
+      Message.getMessage("NGramTokenizer.KANJI_5_12"),
+      Message.getMessage("NGramTokenizer.KANJI_5_13"),
+      Message.getMessage("NGramTokenizer.KANJI_5_14"),
+      Message.getMessage("NGramTokenizer.KANJI_5_18"),
+      Message.getMessage("NGramTokenizer.KANJI_5_26"),
+      Message.getMessage("NGramTokenizer.KANJI_5_29"),
+      Message.getMessage("NGramTokenizer.KANJI_5_34"),
+      Message.getMessage("NGramTokenizer.KANJI_5_39"),
+      Message.getMessage("NGramTokenizer.KANJI_6_0"),
+      Message.getMessage("NGramTokenizer.KANJI_6_3"),
+      Message.getMessage("NGramTokenizer.KANJI_6_9"),
+      Message.getMessage("NGramTokenizer.KANJI_6_10"),
+      Message.getMessage("NGramTokenizer.KANJI_6_11"),
+      Message.getMessage("NGramTokenizer.KANJI_6_12"),
+      Message.getMessage("NGramTokenizer.KANJI_6_16"),
+      Message.getMessage("NGramTokenizer.KANJI_6_18"),
+      Message.getMessage("NGramTokenizer.KANJI_6_20"),
+      Message.getMessage("NGramTokenizer.KANJI_6_21"),
+      Message.getMessage("NGramTokenizer.KANJI_6_22"),
+      Message.getMessage("NGramTokenizer.KANJI_6_23"),
+      Message.getMessage("NGramTokenizer.KANJI_6_25"),
+      Message.getMessage("NGramTokenizer.KANJI_6_28"),
+      Message.getMessage("NGramTokenizer.KANJI_6_29"),
+      Message.getMessage("NGramTokenizer.KANJI_6_30"),
+      Message.getMessage("NGramTokenizer.KANJI_6_32"),
+      Message.getMessage("NGramTokenizer.KANJI_6_34"),
+      Message.getMessage("NGramTokenizer.KANJI_6_35"),
+      Message.getMessage("NGramTokenizer.KANJI_6_37"),
+      Message.getMessage("NGramTokenizer.KANJI_6_39"),
+      Message.getMessage("NGramTokenizer.KANJI_7_0"),
+      Message.getMessage("NGramTokenizer.KANJI_7_3"),
+      Message.getMessage("NGramTokenizer.KANJI_7_6"),
+      Message.getMessage("NGramTokenizer.KANJI_7_7"),
+      Message.getMessage("NGramTokenizer.KANJI_7_9"),
+      Message.getMessage("NGramTokenizer.KANJI_7_11"),
+      Message.getMessage("NGramTokenizer.KANJI_7_12"),
+      Message.getMessage("NGramTokenizer.KANJI_7_13"),
+      Message.getMessage("NGramTokenizer.KANJI_7_16"),
+      Message.getMessage("NGramTokenizer.KANJI_7_18"),
+      Message.getMessage("NGramTokenizer.KANJI_7_19"),
+      Message.getMessage("NGramTokenizer.KANJI_7_20"),
+      Message.getMessage("NGramTokenizer.KANJI_7_21"),
+      Message.getMessage("NGramTokenizer.KANJI_7_23"),
+      Message.getMessage("NGramTokenizer.KANJI_7_25"),
+      Message.getMessage("NGramTokenizer.KANJI_7_28"),
+      Message.getMessage("NGramTokenizer.KANJI_7_29"),
+      Message.getMessage("NGramTokenizer.KANJI_7_32"),
+      Message.getMessage("NGramTokenizer.KANJI_7_33"),
+      Message.getMessage("NGramTokenizer.KANJI_7_35"),
+      Message.getMessage("NGramTokenizer.KANJI_7_37"), };
+
+  static {
+    cjkKanjiNormalizations = new HashMap<Character, Character>();
+    for (String cjkKanjis : CJK_KANJI_NORMALIZATION) {
+      char representative = cjkKanjis.charAt(0);
+      for (int i = 0; i < cjkKanjis.length(); ++i) {
+        cjkKanjiNormalizations.put(cjkKanjis.charAt(i), representative);
+      }
     }
+  }
 
-	public static NGramTokenizer getInstance() {
-		if (nGramTokenizer == null) {
-			nGramTokenizer = new NGramTokenizer();
-		}
-		return nGramTokenizer;
-	}
-    /**
-     * Add a charater to N-Grams
-     * 
-     * @param character
-     */
-	public void addChar(char character) {
-		character = normalize(character);
-		char lastchar = _ngrams.charAt(_ngrams.length() - 1);
-		if (lastchar == ' ') {
-			_ngrams = new StringBuffer(" ");
-			_capitalWord = false;
-			if (character == ' ') {
-				return;
-			}
-		} else if (_ngrams.length() >= N_GRAM) {
-			_ngrams.deleteCharAt(0);
-		}
-		_ngrams.append(character);
+  public NGramTokenizer() {
+    _ngrams = new StringBuffer(" ");
+    _capitalWord = false;
+  }
 
-		if (Character.isUpperCase(character)) {
-			if (Character.isUpperCase(lastchar)) {
-				_capitalWord = true;
-			}
-		} else {
-			_capitalWord = false;
-		}
-	}
+  public static NGramTokenizer getInstance() {
+    if (nGramTokenizer == null) {
+      nGramTokenizer = new NGramTokenizer();
+    }
+    return nGramTokenizer;
+  }
 
-    /**
-     * Get n-Gram
-     * @param n length of n-gram
-     * @return n-Gram String (null if it is invalid)
-     */
-	public String get(int length) {
-		if (_capitalWord) {
-			return null;
-		}
-		int nLength = _ngrams.length();
-		if (length < 1 || length > 3 || nLength < length) {
-			return null;
-		}
-		if (length == 1) {
-			char character = _ngrams.charAt(nLength - 1);
-			if (character == ' ') {
-				return null;
-			}
-			return Character.toString(character);
-		} else {
-			return _ngrams.substring(nLength - length, nLength);
-		}
-	}
-    
-    /**
-     * Character Normalization
-     * @param character
-     * @return Normalized character
-     */
-	public static char normalize(char character) {
-		Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
-		if (block == UnicodeBlock.BASIC_LATIN) {
-			if (character < 'A' || (character < 'a' && character > 'Z') || character > 'z') {
-				character = ' ';
-			}
-		} else if (block == UnicodeBlock.LATIN_1_SUPPLEMENT) {
-			if (LATIN1_EXCLUDED.indexOf(character) >= 0) {
-				character = ' ';
-			}
-		} else if (block == UnicodeBlock.GENERAL_PUNCTUATION) {
-			character = ' ';
-		} else if (block == UnicodeBlock.ARABIC) {
-			if (character == '\u06cc') {
-				character = '\u064a';
-			}
-		} else if (block == UnicodeBlock.LATIN_EXTENDED_ADDITIONAL) {
-			if (character >= '\u1ea0') {
-				character = '\u1ec3';
-			}
-		} else if (block == UnicodeBlock.HIRAGANA) {
-			character = '\u3042';
-		} else if (block == UnicodeBlock.KATAKANA) {
-			character = '\u30a2';
-		} else if (block == UnicodeBlock.BOPOMOFO || block == UnicodeBlock.BOPOMOFO_EXTENDED) {
-			character = '\u3105';
-		} else if (block == UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) {
-			if (cjkKanjiNormalizations.containsKey(character)) {
-				character = cjkKanjiNormalizations.get(character);
-			}
-		} else if (block == UnicodeBlock.HANGUL_SYLLABLES) {
-			character = '\uac00';
-		}
-		return character;
-	}
+  /**
+   * Add a charater to N-Grams
+   * 
+   * @param character
+   */
+  public void addChar(char character) {
+    character = normalize(character);
+    char lastchar = _ngrams.charAt(_ngrams.length() - 1);
+    if (lastchar == ' ') {
+      _ngrams = new StringBuffer(" ");
+      _capitalWord = false;
+      if (character == ' ') {
+        return;
+      }
+    } else if (_ngrams.length() >= N_GRAM) {
+      _ngrams.deleteCharAt(0);
+    }
+    _ngrams.append(character);
+
+    if (Character.isUpperCase(character)) {
+      if (Character.isUpperCase(lastchar)) {
+        _capitalWord = true;
+      }
+    } else {
+      _capitalWord = false;
+    }
+  }
+
+  /**
+   * Get n-Gram
+   * 
+   * @param n
+   *          length of n-gram
+   * @return n-Gram String (null if it is invalid)
+   */
+  public String get(int length) {
+    if (_capitalWord) {
+      return null;
+    }
+    int nLength = _ngrams.length();
+    if (length < 1 || length > 3 || nLength < length) {
+      return null;
+    }
+    if (length == 1) {
+      char character = _ngrams.charAt(nLength - 1);
+      if (character == ' ') {
+        return null;
+      }
+      return Character.toString(character);
+    } else {
+      return _ngrams.substring(nLength - length, nLength);
+    }
+  }
+
+  /**
+   * Character Normalization
+   * 
+   * @param character
+   * @return Normalized character
+   */
+  public static char normalize(char character) {
+    Character.UnicodeBlock block = Character.UnicodeBlock.of(character);
+    if (block == UnicodeBlock.BASIC_LATIN) {
+      if (character < 'A' || (character < 'a' && character > 'Z')
+          || character > 'z') {
+        character = ' ';
+      }
+    } else if (block == UnicodeBlock.LATIN_1_SUPPLEMENT) {
+      if (LATIN1_EXCLUDED.indexOf(character) >= 0) {
+        character = ' ';
+      }
+    } else if (block == UnicodeBlock.GENERAL_PUNCTUATION) {
+      character = ' ';
+    } else if (block == UnicodeBlock.ARABIC) {
+      if (character == '\u06cc') {
+        character = '\u064a';
+      }
+    } else if (block == UnicodeBlock.LATIN_EXTENDED_ADDITIONAL) {
+      if (character >= '\u1ea0') {
+        character = '\u1ec3';
+      }
+    } else if (block == UnicodeBlock.HIRAGANA) {
+      character = '\u3042';
+    } else if (block == UnicodeBlock.KATAKANA) {
+      character = '\u30a2';
+    } else if (block == UnicodeBlock.BOPOMOFO
+        || block == UnicodeBlock.BOPOMOFO_EXTENDED) {
+      character = '\u3105';
+    } else if (block == UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) {
+      if (cjkKanjiNormalizations.containsKey(character)) {
+        character = cjkKanjiNormalizations.get(character);
+      }
+    } else if (block == UnicodeBlock.HANGUL_SYLLABLES) {
+      character = '\uac00';
+    }
+    return character;
+  }
 }

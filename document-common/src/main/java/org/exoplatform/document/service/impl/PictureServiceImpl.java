@@ -48,8 +48,6 @@ public class PictureServiceImpl implements PictureService {
     if (result == null) {
       throw new ServiceException("Could not insert " + picture.toString() + " into \"Picture\" table");
     }
-    
-    pictureDao.flush();
     return result;
   }
 
@@ -62,14 +60,17 @@ public class PictureServiceImpl implements PictureService {
       throw new ServiceException("Picture' URL is null or empty");
     }
     
-    Picture picture = new Picture();
-    picture.setId("2304824kasdfa09as13");
-    picture.setUrl(URL);
-    if (pictureDao.save(picture) == null) {
-      throw new ServiceException("Could not insert " + picture.toString() + " into \"Picture\" table");
+//    Picture picture = new Picture();
+//    picture.setId("2304824kasdfa09as13");
+//    picture.setUrl(URL);
+//    if (pictureDao.save(picture) == null) {
+//      throw new ServiceException("Could not insert " + picture.toString() + " into \"Picture\" table");
+//    }
+    Picture picture = findById("2304824kasdfa09as13");
+    if (picture == null) {
+      System.out.println("Deo hieu tai sao khong tim duoc");
     }
-    pictureDao.flush();
-    return picture;
+    return null;
   }
 
   /* (non-Javadoc)
@@ -77,8 +78,10 @@ public class PictureServiceImpl implements PictureService {
    */
   @Override
   public Picture findById(String Id) throws ServiceException {
-    // TODO Auto-generated method stub
-    return null;
+    if (StringUtils.isEmpty(Id)) {
+      throw new ServiceException("Picture's identify is null or empty");
+    }
+    return pictureDao.find(Id);
   }
 
   /* (non-Javadoc)

@@ -32,64 +32,66 @@ import org.junit.Test;
 @SuppressWarnings("deprecation")
 public class TestDetector {
 
-	static final String TRAINING_EN = "a a a b b c c d e";
-	static final String TRAINING_FR = "a b b c c c d d d";
-	static final String TRAINING_JA = "\u3042 \u3042 \u3042 \u3044 \u3046 \u3048 \u3048";
-	
-	Detector detect;
+  static final String TRAINING_EN = "a a a b b c c d e";
+  static final String TRAINING_FR = "a b b c c c d d d";
+  static final String TRAINING_JA = "\u3042 \u3042 \u3042 \u3044 \u3046 \u3048 \u3048";
 
-	@Before
-	public void setUp() throws Exception {
-		DetectorFactory.clearDetector();
+  Detector detect;
 
-		LanguageProfile profile_en = new LanguageProfile("en");
-		for (String w : TRAINING_EN.split(" ")) {
-			profile_en.addNGramToProfile(w);
-		}
-		DetectorFactory.addLanguageProfile(profile_en, 3);
+  @Before
+  public void setUp() throws Exception {
+    DetectorFactory.clearDetector();
 
-		LanguageProfile profile_fr = new LanguageProfile("fr");
-		for (String w : TRAINING_FR.split(" ")) {
-			profile_fr.addNGramToProfile(w);
-		}
-		DetectorFactory.addLanguageProfile(profile_fr, 3);
+    LanguageProfile profile_en = new LanguageProfile("en");
+    for (String w : TRAINING_EN.split(" ")) {
+      profile_en.addNGramToProfile(w);
+    }
+    DetectorFactory.addLanguageProfile(profile_en, 3);
 
-		LanguageProfile profile_ja = new LanguageProfile("ja");
-		for (String w : TRAINING_JA.split(" ")) {
-			profile_ja.addNGramToProfile(w);
-		}
-		DetectorFactory.addLanguageProfile(profile_ja, 3);
-	}
+    LanguageProfile profile_fr = new LanguageProfile("fr");
+    for (String w : TRAINING_FR.split(" ")) {
+      profile_fr.addNGramToProfile(w);
+    }
+    DetectorFactory.addLanguageProfile(profile_fr, 3);
 
-	@After
-	public void tearDown() throws Exception {
-	}
+    LanguageProfile profile_ja = new LanguageProfile("ja");
+    for (String w : TRAINING_JA.split(" ")) {
+      profile_ja.addNGramToProfile(w);
+    }
+    DetectorFactory.addLanguageProfile(profile_ja, 3);
+  }
 
-	@Test
-	public final void testDetector1() throws LanguageDetectException {
-		detect = DetectorFactory.createInstance();
-		detect.appendTarget("a");
-		assertEquals(detect.detect(), "en");
-	}
+  @After
+  public void tearDown() throws Exception {
+  }
 
-	@Test
-	public final void testDetector2() throws LanguageDetectException {
-		detect = DetectorFactory.createInstance();
-		detect.appendTarget("b d");
-		assertEquals(detect.detect(), "fr");
-	}
+  @Test
+  public final void testDetector1() throws LanguageDetectException {
+    detect = DetectorFactory.createInstance();
+    detect.appendTarget("a");
+    System.out.println("****************************************");
+    System.out.println("asfasdfasfasd: " + detect.detect());
+    assertEquals(detect.detect(), "en");
+  }
 
-	@Test
-	public final void testDetector3() throws LanguageDetectException {
-		detect = DetectorFactory.createInstance();
-		detect.appendTarget("d e");
-		assertEquals(detect.detect(), "en");
-	}
+  @Test
+  public final void testDetector2() throws LanguageDetectException {
+    detect = DetectorFactory.createInstance();
+    detect.appendTarget("b d");
+    assertEquals(detect.detect(), "fr");
+  }
 
-	@Test
-	public final void testDetector4() throws LanguageDetectException {
-		detect = DetectorFactory.createInstance();
-		detect.appendTarget("\u3042\u3042\u3042\u3042a");
-		assertEquals(detect.detect(), "ja");
-	}
+  @Test
+  public final void testDetector3() throws LanguageDetectException {
+    detect = DetectorFactory.createInstance();
+    detect.appendTarget("d e");
+    assertEquals(detect.detect(), "en");
+  }
+
+  @Test
+  public final void testDetector4() throws LanguageDetectException {
+    detect = DetectorFactory.createInstance();
+    detect.appendTarget("\u3042\u3042\u3042\u3042a");
+    assertEquals(detect.detect(), "ja");
+  }
 }

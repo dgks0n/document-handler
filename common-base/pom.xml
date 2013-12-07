@@ -13,44 +13,36 @@
 	<name>Document Handler :: Hibernate Generic DAO</name>
 	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.googlecode.genericdao</groupId> -->
-<!-- 			<artifactId>dao-hibernate</artifactId> -->
-<!-- 			<version>1.2.0</version> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.googlecode.genericdao</groupId>
 			<artifactId>search-hibernate</artifactId>
 			<version>1.2.0</version>
 		</dependency>
 		
-		<!-- PicoContainer Persistence Hibernate -->
-<!--     <dependency> -->
-<!--       <groupId>org.picocontainer.persistence</groupId> -->
-<!--       <artifactId>picocontainer-persistence</artifactId> -->
-<!--       <version>2.2</version> -->
-<!--       <type>pom</type> -->
-<!--     </dependency> -->
-<!--     <dependency> -->
-<!--       <groupId>org.picocontainer.persistence</groupId> -->
-<!--       <artifactId>picocontainer-persistence-hibernate</artifactId> -->
-<!--       <version>2.2</version> -->
-<!--     </dependency> -->
-		<dependency>
-			<groupId>org.picocontainer</groupId>
-			<artifactId>picocontainer</artifactId>
-			<version>2.14.3</version>
+    <!-- C3P0 -->
+    <dependency>
+      <groupId>c3p0</groupId>
+      <artifactId>c3p0</artifactId>
+      <version>0.9.1.2</version>
+    </dependency>
+    <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>4.2.0.CR1</version>
 		</dependency>
-            
-    
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-			<optional>true</optional>
+  
+    <!-- MySQL Connector/JDBC -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.26</version>
+    </dependency>
+    <dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-ehcache</artifactId>
+		  <version>4.2.0.CR1</version>
 		</dependency>
-	</dependencies>
+  </dependencies>
 	<repositories>
 		<repository>
 			<id>sonatype-oss-repo</id>

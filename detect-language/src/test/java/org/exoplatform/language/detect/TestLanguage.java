@@ -25,39 +25,42 @@ import org.junit.Test;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version TestLanguage.java Oct 24, 2013
  */
 public class TestLanguage {
 
-	/**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-    }
+  /**
+   * @throws java.lang.Exception
+   */
+  @Before
+  public void setUp() throws Exception {
+  }
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
+  /**
+   * @throws java.lang.Exception
+   */
+  @After
+  public void tearDown() throws Exception {
+  }
 
-    /**
-     * Test method for {@link com.cybozu.labs.langdetect.Language#Language(java.lang.String, double)}.
-     */
-    @Test
-    public final void testLanguage() {
-        Language lang = new Language(null, 0);
-        assertEquals(lang.getLanguage(), null);
-        assertEquals(lang.getProbability(), 0.0, 0.0001);
-        assertEquals(lang.toString(), "");
-        
-        Language lang2 = new Language("en", 1.0);
-        assertEquals(lang2.getLanguage(), "en");
-        assertEquals(lang2.getProbability(), 1.0, 0.0001);
-        assertEquals(lang2.toString(), "{en:1.0}");
-    }
+  /**
+   * Test method for
+   * {@link com.cybozu.labs.langdetect.Language#Language(java.lang.String, double)}
+   * .
+   */
+  @Test
+  public final void testLanguage() {
+    Language lang = new Language(null, 0);
+    assertEquals(lang.getLanguage(), null);
+    assertEquals(lang.getProbability(), 0.0, 0.0001);
+    assertEquals(lang.toString(), "");
+
+    Language lang2 = new Language("en", 1.0);
+    assertEquals(lang2.getLanguage(), "en");
+    assertEquals(lang2.getProbability(), 1.0, 0.0001);
+    assertEquals(lang2.toString(), "{en:1.0}");
+  }
 }

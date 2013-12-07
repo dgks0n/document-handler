@@ -25,7 +25,7 @@ import javax.servlet.ServletContext;
 import org.everrest.pico.EverrestComposer;
 import org.exoplatform.common.dao.HibernateManagerImpl;
 import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
-import org.exoplatform.common.session.factory.HibernateSessionFactory;
+import org.exoplatform.common.session.config.HibernateConfiguration;
 import org.exoplatform.document.dao.AccountDao;
 import org.exoplatform.document.dao.FileDao;
 import org.exoplatform.document.dao.LabelDao;
@@ -44,6 +44,8 @@ import org.exoplatform.document.service.PictureService;
 import org.exoplatform.document.service.impl.PictureServiceImpl;
 import org.exoplatform.document.upload.handle.UploadMultipartHandler;
 import org.exoplatform.document.upload.rest.UploadDocumentService;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.picocontainer.MutablePicoContainer;
 
 /**
@@ -55,12 +57,11 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
 	@Override
 	protected void doComposeApplication(MutablePicoContainer container, ServletContext servletContext) {
-//	  container.addComponent(HibernateSessionFactory.class);
-//	  container.addComponent(HibernateTransactionManager.class);
-//	  container.addComponent(HibernateManagerImpl.class);
-	  
-	  container.addComponent(UploadMultipartHandler.class);
-    container.addComponent(UploadDocumentService.class);
+	  container.addComponent(Configuration.class);
+	  container.addComponent(ServiceRegistryBuilder.class);
+	  container.addComponent(HibernateConfiguration.class);
+	  container.addComponent(HibernateTransactionManager.class);
+	  container.addComponent(HibernateManagerImpl.class);
 	  
 	  container.addComponent(AccountDao.class, AccountDaoImpl.class); 
 	  container.addComponent(ThumbnailDao.class, ThumbnailDaoImpl.class);
@@ -72,19 +73,20 @@ public class DocumentApplicationComposer extends EverrestComposer {
 	  
 	  // Add services component
     container.addComponent(PictureService.class, PictureServiceImpl.class);
+    
+    container.addComponent(UploadMultipartHandler.class);
+    container.addComponent(UploadDocumentService.class);
 	}
 	
 	@Override
 	protected void doComposeRequest(MutablePicoContainer container) {
-		container.addComponent(CodepageDetectorProxy.class);
-		container.addComponent(CharsetPrinter.class);
-		container.addComponent(CodepageProcessor.class);
+	  container.addComponent(CodepageDetectorProxy.class);
+    container.addComponent(CharsetPrinter.class);
+    container.addComponent(CodepageProcessor.class);
 	}
 
 	@Override
 	protected void doComposeSession(MutablePicoContainer container) {
-	  container.addComponent(HibernateSessionFactory.class);
-    container.addComponent(HibernateTransactionManager.class);
-    container.addComponent(HibernateManagerImpl.class);
+
 	}
 }

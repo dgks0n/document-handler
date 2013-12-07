@@ -2,7 +2,6 @@
 
 package info.monitorenter.cpdetector.io.parser;
 
-@Deprecated
 public interface EncodingParserTokenTypes {
 	int EOF = 1;
 	int NULL_TREE_LOOKAHEAD = 3;
