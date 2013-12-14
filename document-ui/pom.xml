@@ -35,14 +35,15 @@
 		<finalName>document-handler</finalName>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<archiveClasses>false</archiveClasses>
 					<archive>
 						<manifest>
-							<addClasspath>false</addClasspath>
+							<addClasspath>true</addClasspath>
 						</manifest>
 					</archive>
+					<webappDirectory>/Setup tools/Apache Tomcat/apache-tomcat-7.0.42/webapps/document-handler</webappDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
