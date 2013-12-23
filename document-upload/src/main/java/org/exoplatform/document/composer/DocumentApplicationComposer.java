@@ -51,42 +51,42 @@ import org.picocontainer.MutablePicoContainer;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version DocumentApplicationComposer.java Nov 17, 2013
- *
+ * 
  */
 public class DocumentApplicationComposer extends EverrestComposer {
 
-	@Override
-	protected void doComposeApplication(MutablePicoContainer container, ServletContext servletContext) {
-	  container.addComponent(Configuration.class);
-	  container.addComponent(ServiceRegistryBuilder.class);
-	  container.addComponent(HibernateConfiguration.class);
-	  container.addComponent(HibernateTransactionManager.class);
-	  container.addComponent(HibernateManagerImpl.class);
-	  
-	  container.addComponent(AccountDao.class, AccountDaoImpl.class); 
-	  container.addComponent(ThumbnailDao.class, ThumbnailDaoImpl.class);
-	  container.addComponent(RevisionDao.class, RevisionDaoImpl.class);
-	  container.addComponent(PictureDao.class, PictureDaoImpl.class);
-	  container.addComponent(OwnerDao.class, OwnerDaoImpl.class);
-	  container.addComponent(LabelDao.class, LabelDaoImpl.class);
-	  container.addComponent(FileDao.class, FileDaoImpl.class);
-	  
-	  // Add services component
-    container.addComponent(PictureService.class, PictureServiceImpl.class);
-    
-    container.addComponent(UploadMultipartHandler.class);
-    container.addComponent(UploadDocumentService.class);
-	}
-	
-	@Override
-	protected void doComposeRequest(MutablePicoContainer container) {
-	  container.addComponent(CodepageDetectorProxy.class);
-    container.addComponent(CharsetPrinter.class);
-    container.addComponent(CodepageProcessor.class);
-	}
+    @Override
+    protected void doComposeApplication(MutablePicoContainer container, ServletContext servletContext) {
+        container.addComponent(Configuration.class);
+        container.addComponent(ServiceRegistryBuilder.class);
+        container.addComponent(HibernateConfiguration.class);
+        container.addComponent(HibernateTransactionManager.class);
+        container.addComponent(HibernateManagerImpl.class);
 
-	@Override
-	protected void doComposeSession(MutablePicoContainer container) {
+        container.addComponent(AccountDao.class, AccountDaoImpl.class);
+        container.addComponent(ThumbnailDao.class, ThumbnailDaoImpl.class);
+        container.addComponent(RevisionDao.class, RevisionDaoImpl.class);
+        container.addComponent(PictureDao.class, PictureDaoImpl.class);
+        container.addComponent(OwnerDao.class, OwnerDaoImpl.class);
+        container.addComponent(LabelDao.class, LabelDaoImpl.class);
+        container.addComponent(FileDao.class, FileDaoImpl.class);
 
-	}
+        // Add services component
+        container.addComponent(PictureService.class, PictureServiceImpl.class);
+    }
+
+    @Override
+    protected void doComposeRequest(MutablePicoContainer container) {
+        container.addComponent(CodepageDetectorProxy.class);
+        container.addComponent(CharsetPrinter.class);
+        container.addComponent(CodepageProcessor.class);
+        
+        container.addComponent(UploadMultipartHandler.class);
+        container.addComponent(UploadDocumentService.class);
+    }
+
+    @Override
+    protected void doComposeSession(MutablePicoContainer container) {
+
+    }
 }

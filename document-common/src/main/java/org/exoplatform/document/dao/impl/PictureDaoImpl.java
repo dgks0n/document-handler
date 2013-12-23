@@ -24,12 +24,13 @@ import org.exoplatform.document.entity.Picture;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version PictureDaoImpl.java Nov 30, 2013
- *
+ * 
  */
-public class PictureDaoImpl extends HibernateManagerImpl<Picture, String> implements PictureDao {
+public class PictureDaoImpl extends HibernateManagerImpl<Picture, String>
+        implements PictureDao {
 
-  public PictureDaoImpl(HibernateTransactionManager transactionManager) {
-    super(transactionManager);
-  }
+    public PictureDaoImpl(HibernateTransactionManager transactionManager) {
+        super(transactionManager);
+    }
 
 }

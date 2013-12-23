@@ -18,17 +18,18 @@ package org.exoplatform.document.constant;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version TBLRevision.java Nov 28, 2013
  */
 public class TBLRevision {
 
-  public static final String TBL_NAME = "revision";
-  
-  public static final String PINNED = "pinned";
-  public static final String PUBLISHED = "published";
-  public static final String PUBLISH_AUTO = "publish_auto";
-  public static final String PUBLISHED_OUTSIDE_DOMAIN = "published_outside_domain";
-  public static final String PUBLISHED_LINK = "published_link";
+    public static final String TBL_NAME = "revision";
+
+    public static final String PINNED = "pinned";
+    public static final String PUBLISHED = "published";
+    public static final String PUBLISH_AUTO = "publish_auto";
+    public static final String PUBLISHED_OUTSIDE_DOMAIN = "published_outside_domain";
+    public static final String PUBLISHED_LINK = "published_link";
 }

@@ -20,95 +20,101 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  * {@link Language} is to store the detected _language.
- * {@link Detector#getProbabilities()} returns an {@link ArrayList} of {@link Language}s.
+ * {@link Detector#getProbabilities()} returns an {@link ArrayList} of
+ * {@link Language}s.
  * 
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Language.java Oct 18, 2013
- *
+ * 
  */
 public class Language {
 
-	private String _language;
-	private double _probability;
+    private String _language;
+    private double _probability;
 
-	public Language(String language, double probability) {
-		this._language = language;
-		this._probability = probability;
-	}
-	
-	/**
-	 * @return the _language
-	 */
-	public String getLanguage() {
-		return _language;
-	}
+    public Language(String language, double probability) {
+        this._language = language;
+        this._probability = probability;
+    }
 
-	/**
-	 * @param _language
-	 *            the _language to set
-	 */
-	public void setLanguage(String language) {
-		this._language = language;
-	}
+    /**
+     * @return the _language
+     */
+    public String getLanguage() {
+        return _language;
+    }
 
-	/**
-	 * @return the _probability
-	 */
-	public double getProbability() {
-		return _probability;
-	}
+    /**
+     * @param _language
+     *            the _language to set
+     */
+    public void setLanguage(String language) {
+        this._language = language;
+    }
 
-	/**
-	 * @param _probability
-	 *            the _probability to set
-	 */
-	public void setProbability(double probability) {
-		this._probability = probability;
-	}
+    /**
+     * @return the _probability
+     */
+    public double getProbability() {
+        return _probability;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((_language == null) ? 0 : _language.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(_probability);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
+    /**
+     * @param _probability
+     *            the _probability to set
+     */
+    public void setProbability(double probability) {
+        this._probability = probability;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Language other = (Language) obj;
-		if (_language == null) {
-			if (other._language != null)
-				return false;
-		} else if (!_language.equals(other._language))
-			return false;
-		if (Double.doubleToLongBits(_probability) != Double.doubleToLongBits(other._probability))
-			return false;
-		return true;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((_language == null) ? 0 : _language.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(_probability);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 
-	public String toString() {
-		if (StringUtils.isEmpty(_language)) {
-			return "";
-		}
-		return  "{" + _language + ":" + _probability + "}";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Language other = (Language) obj;
+        if (_language == null) {
+            if (other._language != null)
+                return false;
+        } else if (!_language.equals(other._language))
+            return false;
+        if (Double.doubleToLongBits(_probability) != Double
+                .doubleToLongBits(other._probability))
+            return false;
+        return true;
+    }
+
+    public String toString() {
+        if (StringUtils.isEmpty(_language)) {
+            return "";
+        }
+        return "{" + _language + ":" + _probability + "}";
+    }
 }

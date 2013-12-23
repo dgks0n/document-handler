@@ -26,5 +26,4 @@ import org.exoplatform.document.entity.Owner;
  */
 public interface OwnerDao extends HibernateManager<Owner, String> {
   
-  public static final String REPOSITORY_ID = "ownerDao";
 }

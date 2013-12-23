@@ -22,9 +22,8 @@ import org.exoplatform.document.entity.Picture;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version PictureDao.java Nov 30, 2013
- *
+ * 
  */
 public interface PictureDao extends HibernateManager<Picture, String> {
 
-  public static final String REPOSITORY_ID = "pictureDao";
 }

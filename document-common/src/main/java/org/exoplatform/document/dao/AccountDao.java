@@ -22,9 +22,8 @@ import org.exoplatform.document.entity.Account;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version AccountDao.java Nov 30, 2013
- *
+ * 
  */
 public interface AccountDao extends HibernateManager<Account, String> {
 
-  public static final String REPOSITORY_ID = "accountDao";
 }

@@ -25,18 +25,18 @@ import org.hibernate.Session;
  */
 public interface ITransactionManager {
 
-  /**
-   * Obtains the current session. The definition of what exactly "current" means
-   * controlled by the CurrentSessionContext impl configured for use.
-   * 
-   * @return The current session
-   */
-  public Session getSession();
+    /**
+     * Obtains the current session. The definition of what exactly "current"
+     * means controlled by the CurrentSessionContext impl configured for use.
+     * 
+     * @return The current session
+     */
+    public Session getSession();
 
-  /**
-   * Open a Session
-   * 
-   * @return The created session
-   */
-  public Session openSession();
+    /**
+     * Open a Session
+     * 
+     * @return The created session
+     */
+    public Session openSession();
 }

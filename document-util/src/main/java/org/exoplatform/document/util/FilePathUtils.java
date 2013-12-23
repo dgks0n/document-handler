@@ -16,31 +16,31 @@
  */
 package org.exoplatform.document.util;
 
-
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version FilePathUtils.java Nov 7, 2013
  */
 public class FilePathUtils {
 
-  /** . */
-  public static final String USER_HOME = "user.home";
-	public static final String USER_HOME_PATH = System.getProperty(USER_HOME);
-	
-	/**
-   * The specified local path to storage files and logs.
-   */
-	public static final String ROOT_PATH = USER_HOME_PATH + "/document-handler";
-	
-	/**
-	 * We use temporary directory to temporarily store files for java
-	 */
-	public static final String REPOSITORY_PATH = ROOT_PATH + "/repository";
-	
-	/**
-	 * The specified local path to storage documents
-	 */
-	public static final String RESOURCE_PATH = ROOT_PATH + "/resources";
+    /** . */
+    public static final String USER_HOME = "user.home";
+    public static final String USER_HOME_PATH = System.getProperty(USER_HOME);
+
+    /**
+     * The specified local path to storage files and logs.
+     */
+    public static final String ROOT_PATH = USER_HOME_PATH + "/document-handler";
+
+    /**
+     * We use temporary directory to temporarily store files for java
+     */
+    public static final String REPOSITORY_PATH = ROOT_PATH + "/repository";
+
+    /**
+     * The specified local path to storage documents
+     */
+    public static final String RESOURCE_PATH = ROOT_PATH + "/resources";
 }

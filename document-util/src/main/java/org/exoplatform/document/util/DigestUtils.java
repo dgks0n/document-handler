@@ -16,7 +16,6 @@
  */
 package org.exoplatform.document.util;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -33,8 +32,8 @@ public class DigestUtils extends org.apache.commons.codec.digest.DigestUtils {
 	 * @param text - String to calculate a SHA1 hash from.
 	 * @return A SHA1 hash from the provided String.
 	 */
-	public static String getGeneratedSHA1Hash(final String text) {
-		String hashOfText = "";
+	public static String toHexFromText(final String text) {
+		String hashOfText = null;
 	    // If the provided String is null, throw an Exception.
 	    if (text == null) {
 	        throw new RuntimeException("There is no String to calculate a SHA1 hash from.");
@@ -42,16 +41,10 @@ public class DigestUtils extends org.apache.commons.codec.digest.DigestUtils {
 	    
 	    try {
 	        MessageDigest digest = MessageDigest.getInstance("SHA1");
-	        byte[] array = digest.digest(text.getBytes("UTF-8"));
-	        StringBuffer collector = new StringBuffer();
-	        for (int i = 0; i < array.length; i++) {
-	            collector.append(Integer.toString((array[i] & 0xff) + 0x100, 16).substring(1));
-	        }
-	        hashOfText = collector.toString();
+	        digest.update(text.getBytes(CharsetUtils.UTF_8));
+	        hashOfText = sha1Hex(digest.digest());
 	    } catch (NoSuchAlgorithmException nsae) {
 	        throw new RuntimeException("Could not find a SHA1 instance: " + nsae.getMessage());
-	    } catch (UnsupportedEncodingException uee) {
-	        throw new RuntimeException("Could not translate UTF-8: " + uee.getMessage());
 	    }
 	    return hashOfText;
 	}

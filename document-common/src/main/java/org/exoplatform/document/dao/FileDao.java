@@ -22,9 +22,8 @@ import org.exoplatform.document.entity.File;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version FileDao.java Nov 30, 2013
- *
+ * 
  */
 public interface FileDao extends HibernateManager<File, String> {
 
-  public static final String REPOSITORY_ID = "fileDao";
 }

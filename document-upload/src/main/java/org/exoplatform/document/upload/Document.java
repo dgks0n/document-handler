@@ -110,7 +110,6 @@ public class Document implements Serializable {
 	boolean isSystem;
 
 	public Document() {
-		super();
 	}
 	
 	public Document(String filename, long size, String url, String contentType,

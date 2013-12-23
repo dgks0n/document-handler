@@ -18,13 +18,14 @@ package org.exoplatform.document.constant;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version TBLPicture.java Nov 27, 2013
  */
 public class TBLPicture {
-  
-  public static final String TBL_NAME = "picture";
-  
-  public static final String URL = "url";
+
+    public static final String TBL_NAME = "picture";
+
+    public static final String URL = "url";
 }

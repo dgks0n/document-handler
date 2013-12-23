@@ -24,12 +24,13 @@ import org.exoplatform.document.entity.Revision;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version RevisionDaoImpl.java Nov 30, 2013
- *
+ * 
  */
-public class RevisionDaoImpl extends HibernateManagerImpl<Revision, String> implements RevisionDao {
+public class RevisionDaoImpl extends HibernateManagerImpl<Revision, String>
+        implements RevisionDao {
 
-  public RevisionDaoImpl(HibernateTransactionManager transactionManager) {
-    super(transactionManager);
-  }
+    public RevisionDaoImpl(HibernateTransactionManager transactionManager) {
+        super(transactionManager);
+    }
 
 }

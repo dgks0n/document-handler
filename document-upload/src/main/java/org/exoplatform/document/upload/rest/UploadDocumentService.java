@@ -16,7 +16,6 @@
  */
 package org.exoplatform.document.upload.rest;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,65 +42,52 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version UploadDocumentService.java Nov 7, 2013
  */
 @Path("/document-service/document")
 public class UploadDocumentService implements Serializable {
 
-  private static final long serialVersionUID = -2858971360376069291L;
+    private static final long serialVersionUID = -2858971360376069291L;
 
-  private static final Logger logger = LoggerFactory.getLogger(UploadDocumentService.class);
-  
-  private final UploadMultipartHandler uploadMultipartHandler;
-  
-  private final PictureService pictureService;
+    private static final Logger logger = LoggerFactory.getLogger(UploadDocumentService.class);
 
-  public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler, PictureService pictureService) {
-    this.uploadMultipartHandler = uploadMultipartHandler;
-    this.pictureService = pictureService;
-  }
+    private final UploadMultipartHandler uploadMultipartHandler;
 
-  @POST
-  @Path("/upload")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response uploadFile(@Context HttpServletRequest request) {
-    String responseText = null;
-    String message = null;
-    List<Document> documents = new ArrayList<Document>();
-    try {
-      documents = uploadMultipartHandler.parseHttpRequest(request);
-      if (CollectionUtils.isNotEmpty(documents)) {
-        pictureService.createByURL(documents.get(0).getUrl());
-        return Response.ok(JSON.encode(documents.get(0))).build();
-      } else {
-        message = "IO exception has occurred while reading the properties file";
-        responseText = "{\"error\":\"" + 2015
-            + "\",\"message\":\"" + message + "\"}";
-      }
-    } catch (ServiceException se) {
-      message = "Couldn't insert [url: \"" + documents.get(0).getUrl() + "\"] to database";
-      responseText = "{\"error\":\"" + 2016
-          + "\",\"message\":\"" + message + "\"}";
-      logger.error(message, se);
-    } catch (SizeLimitExceededException slee) {
-      message = slee.getMessage();
-      responseText = "{\"error\":\"" + 2013
-          + "\",\"message\":\"" + message + "\"}";
-      logger.error(message, slee);
-    } catch (FileUploadException fue) {
-      message = fue.getMessage();
-      responseText = "{\"error\":\"" + 2014
-          + "\",\"message\":\"" + message + "\"}";
-      logger.error(message, fue);
-    } catch (IOException ioe) {
-      message = "An IO exception has occurred while reading the properties file";
-      responseText = "{\"error\":\"" + 2015
-          + "\",\"message\":\"" + message + "\"}";
-      logger.error(message, ioe);
+    private final FileS
+
+    public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler, PictureService pictureService) {
+        this.uploadMultipartHandler = uploadMultipartHandler;
+        this.pictureService = pictureService;
     }
-    
-    return Response.status(Response.Status.BAD_REQUEST).entity(responseText).build();
-  }
+
+    @POST
+    @Path("/upload")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response uploadFile(@Context HttpServletRequest request) {
+        String responseText = null;
+        String message = null;
+        List<Document> documents = new ArrayList<Document>();
+        try {
+            documents = uploadMultipartHandler.parseHttpRequest(request);
+            if (CollectionUtils.isNotEmpty(documents)) {
+                pictureService.createByURL(documents.get(0).getUrl());
+                return Response.ok(JSON.encode(documents.get(0))).build();
+            }
+            
+            message = "IO exception has occurred while reading the properties file";
+            responseText = "{\"error\":\"" + 2015 + "\",\"message\":\"" + message + "\"}";
+        } catch (ServiceException se) {
+            message = "Couldn't insert [url: \"" + documents.get(0).getUrl() + "\"] to database";
+            responseText = "{\"error\":\"" + 2016 + "\",\"message\":\"" + message + "\"}";
+        } catch (SizeLimitExceededException slee) {
+            responseText = "{\"error\":\"" + 2013 + "\",\"message\":\"" + slee.getMessage() + "\"}";
+        } catch (FileUploadException fue) {
+            responseText = "{\"error\":\"" + 2014 + "\",\"message\":\"" + fue.getMessage() + "\"}";
+        }
+
+        return Response.status(Response.Status.BAD_REQUEST).entity(responseText).build();
+    }
 }

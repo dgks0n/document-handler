@@ -26,5 +26,4 @@ import org.exoplatform.document.entity.Thumbnail;
  */
 public interface ThumbnailDao extends HibernateManager<Thumbnail, String> {
 
-  public static final String REPOSITORY_ID = "thumbnailDao";
 }

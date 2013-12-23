@@ -5,8 +5,8 @@
 		<param name="File" value="${user.home}/document-handler/logs/catalina.log" />
 		<param name="Append" value="true" />
 		<param name="Encoding" value="UTF-8" />
-		<param name="MaxFileSize" value="15MB" />
-		<param name="MaxBackupIndex" value="5" />
+		<param name="MaxFileSize" value="5MB" />
+		<param name="MaxBackupIndex" value="30" />
 		<param name="Threshold" value="ALL" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{ISO8601} | %-5p | [%c: %L] | %m%n" />

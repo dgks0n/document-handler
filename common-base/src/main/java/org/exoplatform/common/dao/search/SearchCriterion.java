@@ -37,16 +37,18 @@ import com.googlecode.genericdao.search.ISearch;
  * the result for each row. However, by specifying fields, any combination of
  * individual properties can be returned for each row in the result set. These
  * properties can be returned as maps, lists, arrays or a single object
- * depending on <code>resultMode</code>. See also the {@link Field}
- * class.<br/><br/>
+ * depending on <code>resultMode</code>. See also the {@link Field} class.<br/>
+ * <br/>
  * 
  * Additionally, fields can be specified using column operators:
  * <code>COUNT, COUNT DISTINCT, SUM, AVG, MAX, MIN</code>. Note that fields with
  * column operators can not be mixed with fields that do not use column
- * operators.<br/><br/>
+ * operators.<br/>
+ * <br/>
  * 
  * Set <code>distinct</code> to <code>true</code> in order to filter out
- * duplicate results.<br/><br/>
+ * duplicate results.<br/>
+ * <br/>
  * 
  * <li>Fetch - This determines which attached objects to pull along with the
  * base search object. With Hibernate this eagerly loads the specified
@@ -69,9 +71,9 @@ import com.googlecode.genericdao.search.ISearch;
  * @see Sort
  * @see IMutableSearch
  * 
- * Created by The eXo Platform SAS
+ *      Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version SearchParameters.java Nov 5, 2013
  */
 public interface SearchCriterion extends ISearch {

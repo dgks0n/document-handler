@@ -18,13 +18,14 @@ package org.exoplatform.document.constant;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version TBLEntity.java Nov 27, 2013
  */
 public class TBLEntity {
 
-  public static final String ID = "id";
-  public static final String KIND = "kind";
-  public static final String SELF_LINK = "self_link";
+    public static final String ID = "id";
+    public static final String KIND = "kind";
+    public static final String SELF_LINK = "self_link";
 }

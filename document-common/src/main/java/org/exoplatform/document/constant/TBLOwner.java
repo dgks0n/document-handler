@@ -18,18 +18,19 @@ package org.exoplatform.document.constant;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version TBLOwner.java Nov 27, 2013
  */
 public class TBLOwner {
 
-  public static final String TBL_NAME = "owner";
-  
-  public static final String KIND = "kind";
-  public static final String DISPLAY_NAME = "display_name";
-  public static final String IS_AUTHENTICATED_USER = "is_authenticated_user";
-  public static final String PERMISSION_ID = "permission_id";
-  public static final String PICTURE = "picture";
-  public static final String ACCOUNT_INFOR = "account_infor";
+    public static final String TBL_NAME = "owner";
+
+    public static final String KIND = "kind";
+    public static final String DISPLAY_NAME = "display_name";
+    public static final String IS_AUTHENTICATED_USER = "is_authenticated_user";
+    public static final String PERMISSION_ID = "permission_id";
+    public static final String PICTURE = "picture";
+    public static final String ACCOUNT_INFOR = "account_infor";
 }

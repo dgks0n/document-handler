@@ -26,28 +26,29 @@ import org.slf4j.LoggerFactory;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @since Sep 26, 2013
- * @version 
+ * @version
  */
 public class Message {
 
-	private static final Logger logger = LoggerFactory.getLogger(Message.class);
-	
-	private static final String BUNDLE_NAME = "org.exoplatform.language.message.Message";
-	
-	private static final ResourceBundle RESOURCE_BUNDLE;
-	
-	static {
-		RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, Locale.getDefault());
-	}
-	
-	public static String getMessage(final String key) {
-		String valueOfKey;
-		try {
-			valueOfKey = RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException mre) {
-			logger.error("Can't find any messages matches with \"" + key + "\"", mre);
-			valueOfKey = "[" + key + "]";
-		}
-		return valueOfKey;
-	}
+    private static final Logger logger = LoggerFactory.getLogger(Message.class);
+
+    private static final String BUNDLE_NAME = "org.exoplatform.language.message.Message";
+
+    private static final ResourceBundle RESOURCE_BUNDLE;
+
+    static {
+        RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, Locale.getDefault());
+    }
+
+    public static String getMessage(final String key) {
+        String valueOfKey;
+        try {
+            valueOfKey = RESOURCE_BUNDLE.getString(key);
+        } catch (MissingResourceException mre) {
+            logger.error(
+                    "Can't find any messages matches with \"" + key + "\"", mre);
+            valueOfKey = "[" + key + "]";
+        }
+        return valueOfKey;
+    }
 }

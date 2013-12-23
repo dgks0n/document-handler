@@ -24,12 +24,13 @@ import org.exoplatform.document.entity.Thumbnail;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version ThumbnailDaoImpl.java Nov 30, 2013
- *
+ * 
  */
-public class ThumbnailDaoImpl extends HibernateManagerImpl<Thumbnail, String> implements ThumbnailDao {
+public class ThumbnailDaoImpl extends HibernateManagerImpl<Thumbnail, String>
+        implements ThumbnailDao {
 
-  public ThumbnailDaoImpl(HibernateTransactionManager transactionManager) {
-    super(transactionManager);
-  }
+    public ThumbnailDaoImpl(HibernateTransactionManager transactionManager) {
+        super(transactionManager);
+    }
 
 }

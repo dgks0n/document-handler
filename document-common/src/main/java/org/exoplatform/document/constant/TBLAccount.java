@@ -18,26 +18,27 @@ package org.exoplatform.document.constant;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version TBLAccount.java Nov 28, 2013
  */
 public class TBLAccount {
 
-  public static final String TBL_NAME = "account";
-  
-  public static final String GIVE_NAME = "give_name";
-  public static final String FAMILY_NAME = "family_name";
-  public static final String EMAIL_ADDRESS = "email_address";
-  public static final String LINK = "link";
-  public static final String GENDER = "gender";
-  public static final String BIRTH_DAY = "birthday";
-  public static final String LOCALE = "locale";
-  public static final String VERIFIED_EMAIL = "verified_email";
-  public static final String PASSWORD = "password";
-  public static final String TIME_ZONE = "time_zone";
-  public static final String DESCRIPTION = "description";
-  public static final String LANGUAGE = "language";
-  public static final String CREATED_DATE = "created_date";
-  public static final String MODIFIED_DATE = "modified_date";
+    public static final String TBL_NAME = "account";
+
+    public static final String GIVE_NAME = "give_name";
+    public static final String FAMILY_NAME = "family_name";
+    public static final String EMAIL_ADDRESS = "email_address";
+    public static final String LINK = "link";
+    public static final String GENDER = "gender";
+    public static final String BIRTH_DAY = "birthday";
+    public static final String LOCALE = "locale";
+    public static final String VERIFIED_EMAIL = "verified_email";
+    public static final String PASSWORD = "password";
+    public static final String TIME_ZONE = "time_zone";
+    public static final String DESCRIPTION = "description";
+    public static final String LANGUAGE = "language";
+    public static final String CREATED_DATE = "created_date";
+    public static final String MODIFIED_DATE = "modified_date";
 }

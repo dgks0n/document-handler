@@ -23,21 +23,21 @@ package org.exoplatform.language.define;
  */
 public enum ErrorCode {
 	// Text note
-	NOTEXTERROR, 
+	NO_TEXT_ERROR, 
 	// Format error
-	FORMATERROR, 
+	FORMAT_ERROR, 
 	// File loader
-	FILELOADERROR, 
+	FILE_LOAD_ERROR, 
 	// Duplicate language
-	DUPLICATELANGERROR, 
+	DUPLICATE_LANG_ERROR, 
 	// Need load profile
-	NEEDLOADPROFILEERROR, 
+	NEED_LOAD_PROFILE_ERROR, 
 	// Can't detect
-	CANTDETECTERROR, 
+	CANT_DETECT_ERROR, 
 	// Can't open train data
-	CANTOPENTRAINDATA, 
+	CANT_OPEN_TRAIN_DATA, 
 	// Train data format error
-	TRAINDATAFORMATERROR, 
+	TRAIN_DATA_FORMAT_ERROR, 
 	// Error when initialize parameters
-	INITPARAMERROR
+	INIT_PARAM_ERROR
 }

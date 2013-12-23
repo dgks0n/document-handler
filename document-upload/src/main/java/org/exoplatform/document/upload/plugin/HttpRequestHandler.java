@@ -16,7 +16,6 @@
  */
 package org.exoplatform.document.upload.plugin;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +41,7 @@ public interface HttpRequestHandler {
 	 * @deprecated Use {@link #parseHttpRequest(HttpServletRequest)} instead for
 	 */
 	@Deprecated
-	public List<Document> parseUploadMultipart(HttpServletRequest request) throws SizeLimitExceededException, FileUploadException, IOException;
+	public List<Document> parseUploadMultipart(HttpServletRequest request) throws SizeLimitExceededException, FileUploadException;
 	
 	/**
 	 * Just handle one file upload in this handler, developer can extend to support multi-files upload 
@@ -51,5 +50,5 @@ public interface HttpRequestHandler {
 	 * @return
 	 * @throws FileUploadException 
 	 */
-	public List<Document> parseHttpRequest(HttpServletRequest request) throws SizeLimitExceededException, FileUploadException, IOException;
+	public List<Document> parseHttpRequest(HttpServletRequest request) throws SizeLimitExceededException, FileUploadException;
 }

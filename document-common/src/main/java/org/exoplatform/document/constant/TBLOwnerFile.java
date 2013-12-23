@@ -19,12 +19,12 @@ package org.exoplatform.document.constant;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version TBLOwnerFile.java Nov 28, 2013
- *
+ * 
  */
 public class TBLOwnerFile {
 
-  public static final String TBL_NAME = "join_owner_file";
-  
-  public static final String OWNER_ID = "owner_id";
-  public static final String FILE_ID = "file_id";
+    public static final String TBL_NAME = "join_owner_file";
+
+    public static final String OWNER_ID = "owner_id";
+    public static final String FILE_ID = "file_id";
 }

@@ -26,5 +26,4 @@ import org.exoplatform.document.entity.Revision;
  */
 public interface RevisionDao extends HibernateManager<Revision, String> {
 
-  public static final String REPOSITORY_ID = "revisionDao";
 }

@@ -24,12 +24,13 @@ import org.exoplatform.document.entity.Owner;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version OwnerDaoImpl.java Nov 30, 2013
- *
+ * 
  */
-public class OwnerDaoImpl extends HibernateManagerImpl<Owner, String> implements OwnerDao {
+public class OwnerDaoImpl extends HibernateManagerImpl<Owner, String> implements
+        OwnerDao {
 
-  public OwnerDaoImpl(HibernateTransactionManager transactionManager) {
-    super(transactionManager);
-  }
-  
+    public OwnerDaoImpl(HibernateTransactionManager transactionManager) {
+        super(transactionManager);
+    }
+
 }

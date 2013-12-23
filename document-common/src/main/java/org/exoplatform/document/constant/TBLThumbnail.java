@@ -19,12 +19,12 @@ package org.exoplatform.document.constant;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version TBLThumbnail.java Nov 27, 2013
- *
+ * 
  */
 public class TBLThumbnail {
 
-  public static final String TBL_NAME = "thumbnail";
-  
-  public static final String IMAGE = "image";
-  public static final String MIME_TYPE = "mime_type";
+    public static final String TBL_NAME = "thumbnail";
+
+    public static final String IMAGE = "image";
+    public static final String MIME_TYPE = "mime_type";
 }

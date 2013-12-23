@@ -24,12 +24,13 @@ import org.exoplatform.document.entity.Account;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version AccountDaoImpl.java Nov 30, 2013
- *
+ * 
  */
-public class AccountDaoImpl extends HibernateManagerImpl<Account, String> implements AccountDao {
+public class AccountDaoImpl extends HibernateManagerImpl<Account, String>
+        implements AccountDao {
 
-  public AccountDaoImpl(HibernateTransactionManager transactionManager) {
-    super(transactionManager);
-  }
-  
+    public AccountDaoImpl(HibernateTransactionManager transactionManager) {
+        super(transactionManager);
+    }
+
 }

@@ -20,15 +20,17 @@ import org.exoplatform.common.dao.HibernateManagerImpl;
 import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
 import org.exoplatform.document.dao.LabelDao;
 import org.exoplatform.document.entity.Label;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version LabelDaoImpl.java Nov 30, 2013
- *
+ * 
  */
-public class LabelDaoImpl extends HibernateManagerImpl<Label, String> implements LabelDao {
+public class LabelDaoImpl extends HibernateManagerImpl<Label, String> implements
+        LabelDao {
 
-  public LabelDaoImpl(HibernateTransactionManager transactionManager) {
-    super(transactionManager);
-  }
+    public LabelDaoImpl(HibernateTransactionManager transactionManager) {
+        super(transactionManager);
+    }
 
 }

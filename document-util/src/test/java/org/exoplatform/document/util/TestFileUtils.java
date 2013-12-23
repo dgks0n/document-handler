@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.exoplatform.document.util.exception.DuplicateFileException;
+import org.exoplatform.document.util.exception.FileException;
 import org.junit.Test;
 
 /**
@@ -38,7 +38,7 @@ public class TestFileUtils {
 	File target;
 	
 	@Test
-	public void testRenameFile() throws FileNotFoundException, DuplicateFileException, IOException {
+	public void testRenameFile() throws FileNotFoundException, FileException, IOException {
 		source = FileUtils.toFile(getClass().getResource("source/grid-mixed-1.txt"));
 		target = new File(source.getParentFile().getParentFile().getPath() + "/target/grid-mixed-new.txt");
 		boolean isSuccess = FileUtils.move(source, target, false);
@@ -52,7 +52,7 @@ public class TestFileUtils {
 		boolean isSuccess = false;
 		try {
 			isSuccess = FileUtils.move(source, target, false);
-		} catch (DuplicateFileException dfe) {
+		} catch (FileException dfe) {
 			System.out.println(dfe.getMessage());
 		}
 		
@@ -60,7 +60,7 @@ public class TestFileUtils {
 	}
 	
 	@Test
-	public void testRenameFileDuplicateOverwrite() throws FileNotFoundException, DuplicateFileException, IOException {
+	public void testRenameFileDuplicateOverwrite() throws FileNotFoundException, FileException, IOException {
 		source = FileUtils.toFile(getClass().getResource("source/digraphs.txt"));
 		target = new File(source.getParentFile().getParentFile().getPath() + "/target/digraphs.txt");
 		boolean isSuccess = FileUtils.move(source, target, true);

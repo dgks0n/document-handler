@@ -25,10 +25,10 @@ package org.exoplatform.document.entity.plugin;
  */
 public interface IOwner {
 
-	/**
-	 * Get display name of the Owner
-	 * 
-	 * @return a plain text name
-	 */
-	public String getDisplayName();
+    /**
+     * Get display name of the Owner
+     * 
+     * @return a plain text name
+     */
+    public String getDisplayName();
 }

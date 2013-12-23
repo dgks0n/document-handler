@@ -20,9 +20,9 @@ package org.exoplatform.document.util.exception;
  * Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  *          
- * @version FileUtilsException.java Oct 30, 2013
+ * @version FileException.java Oct 30, 2013
  */
-public class DuplicateFileException extends Exception {
+public class FileException extends Exception {
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class DuplicateFileException extends Exception {
    * cause is not initialized, and may subsequently be initialized by a call to
    * {@link #initCause}.
    */
-  public DuplicateFileException() {
+  public FileException() {
     super();
   }
 
@@ -47,7 +47,7 @@ public class DuplicateFileException extends Exception {
    *          The detail message which is saved for later retrieval by the
    *          {@link #getMessage()} method.
    */
-  public DuplicateFileException(final String message) {
+  public FileException(final String message) {
     super(message);
   }
 
@@ -64,7 +64,7 @@ public class DuplicateFileException extends Exception {
    *          indicates that the cause is nonexistent or unknown.
    * @since 1.4
    */
-  public DuplicateFileException(final Throwable cause) {
+  public FileException(final Throwable cause) {
     super(cause);
   }
 
@@ -83,7 +83,7 @@ public class DuplicateFileException extends Exception {
    *          indicates that the cause is nonexistent or unknown.
    * @since 1.4
    */
-  public DuplicateFileException(final String message, final Throwable cause) {
+  public FileException(final String message, final Throwable cause) {
     super(message, cause);
   }
 }

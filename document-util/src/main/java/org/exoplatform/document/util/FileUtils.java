@@ -24,123 +24,138 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CountingInputStream;
-import org.exoplatform.document.util.exception.DuplicateFileException;
+import org.exoplatform.document.util.exception.FileException;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version FileUtils.java Oct 26, 2013
- *
+ * 
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
 
-	/**
-	 * Move or rename a file to a target file.
-	 * 
-	 * By default, this method attempts to move the file to the target file, failing if the target file exists except if the source and target are the same file, in which case this method has no effect.
-	 * If the file is a symbolic link then the symbolic link itself, not the target of the link, is moved.
-	 * 
-	 * @param source - the path to the file to move
-	 * @param target - the path to the target file (may be associated with a different provider to the source path)
-	 * @param isOverwrite - options specifying how the move or rename should be done
-	 * 
-	 * @return True if probably move or rename otherwise is False
-	 * 
-	 * @throws FileNotFoundException if source file doen't exist or File's path is invalid.
-	 * @throws IOException
-	 */
-	public static boolean move(File source, File target, boolean isOverwrite) throws FileNotFoundException, DuplicateFileException, IOException {
-		if (!source.exists()) {
-			throw new FileNotFoundException("The system cannot find the file specified. File's path " + source.getAbsolutePath());
-		}
-		
-		File existing = new File(target.getParentFile().getPath() + File.separator + source.getName());
-		if (!isOverwrite && existing.exists()) {
-			throw new DuplicateFileException("The process cannot move or rename the file " + source.getName() + " because it is being used by another file.");
-		}
-		
-		return source.renameTo(target);
-	}
-	
-	/**
-	 * Move or rename a file to a target file.
-	 * 
-	 * By default, this method attempts to move the file to the target file, failing if the target file exists except if the source and target are the same file, in which case this method has no effect.
-	 * If the file is a symbolic link then the symbolic link itself, not the target of the link, is moved.
-	 * 
-	 * @param source - the path to the file to move
-	 * @param targetName - the name of the target file
-	 * @param isOverwrite - options specifying how the move or rename should be done
-	 * 
-	 * @return True if probably move or rename otherwise is False
-	 * 
-	 * @throws FileNotFoundException if source file doen't exist or File's path is invalid.
-	 * @throws IOException
-	 */
-	public static boolean move(File source, String targetName, boolean isOverwrite) throws FileNotFoundException, DuplicateFileException, IOException {
-		File target = new File(source.getParentFile().getPath() + File.separator + targetName);
-		return move(source, target, isOverwrite);
-	}
-	
-	/**
-	 * Returns the size of the specified file or directory. If the provided File is a regular file, then the file's length is returned.
-	 * If the argument is a directory, then the size of the directory is calculated recursively. If a directory or subdirectory is security restricted, its size will not be included.
-	 * 
-	 * @param inputStream - the input stream
-	 * @param fileName - the file's name
-	 * 
-	 * @return the length of the file, or recursive size of the directory, provided (in bytes).
-	 * @throws NullPointerException - if the file is null
-	 * @throws IllegalArgumentException - if the file does not exist.
-	 */
-	public static long sizeOf(InputStream inputStream, String fileName) throws NullPointerException, IllegalArgumentException {
-		if (inputStream == null) {
-			throw new NullPointerException("The input stream is null.");
-		}
-		
-    FileOutputStream fileOutputStream = null;
-    CountingInputStream countingInputStream = null;
+    /**
+     * Move or rename a file to a target file.
+     * 
+     * By default, this method attempts to move the file to the target file,
+     * failing if the target file exists except if the source and target are the
+     * same file, in which case this method has no effect. If the file is a
+     * symbolic link then the symbolic link itself, not the target of the link,
+     * is moved.
+     * 
+     * @param source
+     *            - the path to the file to move
+     * @param target
+     *            - the path to the target file (may be associated with a
+     *            different provider to the source path)
+     * @param isOverwrite
+     *            - options specifying how the move or rename should be done
+     * 
+     * @return True if probably move or rename otherwise is False
+     * 
+     * @throws FileNotFoundException
+     *             if source file doen't exist or File's path is invalid.
+     * @throws IOException
+     */
+    public static boolean move(File source, File target, boolean isOverwrite) throws FileException {
+        if (!source.exists()) {
+            throw new FileException("The system cannot find the file specified. File's path "
+                            + source.getAbsolutePath());
+        }
 
-    long sizeOfFile = 0;
-    try {
-      fileName = FileNameUtils.getName(fileName);
-      fileOutputStream = new FileOutputStream(new File(FilePathUtils.ROOT_PATH + fileName));
-      countingInputStream = new CountingInputStream(inputStream);
+        File existing = new File(target.getParentFile().getPath() + File.separator + source.getName());
+        if (!isOverwrite && existing.exists()) {
+            throw new FileException("The process cannot move or rename the file "
+                            + source.getName()
+                            + " because it is being used by another file.");
+        }
 
-      // Write file directly on location
-      IOUtils.copyLarge(countingInputStream, fileOutputStream);
-      sizeOfFile = countingInputStream.getByteCount();
-    } catch (Exception ex) {
-      sizeOfFile = 0;
-    } finally {
-      IOUtils.closeQuietly(countingInputStream);
-      IOUtils.closeQuietly(fileOutputStream);
+        return source.renameTo(target);
     }
 
-    return sizeOfFile;
-	}
-	
-	/**
-	 * Create a file or folder from specified path or the directory cannot be created then an exception is thrown.
-	 * 
-	 * @param filePath - the specified local path
-	 * @return File - created file
-	 * 
-	 * @throws IllegalArgumentException if the file's Path is <code>null</code>
-	 * @throws IOException if the directory cannot be created
-	 */
-	public static File forceMkdir(String filePath) throws IllegalArgumentException, IOException {
-    if (StringUtils.isEmpty(filePath)) {
-      throw new IllegalArgumentException("Unable to create directory "
-          + filePath);
+    /**
+     * Move or rename a file to a target file.
+     * 
+     * By default, this method attempts to move the file to the target file,
+     * failing if the target file exists except if the source and target are the
+     * same file, in which case this method has no effect. If the file is a
+     * symbolic link then the symbolic link itself, not the target of the link,
+     * is moved.
+     * 
+     * @param source
+     *            - the path to the file to move
+     * @param targetName
+     *            - the name of the target file
+     * @param isOverwrite
+     *            - options specifying how the move or rename should be done
+     * 
+     * @return True if probably move or rename otherwise is False
+     * 
+     * @throws FileNotFoundException
+     *             if source file doen't exist or File's path is invalid.
+     * @throws IOException
+     */
+    public static boolean move(File source, String targetName, boolean isOverwrite) throws FileException {
+        File target = new File(source.getParentFile().getPath() + File.separator + targetName);
+        return move(source, target, isOverwrite);
     }
 
-    File directory = new File(filePath);
-    if (!directory.exists()) {
-      if (!directory.mkdirs()) {
-        throw new IOException("Unable to create directory " + directory);
-      }
+    /**
+     * Returns the size of the specified file or directory. If the provided File
+     * is a regular file, then the file's length is returned. If the argument is
+     * a directory, then the size of the directory is calculated recursively. If
+     * a directory or subdirectory is security restricted, its size will not be
+     * included.
+     * 
+     * @param inputStream
+     *            - the input stream
+     * @param fileName
+     *            - the file's name
+     * 
+     * @return the length of the file, or recursive size of the directory,
+     *         provided (in bytes).
+     * @throws NullPointerException
+     *             - if the file is null
+     * @throws IllegalArgumentException
+     *             - if the file does not exist.
+     */
+    public static long sizeOf(InputStream inputStream, String fileName) throws FileException {
+        FileOutputStream fileOutputStream = null;
+        CountingInputStream countingInputStream = null;
+
+        long sizeOfFile = 0;
+        try {
+            fileName = FileNameUtils.getName(fileName);
+            fileOutputStream = new FileOutputStream(new File(FilePathUtils.ROOT_PATH + fileName));
+            countingInputStream = new CountingInputStream(inputStream);
+            
+            IOUtils.copyLarge(countingInputStream, fileOutputStream);
+            sizeOfFile = countingInputStream.getByteCount();
+        } catch (Exception ex) {
+            sizeOfFile = 0;
+        } finally {
+            IOUtils.closeQuietly(countingInputStream);
+            IOUtils.closeQuietly(fileOutputStream);
+        }
+
+        return sizeOfFile;
     }
 
-    return directory;
-	}
+    /**
+     * Create a file or folder from specified path or the directory cannot be
+     * created then an exception is thrown.
+     * 
+     * @param filePath
+     *            - the specified local path
+     * @return File - created file
+     * 
+     */
+    public static File forceMkdir(String filePath) {
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            if (!directory.mkdirs())
+                return null;
+        }
+
+        return directory;
+    }
 }

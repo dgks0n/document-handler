@@ -22,9 +22,8 @@ import org.exoplatform.document.entity.Label;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version LabelDao.java Nov 30, 2013
- *
+ * 
  */
 public interface LabelDao extends HibernateManager<Label, String> {
 
-  public static final String REPOSITORY_ID = "labelDao";
 }

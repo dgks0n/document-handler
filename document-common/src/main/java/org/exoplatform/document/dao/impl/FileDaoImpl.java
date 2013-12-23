@@ -24,12 +24,13 @@ import org.exoplatform.document.entity.File;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version FileDaoImpl.java Nov 30, 2013
- *
+ * 
  */
-public class FileDaoImpl extends HibernateManagerImpl<File, String> implements FileDao {
+public class FileDaoImpl extends HibernateManagerImpl<File, String> implements
+        FileDao {
 
-  public FileDaoImpl(HibernateTransactionManager transactionManager) {
-    super(transactionManager);
-  }
+    public FileDaoImpl(HibernateTransactionManager transactionManager) {
+        super(transactionManager);
+    }
 
 }

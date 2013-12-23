@@ -36,117 +36,117 @@ import org.slf4j.LoggerFactory;
  */
 public class LanguageProfile {
 
-  private static final Logger logger = LoggerFactory.getLogger(LanguageProfile.class);
+    private static final Logger logger = LoggerFactory.getLogger(LanguageProfile.class);
 
-  private static final int MINIMUM_FREQ = 2;
-  private static final int LESS_FREQ_RATIO = 100000;
-  public String name = null;
-  public HashMap<String, Integer> frequency = new HashMap<String, Integer>();
-  public int[] nWords = new int[NGramTokenizer.N_GRAM];
+    private static final int MINIMUM_FREQ = 2;
+    private static final int LESS_FREQ_RATIO = 100000;
+    public String name = null;
+    public HashMap<String, Integer> frequency = new HashMap<String, Integer>();
+    public int[] nWords = new int[NGramTokenizer.N_GRAM];
 
-  /**
-   * Constructor for JSONIC
-   */
-  public LanguageProfile() {
-    // TODO don't do anything here
-  }
-
-  /**
-   * Normal Constructor
-   * 
-   * @param name
-   *          language name
-   * @deprecated Use {@link #addLanguageProfile(String)}
-   */
-  @Deprecated
-  public LanguageProfile(String name) {
-    this.name = name;
-  }
-
-  public void addLanguageProfile(String name) {
-    this.name = name;
-  }
-
-  public String getLanguageProfile() {
-    return name;
-  }
-
-  public HashMap<String, Integer> getFrequency() {
-    return frequency;
-  }
-
-  public int[] getNWords() {
-    return nWords;
-  }
-
-  /**
-   * Add n-gram to profile
-   * 
-   * @param gram
-   */
-  public void addNGramToProfile(final String nGram) {
-    if (StringUtils.isEmpty(name) || StringUtils.isEmpty(nGram)) {
-      return;
+    /**
+     * Constructor for JSONIC
+     */
+    public LanguageProfile() {
+        // TODO don't do anything here
     }
 
-    if (logger.isDebugEnabled()) {
-      logger.info("Adding N-Gram \"" + nGram + "\" to language analyzer");
+    /**
+     * Normal Constructor
+     * 
+     * @param name
+     *            language name
+     * @deprecated Use {@link #addLanguageProfile(String)}
+     */
+    @Deprecated
+    public LanguageProfile(String name) {
+        this.name = name;
     }
 
-    int len = nGram.length();
-    if (len < 1 || len > NGramTokenizer.N_GRAM) {
-      return;
-    }
-    ++nWords[len - 1];
-    if (frequency.containsKey(nGram)) {
-      frequency.put(nGram, frequency.get(nGram) + 1);
-    } else {
-      frequency.put(nGram, 1);
-    }
-  }
-
-  /**
-   * Eliminate below less frequency n-grams and noise Latin alphabets
-   */
-  public void omitLessFrequency() {
-    if (StringUtils.isEmpty(name)) {
-      return;
+    public void addLanguageProfile(String name) {
+        this.name = name;
     }
 
-    if (logger.isDebugEnabled()) {
-      logger
-          .info("Eliminate below less frequency N-Grams and noise Latin alphabets");
+    public String getLanguageProfile() {
+        return name;
     }
 
-    int threshold = nWords[0] / LESS_FREQ_RATIO;
-    if (threshold < MINIMUM_FREQ) {
-      threshold = MINIMUM_FREQ;
+    public HashMap<String, Integer> getFrequency() {
+        return frequency;
     }
 
-    Set<String> keys = frequency.keySet();
-    int roman = 0;
-    for (Iterator<String> iterator = keys.iterator(); iterator.hasNext();) {
-      String key = iterator.next();
-      int count = frequency.get(key);
-      if (count <= threshold) {
-        nWords[key.length() - 1] -= count;
-        iterator.remove();
-      } else {
-        if (key.matches("^[A-Za-z]$")) {
-          roman += count;
+    public int[] getNWords() {
+        return nWords;
+    }
+
+    /**
+     * Add n-gram to profile
+     * 
+     * @param gram
+     */
+    public void addNGramToProfile(final String nGram) {
+        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(nGram)) {
+            return;
         }
-      }
+
+        if (logger.isDebugEnabled()) {
+            logger.info("Adding N-Gram \"" + nGram + "\" to language analyzer");
+        }
+
+        int len = nGram.length();
+        if (len < 1 || len > NGramTokenizer.N_GRAM) {
+            return;
+        }
+        ++nWords[len - 1];
+        if (frequency.containsKey(nGram)) {
+            frequency.put(nGram, frequency.get(nGram) + 1);
+        } else {
+            frequency.put(nGram, 1);
+        }
     }
 
-    if (roman < nWords[0] / 3) {
-      Set<String> keys2 = frequency.keySet();
-      for (Iterator<String> iterator = keys2.iterator(); iterator.hasNext();) {
-        String key = iterator.next();
-        if (key.matches(".*[A-Za-z].*")) {
-          nWords[key.length() - 1] -= frequency.get(key);
-          iterator.remove();
+    /**
+     * Eliminate below less frequency n-grams and noise Latin alphabets
+     */
+    public void omitLessFrequency() {
+        if (StringUtils.isEmpty(name)) {
+            return;
         }
-      }
+
+        if (logger.isDebugEnabled()) {
+            logger.info("Eliminate below less frequency N-Grams and noise Latin alphabets");
+        }
+
+        int threshold = nWords[0] / LESS_FREQ_RATIO;
+        if (threshold < MINIMUM_FREQ) {
+            threshold = MINIMUM_FREQ;
+        }
+
+        Set<String> keys = frequency.keySet();
+        int roman = 0;
+        for (Iterator<String> iterator = keys.iterator(); iterator.hasNext();) {
+            String key = iterator.next();
+            int count = frequency.get(key);
+            if (count <= threshold) {
+                nWords[key.length() - 1] -= count;
+                iterator.remove();
+            } else {
+                if (key.matches("^[A-Za-z]$")) {
+                    roman += count;
+                }
+            }
+        }
+
+        if (roman < nWords[0] / 3) {
+            Set<String> keys2 = frequency.keySet();
+            for (Iterator<String> iterator = keys2.iterator(); iterator
+                    .hasNext();) {
+                String key = iterator.next();
+                if (key.matches(".*[A-Za-z].*")) {
+                    nWords[key.length() - 1] -= frequency.get(key);
+                    iterator.remove();
+                }
+            }
+        }
     }
-  }
 }
