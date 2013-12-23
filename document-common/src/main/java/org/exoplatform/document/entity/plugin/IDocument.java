@@ -22,8 +22,9 @@ import org.exoplatform.document.entity.Owner;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version IDocument.java Nov 1, 2013
  */
 public interface IDocument {
@@ -34,60 +35,60 @@ public interface IDocument {
 	 * @return an array of ETag
 	 */
 	public String[] getEtag();
-	
+
 	/**
 	 * The MIME type of the document
 	 * 
 	 * @return a MIME type
 	 */
 	public String getMimeType();
-	
+
 	/**
 	 * Last time this document was modified (formatted RFC 3339 timestamp).
 	 * 
 	 * @return modified time
 	 */
 	public Calendar getModifiedDate();
-	
+
 	/**
-	 * Short term download URL for the file. 
-	 * This will only be populated on files with content stored in Drive.
+	 * Short term download URL for the file. This will only be populated on
+	 * files with content stored in Drive.
 	 * 
 	 * @return a short download URL
 	 */
 	public String getDownloadUrl();
-	
+
 	/**
-	 * The original filename when this document was created. 
-	 * This will only be populated on files with content stored in Drive.
+	 * The original filename when this document was created. This will only be
+	 * populated on files with content stored in Drive.
 	 * 
 	 * @return original filename
 	 */
 	public String getOriginalFilename();
-	
+
 	/**
-	 * An MD5 checksum for the content of this document. 
-	 * This will only be populated on files with content stored in Drive.
+	 * An MD5 checksum for the content of this document. This will only be
+	 * populated on files with content stored in Drive.
 	 * 
 	 * @return an MD5
 	 */
 	public String getMd5Checksum();
-	
+
 	/**
-	 * The size of the document in bytes. 
-	 * This will only be populated on files with content stored in Drive.
+	 * The size of the document in bytes. This will only be populated on files
+	 * with content stored in Drive.
 	 * 
 	 * @return size of document
 	 */
 	public long getFileSize();
-	
+
 	/**
 	 * Name of the last user to modify this document.
 	 * 
 	 * @return a name
 	 */
 	public String getLastModifyingUserName();
-	
+
 	/**
 	 * The last user to modify this document.
 	 * 

@@ -20,16 +20,14 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version BaseEntityIdentity.java Nov 27, 2013
  */
 @MappedSuperclass
 public class BaseEntityIdentity extends BaseEntity<String> {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = -2511611428290954711L;
-  
+	private static final long serialVersionUID = -2511611428290954711L;
+
 }

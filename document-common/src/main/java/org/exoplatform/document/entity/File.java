@@ -38,495 +38,511 @@ import org.exoplatform.document.constant.TBLEntity;
 import org.exoplatform.document.constant.TBLFile;
 import org.exoplatform.document.constant.TBLOwnerFile;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version File.java Oct 31, 2013
- *
+ * 
  */
 @Entity
-@Table(name = TBLFile.TBL_NAME,
-    uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
+@Table(name = TBLFile.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLFile.TBL_NAME)
 public class File extends Document {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1525605509708642225L;
-	
-	@Column(name = TBLFile.TITLE, nullable = false , length = 500)
+
+	@Column(name = TBLFile.TITLE, nullable = false, length = 500)
 	private String title;
-	
+
 	@Column(name = TBLFile.DESCRIPTION, length = 1000)
 	private String description;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = TBLFile.LABEL_OF_FILE, referencedColumnName = TBLEntity.ID,
-	    insertable = false, updatable = false)
+	@JoinColumn(name = TBLFile.LABEL_OF_FILE, referencedColumnName = TBLEntity.ID, insertable = false, updatable = false)
 	private Label lableOfFile;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-  @Column(name = TBLFile.CREATED_DATE)
+	@Column(name = TBLFile.CREATED_DATE)
 	private Calendar createdDate;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-  @Column(name = TBLFile.MODIFIED_BY_ME_DATE)
+	@Column(name = TBLFile.MODIFIED_BY_ME_DATE)
 	private Calendar modifiedByMeDate;
-	
-	@Column(name = TBLFile.FILE_EXTENSION, nullable = false , length = 10)
+
+	@Column(name = TBLFile.FILE_EXTENSION, nullable = false, length = 10)
 	private String fileExtension;
-	
+
 	@Column(name = TBLFile.ALTERNATE_LINK, nullable = true, length = 1500)
 	private String alternateLink;
-	
+
 	@Column(name = TBLFile.EMBED_LINK, nullable = true, length = 1500)
 	private String embedLink;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-  @Column(name = TBLFile.SHARED_WITH_ME_DATE)
+	@Column(name = TBLFile.SHARED_WITH_ME_DATE)
 	private Calendar sharedWithMeDate;
-	
-	//private List parents;
-	
+
+	// private List parents;
+
 	@Column(name = TBLFile.QUOTA_BYTES_USED)
 	private long quotaBytesUsed;
-	
+
 	@Lob
 	@Column(name = TBLFile.OWNER_NAME)
 	private String[] ownerNames;
-	
+
 	@Column(name = TBLFile.EDITABLE, length = 10)
 	private boolean editable;
-	
+
 	@Column(name = TBLFile.WRITER_SCAN_SHARE, length = 10)
 	private boolean writersCanShare;
-	
+
 	@Column(name = TBLFile.THUMBNAIL_LINK, nullable = true, length = 1500)
 	private String thumbnailLink;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-  @Column(name = TBLFile.LAST_VIEWED_BY_ME_DATE)
+	@Column(name = TBLFile.LAST_VIEWED_BY_ME_DATE)
 	private Calendar lastViewedByMeDate;
-	
+
 	@Column(name = TBLFile.WEB_CONTENT_LINK, nullable = true, length = 1500)
 	private String webContentLink;
-	
+
 	@Column(name = TBLFile.EXPLICITLY_TRASHED, length = 10)
 	private boolean explicitlyTrashed;
-	
+
 	/*
-   * One - To - One
-   * 
-   * One File has only one Thumbnail and one Thumbnail has only one File
-   */
+	 * One - To - One
+	 * 
+	 * One File has only one Thumbnail and one Thumbnail has only one File
+	 */
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = TBLFile.THUMBNAIL, referencedColumnName = TBLEntity.ID)
+	@JoinColumn(name = TBLFile.THUMBNAIL, referencedColumnName = TBLEntity.ID)
 	private Thumbnail thumbnail;
-	
+
 	@Column(name = TBLFile.WEB_VIEW_LINK, nullable = true, length = 1500)
 	private String webViewLink;
-	
+
 	@Column(name = TBLFile.ICON_LINK, nullable = true, length = 1500)
 	private String iconLink;
-	
+
 	@Column(name = TBLFile.SHARED, length = 10)
 	private boolean shared;
-	
+
 	/*
-   * Many - To - Many
-   * 
-   * One Owner has many File and one File has many Owner
-   */
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, 
-	    fetch = FetchType.LAZY)
-  @JoinTable(name = TBLOwnerFile.TBL_NAME, joinColumns = {
-      @JoinColumn(name = TBLOwnerFile.OWNER_ID, referencedColumnName = TBLEntity.ID)}, 
-      inverseJoinColumns = { 
-          @JoinColumn(name = TBLOwnerFile.FILE_ID, referencedColumnName = TBLEntity.ID) 
-      })
+	 * Many - To - Many
+	 * 
+	 * One Owner has many File and one File has many Owner
+	 */
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@JoinTable(name = TBLOwnerFile.TBL_NAME, joinColumns = { @JoinColumn(name = TBLOwnerFile.OWNER_ID, referencedColumnName = TBLEntity.ID) }, inverseJoinColumns = { @JoinColumn(name = TBLOwnerFile.FILE_ID, referencedColumnName = TBLEntity.ID) })
 	private List<Owner> owners;
-	
+
 	@Column(name = TBLFile.APPLICATION_DATA_CONTENT, length = 10)
 	private boolean appDataContents;
-	
+
 	@Column(name = TBLFile.DEFAULT_OPEN_WITH_LINK, nullable = true, length = 1500)
 	private String defaultOpenWithLink;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = TBLFile.HEAD_REVISION_IDENTITY, insertable = false, 
-      updatable = false, nullable = false)
+	@JoinColumn(name = TBLFile.HEAD_REVISION_IDENTITY, insertable = false, updatable = false, nullable = false)
 	private Revision revision;
-	
+
 	@Column(name = TBLFile.COPYABLE, length = 10)
 	private boolean copyable;
 
-	/**
-	 * 
-	 */
 	public File() {
 		super();
 	}
 
-  /**
-   * @return the title
-   */
-  public String getTitle() {
-    return title;
-  }
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
 
-  /**
-   * @param title the title to set
-   */
-  public void setTitle(String title) {
-    this.title = title;
-  }
+	/**
+	 * @param title
+	 *            the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-  /**
-   * @return the description
-   */
-  public String getDescription() {
-    return description;
-  }
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-  /**
-   * @param description the description to set
-   */
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-  /**
-   * @return the lableOfFile
-   */
-  public Label getLableOfFile() {
-    return lableOfFile;
-  }
+	/**
+	 * @return the lableOfFile
+	 */
+	public Label getLableOfFile() {
+		return lableOfFile;
+	}
 
-  /**
-   * @param lableOfFile the lableOfFile to set
-   */
-  public void setLableOfFile(Label lableOfFile) {
-    this.lableOfFile = lableOfFile;
-  }
+	/**
+	 * @param lableOfFile
+	 *            the lableOfFile to set
+	 */
+	public void setLableOfFile(Label lableOfFile) {
+		this.lableOfFile = lableOfFile;
+	}
 
-  /**
-   * @return the createdDate
-   */
-  public Calendar getCreatedDate() {
-    return createdDate;
-  }
+	/**
+	 * @return the createdDate
+	 */
+	public Calendar getCreatedDate() {
+		return createdDate;
+	}
 
-  /**
-   * @param createdDate the createdDate to set
-   */
-  public void setCreatedDate(Calendar createdDate) {
-    this.createdDate = createdDate;
-  }
+	/**
+	 * @param createdDate
+	 *            the createdDate to set
+	 */
+	public void setCreatedDate(Calendar createdDate) {
+		this.createdDate = createdDate;
+	}
 
-  /**
-   * @return the modifiedByMeDate
-   */
-  public Calendar getModifiedByMeDate() {
-    return modifiedByMeDate;
-  }
+	/**
+	 * @return the modifiedByMeDate
+	 */
+	public Calendar getModifiedByMeDate() {
+		return modifiedByMeDate;
+	}
 
-  /**
-   * @param modifiedByMeDate the modifiedByMeDate to set
-   */
-  public void setModifiedByMeDate(Calendar modifiedByMeDate) {
-    this.modifiedByMeDate = modifiedByMeDate;
-  }
+	/**
+	 * @param modifiedByMeDate
+	 *            the modifiedByMeDate to set
+	 */
+	public void setModifiedByMeDate(Calendar modifiedByMeDate) {
+		this.modifiedByMeDate = modifiedByMeDate;
+	}
 
-  /**
-   * @return the fileExtension
-   */
-  public String getFileExtension() {
-    return fileExtension;
-  }
+	/**
+	 * @return the fileExtension
+	 */
+	public String getFileExtension() {
+		return fileExtension;
+	}
 
-  /**
-   * @param fileExtension the fileExtension to set
-   */
-  public void setFileExtension(String fileExtension) {
-    this.fileExtension = fileExtension;
-  }
+	/**
+	 * @param fileExtension
+	 *            the fileExtension to set
+	 */
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
 
-  /**
-   * @return the alternateLink
-   */
-  public String getAlternateLink() {
-    return alternateLink;
-  }
+	/**
+	 * @return the alternateLink
+	 */
+	public String getAlternateLink() {
+		return alternateLink;
+	}
 
-  /**
-   * @param alternateLink the alternateLink to set
-   */
-  public void setAlternateLink(String alternateLink) {
-    this.alternateLink = alternateLink;
-  }
+	/**
+	 * @param alternateLink
+	 *            the alternateLink to set
+	 */
+	public void setAlternateLink(String alternateLink) {
+		this.alternateLink = alternateLink;
+	}
 
-  /**
-   * @return the embedLink
-   */
-  public String getEmbedLink() {
-    return embedLink;
-  }
+	/**
+	 * @return the embedLink
+	 */
+	public String getEmbedLink() {
+		return embedLink;
+	}
 
-  /**
-   * @param embedLink the embedLink to set
-   */
-  public void setEmbedLink(String embedLink) {
-    this.embedLink = embedLink;
-  }
+	/**
+	 * @param embedLink
+	 *            the embedLink to set
+	 */
+	public void setEmbedLink(String embedLink) {
+		this.embedLink = embedLink;
+	}
 
-  /**
-   * @return the sharedWithMeDate
-   */
-  public Calendar getSharedWithMeDate() {
-    return sharedWithMeDate;
-  }
+	/**
+	 * @return the sharedWithMeDate
+	 */
+	public Calendar getSharedWithMeDate() {
+		return sharedWithMeDate;
+	}
 
-  /**
-   * @param sharedWithMeDate the sharedWithMeDate to set
-   */
-  public void setSharedWithMeDate(Calendar sharedWithMeDate) {
-    this.sharedWithMeDate = sharedWithMeDate;
-  }
+	/**
+	 * @param sharedWithMeDate
+	 *            the sharedWithMeDate to set
+	 */
+	public void setSharedWithMeDate(Calendar sharedWithMeDate) {
+		this.sharedWithMeDate = sharedWithMeDate;
+	}
 
-  /**
-   * @return the quotaBytesUsed
-   */
-  public long getQuotaBytesUsed() {
-    return quotaBytesUsed;
-  }
+	/**
+	 * @return the quotaBytesUsed
+	 */
+	public long getQuotaBytesUsed() {
+		return quotaBytesUsed;
+	}
 
-  /**
-   * @param quotaBytesUsed the quotaBytesUsed to set
-   */
-  public void setQuotaBytesUsed(long quotaBytesUsed) {
-    this.quotaBytesUsed = quotaBytesUsed;
-  }
+	/**
+	 * @param quotaBytesUsed
+	 *            the quotaBytesUsed to set
+	 */
+	public void setQuotaBytesUsed(long quotaBytesUsed) {
+		this.quotaBytesUsed = quotaBytesUsed;
+	}
 
-  /**
-   * @return the ownerNames
-   */
-  public String[] getOwnerNames() {
-    return ownerNames;
-  }
+	/**
+	 * @return the ownerNames
+	 */
+	public String[] getOwnerNames() {
+		return ownerNames;
+	}
 
-  /**
-   * @param ownerNames the ownerNames to set
-   */
-  public void setOwnerNames(String[] ownerNames) {
-    this.ownerNames = ownerNames;
-  }
+	/**
+	 * @param ownerNames
+	 *            the ownerNames to set
+	 */
+	public void setOwnerNames(String[] ownerNames) {
+		this.ownerNames = ownerNames;
+	}
 
-  /**
-   * @return the editable
-   */
-  public boolean isEditable() {
-    return editable;
-  }
+	/**
+	 * @return the editable
+	 */
+	public boolean isEditable() {
+		return editable;
+	}
 
-  /**
-   * @param editable the editable to set
-   */
-  public void setEditable(boolean editable) {
-    this.editable = editable;
-  }
+	/**
+	 * @param editable
+	 *            the editable to set
+	 */
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
 
-  /**
-   * @return the writersCanShare
-   */
-  public boolean isWritersCanShare() {
-    return writersCanShare;
-  }
+	/**
+	 * @return the writersCanShare
+	 */
+	public boolean isWritersCanShare() {
+		return writersCanShare;
+	}
 
-  /**
-   * @param writersCanShare the writersCanShare to set
-   */
-  public void setWritersCanShare(boolean writersCanShare) {
-    this.writersCanShare = writersCanShare;
-  }
+	/**
+	 * @param writersCanShare
+	 *            the writersCanShare to set
+	 */
+	public void setWritersCanShare(boolean writersCanShare) {
+		this.writersCanShare = writersCanShare;
+	}
 
-  /**
-   * @return the thumbnailLink
-   */
-  public String getThumbnailLink() {
-    return thumbnailLink;
-  }
+	/**
+	 * @return the thumbnailLink
+	 */
+	public String getThumbnailLink() {
+		return thumbnailLink;
+	}
 
-  /**
-   * @param thumbnailLink the thumbnailLink to set
-   */
-  public void setThumbnailLink(String thumbnailLink) {
-    this.thumbnailLink = thumbnailLink;
-  }
+	/**
+	 * @param thumbnailLink
+	 *            the thumbnailLink to set
+	 */
+	public void setThumbnailLink(String thumbnailLink) {
+		this.thumbnailLink = thumbnailLink;
+	}
 
-  /**
-   * @return the lastViewedByMeDate
-   */
-  public Calendar getLastViewedByMeDate() {
-    return lastViewedByMeDate;
-  }
+	/**
+	 * @return the lastViewedByMeDate
+	 */
+	public Calendar getLastViewedByMeDate() {
+		return lastViewedByMeDate;
+	}
 
-  /**
-   * @param lastViewedByMeDate the lastViewedByMeDate to set
-   */
-  public void setLastViewedByMeDate(Calendar lastViewedByMeDate) {
-    this.lastViewedByMeDate = lastViewedByMeDate;
-  }
+	/**
+	 * @param lastViewedByMeDate
+	 *            the lastViewedByMeDate to set
+	 */
+	public void setLastViewedByMeDate(Calendar lastViewedByMeDate) {
+		this.lastViewedByMeDate = lastViewedByMeDate;
+	}
 
-  /**
-   * @return the webContentLink
-   */
-  public String getWebContentLink() {
-    return webContentLink;
-  }
+	/**
+	 * @return the webContentLink
+	 */
+	public String getWebContentLink() {
+		return webContentLink;
+	}
 
-  /**
-   * @param webContentLink the webContentLink to set
-   */
-  public void setWebContentLink(String webContentLink) {
-    this.webContentLink = webContentLink;
-  }
+	/**
+	 * @param webContentLink
+	 *            the webContentLink to set
+	 */
+	public void setWebContentLink(String webContentLink) {
+		this.webContentLink = webContentLink;
+	}
 
-  /**
-   * @return the explicitlyTrashed
-   */
-  public boolean isExplicitlyTrashed() {
-    return explicitlyTrashed;
-  }
+	/**
+	 * @return the explicitlyTrashed
+	 */
+	public boolean isExplicitlyTrashed() {
+		return explicitlyTrashed;
+	}
 
-  /**
-   * @param explicitlyTrashed the explicitlyTrashed to set
-   */
-  public void setExplicitlyTrashed(boolean explicitlyTrashed) {
-    this.explicitlyTrashed = explicitlyTrashed;
-  }
+	/**
+	 * @param explicitlyTrashed
+	 *            the explicitlyTrashed to set
+	 */
+	public void setExplicitlyTrashed(boolean explicitlyTrashed) {
+		this.explicitlyTrashed = explicitlyTrashed;
+	}
 
-  /**
-   * @return the thumbnail
-   */
-  public Thumbnail getThumbnail() {
-    return thumbnail;
-  }
+	/**
+	 * @return the thumbnail
+	 */
+	public Thumbnail getThumbnail() {
+		return thumbnail;
+	}
 
-  /**
-   * @param thumbnail the thumbnail to set
-   */
-  public void setThumbnail(Thumbnail thumbnail) {
-    this.thumbnail = thumbnail;
-  }
+	/**
+	 * @param thumbnail
+	 *            the thumbnail to set
+	 */
+	public void setThumbnail(Thumbnail thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 
-  /**
-   * @return the webViewLink
-   */
-  public String getWebViewLink() {
-    return webViewLink;
-  }
+	/**
+	 * @return the webViewLink
+	 */
+	public String getWebViewLink() {
+		return webViewLink;
+	}
 
-  /**
-   * @param webViewLink the webViewLink to set
-   */
-  public void setWebViewLink(String webViewLink) {
-    this.webViewLink = webViewLink;
-  }
+	/**
+	 * @param webViewLink
+	 *            the webViewLink to set
+	 */
+	public void setWebViewLink(String webViewLink) {
+		this.webViewLink = webViewLink;
+	}
 
-  /**
-   * @return the iconLink
-   */
-  public String getIconLink() {
-    return iconLink;
-  }
+	/**
+	 * @return the iconLink
+	 */
+	public String getIconLink() {
+		return iconLink;
+	}
 
-  /**
-   * @param iconLink the iconLink to set
-   */
-  public void setIconLink(String iconLink) {
-    this.iconLink = iconLink;
-  }
+	/**
+	 * @param iconLink
+	 *            the iconLink to set
+	 */
+	public void setIconLink(String iconLink) {
+		this.iconLink = iconLink;
+	}
 
-  /**
-   * @return the shared
-   */
-  public boolean isShared() {
-    return shared;
-  }
+	/**
+	 * @return the shared
+	 */
+	public boolean isShared() {
+		return shared;
+	}
 
-  /**
-   * @param shared the shared to set
-   */
-  public void setShared(boolean shared) {
-    this.shared = shared;
-  }
+	/**
+	 * @param shared
+	 *            the shared to set
+	 */
+	public void setShared(boolean shared) {
+		this.shared = shared;
+	}
 
-  /**
-   * @return the owners
-   */
-  public List<Owner> getOwners() {
-    return owners;
-  }
+	/**
+	 * @return the owners
+	 */
+	public List<Owner> getOwners() {
+		return owners;
+	}
 
-  /**
-   * @param owners the owners to set
-   */
-  public void setOwners(List<Owner> owners) {
-    this.owners = owners;
-  }
+	/**
+	 * @param owners
+	 *            the owners to set
+	 */
+	public void setOwners(List<Owner> owners) {
+		this.owners = owners;
+	}
 
-  /**
-   * @return the appDataContents
-   */
-  public boolean isAppDataContents() {
-    return appDataContents;
-  }
+	/**
+	 * @return the appDataContents
+	 */
+	public boolean isAppDataContents() {
+		return appDataContents;
+	}
 
-  /**
-   * @param appDataContents the appDataContents to set
-   */
-  public void setAppDataContents(boolean appDataContents) {
-    this.appDataContents = appDataContents;
-  }
+	/**
+	 * @param appDataContents
+	 *            the appDataContents to set
+	 */
+	public void setAppDataContents(boolean appDataContents) {
+		this.appDataContents = appDataContents;
+	}
 
-  /**
-   * @return the defaultOpenWithLink
-   */
-  public String getDefaultOpenWithLink() {
-    return defaultOpenWithLink;
-  }
+	/**
+	 * @return the defaultOpenWithLink
+	 */
+	public String getDefaultOpenWithLink() {
+		return defaultOpenWithLink;
+	}
 
-  /**
-   * @param defaultOpenWithLink the defaultOpenWithLink to set
-   */
-  public void setDefaultOpenWithLink(String defaultOpenWithLink) {
-    this.defaultOpenWithLink = defaultOpenWithLink;
-  }
+	/**
+	 * @param defaultOpenWithLink
+	 *            the defaultOpenWithLink to set
+	 */
+	public void setDefaultOpenWithLink(String defaultOpenWithLink) {
+		this.defaultOpenWithLink = defaultOpenWithLink;
+	}
 
-  /**
-   * @return the revision
-   */
-  public Revision getRevision() {
-    return revision;
-  }
+	/**
+	 * @return the revision
+	 */
+	public Revision getRevision() {
+		return revision;
+	}
 
-  /**
-   * @param revision the revision to set
-   */
-  public void setRevision(Revision revision) {
-    this.revision = revision;
-  }
+	/**
+	 * @param revision
+	 *            the revision to set
+	 */
+	public void setRevision(Revision revision) {
+		this.revision = revision;
+	}
 
-  /**
-   * @return the copyable
-   */
-  public boolean isCopyable() {
-    return copyable;
-  }
+	/**
+	 * @return the copyable
+	 */
+	public boolean isCopyable() {
+		return copyable;
+	}
 
-  /**
-   * @param copyable the copyable to set
-   */
-  public void setCopyable(boolean copyable) {
-    this.copyable = copyable;
-  }
+	/**
+	 * @param copyable
+	 *            the copyable to set
+	 */
+	public void setCopyable(boolean copyable) {
+		this.copyable = copyable;
+	}
 }

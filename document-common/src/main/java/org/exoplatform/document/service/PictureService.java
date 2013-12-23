@@ -22,19 +22,19 @@ import org.exoplatform.document.exception.ServiceException;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version PictureService.java Nov 30, 2013
- *
+ * 
  */
 public interface PictureService {
-  
-  public static final String SERVICE_ID = "pictureService";
 
-  public Picture create(Picture picture) throws ServiceException;
-  
-  public Picture createByURL(String URL) throws ServiceException;
-  
-  public Picture findById(String Id) throws ServiceException;
-  
-  public boolean remove(Picture picture) throws ServiceException;
-  
-  public boolean removeById(String Id) throws ServiceException;
+	public static final String SERVICE_ID = "pictureService";
+
+	public Picture create(Picture picture) throws ServiceException;
+
+	public Picture createByURL(String URL) throws ServiceException;
+
+	public Picture findById(String Id) throws ServiceException;
+
+	public boolean remove(Picture picture) throws ServiceException;
+
+	public boolean removeById(String Id) throws ServiceException;
 }

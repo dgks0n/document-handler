@@ -18,8 +18,9 @@ package org.exoplatform.document.entity.plugin;
 
 /**
  * Created by The eXo Platform SAS
+ * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
- *          
+ * 
  * @version IOwner.java Nov 1, 2013
  */
 public interface IOwner {

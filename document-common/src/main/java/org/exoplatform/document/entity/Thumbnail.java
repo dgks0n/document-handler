@@ -24,32 +24,28 @@ import javax.persistence.UniqueConstraint;
 
 import org.exoplatform.document.constant.TBLEntity;
 import org.exoplatform.document.constant.TBLThumbnail;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Thumbnail.java Oct 31, 2013
- *
+ * 
  */
 @Entity
-@Table(name = TBLThumbnail.TBL_NAME,
-    uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
+@Table(name = TBLThumbnail.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLThumbnail.TBL_NAME)
 public class Thumbnail extends StringIdentity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5149103349382724837L;
 
 	@Lob
 	@Column(name = TBLThumbnail.IMAGE, nullable = false)
 	private byte[] image;
-	
+
 	@Column(name = TBLThumbnail.MIME_TYPE, nullable = true, length = 250)
 	private String mimeType;
 
-	/**
-	 * 
-	 */
 	public Thumbnail() {
 	}
 
@@ -61,7 +57,8 @@ public class Thumbnail extends StringIdentity {
 	}
 
 	/**
-	 * @param image the image to set
+	 * @param image
+	 *            the image to set
 	 */
 	public void setImage(byte[] image) {
 		this.image = image;
@@ -75,10 +72,11 @@ public class Thumbnail extends StringIdentity {
 	}
 
 	/**
-	 * @param mimeType the mimeType to set
+	 * @param mimeType
+	 *            the mimeType to set
 	 */
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
-	
+
 }

@@ -23,50 +23,49 @@ import javax.persistence.UniqueConstraint;
 
 import org.exoplatform.document.constant.TBLEntity;
 import org.exoplatform.document.constant.TBLPicture;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Picture.java Oct 31, 2013
- *
+ * 
  */
 @Entity
-@Table(name = TBLPicture.TBL_NAME, 
-    uniqueConstraints = {@UniqueConstraint(columnNames = TBLEntity.ID)})
+@Table(name = TBLPicture.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLPicture.TBL_NAME)
 public class Picture extends StringIdentity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1190891511410189743L;
 
 	@Column(name = TBLPicture.URL, length = 1500)
 	private String url;
 
-	/**
-	 * 
-	 */
 	public Picture() {
 	}
 
-  /**
-   * @return the url
-   */
-  public String getUrl() {
-    return url;
-  }
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
 
-  /**
-   * @param url the url to set
-   */
-  public void setUrl(String url) {
-    this.url = url;
-  }
+	/**
+	 * @param url
+	 *            the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString() {
-    return "picture [url=" + url + ", id=" + id + "]";
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "picture [url=" + url + ", id=" + id + "]";
+	}
 }

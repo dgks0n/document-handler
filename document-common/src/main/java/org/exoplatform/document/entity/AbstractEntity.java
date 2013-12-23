@@ -31,27 +31,24 @@ import org.exoplatform.document.entity.plugin.Entity;
  * 
  */
 @MappedSuperclass
-public abstract class AbstractEntity<I extends Serializable> implements Entity<I> {
+public abstract class AbstractEntity<I extends Serializable> implements
+		Entity<I> {
 
-  /**
-	 * 
+	private static final long serialVersionUID = 6475766928065560033L;
+
+	/**
+	 * ID of Object Entity
 	 */
-  private static final long serialVersionUID = 6475766928065560033L;
+	@Id
+	@Column(name = TBLEntity.ID, unique = true, nullable = false, length = 100)
+	protected I id;
 
-  /**
-   * ID of Object Entity
-   */
-  @Id
-  @Column(name = TBLEntity.ID, unique = true, 
-      nullable = false, length = 100)
-  protected I id;
+	public void setId(I id) {
+		this.id = id;
+	}
 
-  public void setId(I id) {
-    this.id = id;
-  }
-
-  @Override
-  public I getId() {
-    return id;
-  }
+	@Override
+	public I getId() {
+		return id;
+	}
 }

@@ -25,10 +25,10 @@ import java.io.Serializable;
  */
 public interface Entity<I extends Serializable> extends Serializable {
 
-  /**
-   * Get Entity's Id
-   * 
-   * @return an Entity's Id
-   */
-  public I getId();
+	/**
+	 * Get Entity's Id
+	 * 
+	 * @return an Entity's Id
+	 */
+	public I getId();
 }

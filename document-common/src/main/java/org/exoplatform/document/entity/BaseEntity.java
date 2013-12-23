@@ -26,19 +26,17 @@ import org.exoplatform.document.constant.TBLEntity;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version BaseEntity.java Oct 31, 2013
- *
+ * 
  */
 @MappedSuperclass
-public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<I> {
+public abstract class BaseEntity<I extends Serializable> extends
+		AbstractEntity<I> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 311072933487708402L;
 
 	@Column(name = TBLEntity.KIND, length = 50)
 	protected String kind;
-	
+
 	@Column(name = TBLEntity.SELF_LINK, length = 1500)
 	protected String selfLink;
 
@@ -50,7 +48,8 @@ public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<
 	}
 
 	/**
-	 * @param kind the kind to set
+	 * @param kind
+	 *            the kind to set
 	 */
 	public void setKind(String kind) {
 		this.kind = kind;
@@ -64,7 +63,8 @@ public abstract class BaseEntity<I extends Serializable> extends AbstractEntity<
 	}
 
 	/**
-	 * @param selfLink the selfLink to set
+	 * @param selfLink
+	 *            the selfLink to set
 	 */
 	public void setSelfLink(String selfLink) {
 		this.selfLink = selfLink;

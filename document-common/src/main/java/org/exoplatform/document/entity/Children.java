@@ -19,75 +19,78 @@ package org.exoplatform.document.entity;
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
  * @version Children.java Oct 31, 2013
- *
+ * 
  */
 public class Children extends BaseEntityIdentity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3338144206955937089L;
 
 	private String childLink;
 
-  public Children() {
-    super();
-  }
+	public Children() {
+		super();
+	}
 
-  /**
-   * @param childLink
-   */
-  public Children(String childLink) {
-    this.childLink = childLink;
-  }
+	/**
+	 * @param childLink
+	 */
+	public Children(String childLink) {
+		this.childLink = childLink;
+	}
 
-  /**
-   * @return the childLink
-   */
-  public String getChildLink() {
-    return childLink;
-  }
+	/**
+	 * @return the childLink
+	 */
+	public String getChildLink() {
+		return childLink;
+	}
 
-  /**
-   * @param childLink the childLink to set
-   */
-  public void setChildLink(String childLink) {
-    this.childLink = childLink;
-  }
+	/**
+	 * @param childLink
+	 *            the childLink to set
+	 */
+	public void setChildLink(String childLink) {
+		this.childLink = childLink;
+	}
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((childLink == null) ? 0 : childLink.hashCode());
-    return result;
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((childLink == null) ? 0 : childLink.hashCode());
+		return result;
+	}
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof Children)) {
-      return false;
-    }
-    Children other = (Children) obj;
-    if (childLink == null) {
-      if (other.childLink != null) {
-        return false;
-      }
-    } else if (!childLink.equals(other.childLink)) {
-      return false;
-    }
-    return true;
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Children)) {
+			return false;
+		}
+		Children other = (Children) obj;
+		if (childLink == null) {
+			if (other.childLink != null) {
+				return false;
+			}
+		} else if (!childLink.equals(other.childLink)) {
+			return false;
+		}
+		return true;
+	}
 }

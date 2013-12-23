@@ -26,9 +26,6 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class NumericIdentity extends AbstractEntity<Long> {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = 6310887535955696899L;
 
 }

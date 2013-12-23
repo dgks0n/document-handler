@@ -16,13 +16,19 @@
  */
 package org.exoplatform.common.session.config;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.picocontainer.Disposable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * Hibernate Utility class with a convenient method to get Session Factory object.
+ * 
+ * 
  * Created by The eXo Platform SAS
  * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
@@ -31,39 +37,73 @@ import org.picocontainer.Disposable;
  */
 public final class HibernateConfiguration implements Disposable {
 
-  private final SessionFactory sessionFactory;
+	private static final Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
+	
+	/** Session Factory {@link SessionFactory} */
+	private final SessionFactory sessionFactory;
 
-  private final Configuration _configuration;
+	/** Configuration {@link Configuration} */
+	private final Configuration _configuration;
 
-  public HibernateConfiguration(Configuration configuration, ServiceRegistryBuilder serviceRegistryBuilder) {
-    this._configuration = configuration;
-    this._configuration.configure();
-    this.sessionFactory = _configuration.buildSessionFactory(serviceRegistryBuilder.applySettings(_configuration.getProperties()).buildServiceRegistry());
-  }
+	/**
+	 * Create a new instance of the SessionFactory from standard hibernate.cfg.xml config file
+	 * 
+	 * @param configuration
+	 * @param serviceRegistryBuilder
+	 */
+	public HibernateConfiguration(Configuration configuration, ServiceRegistryBuilder serviceRegistryBuilder) {
+		logger.debug("Trying to initialize the SessionFactory creation instance from hibernate.cfg.xml config file");
+		
+		try {
+			this._configuration = configuration;
+			this._configuration.configure();
+			this.sessionFactory = _configuration
+					.buildSessionFactory(serviceRegistryBuilder.applySettings(
+							_configuration.getProperties()).buildServiceRegistry());
+		} catch (HibernateException he) {
+			// Make sure you log the exception, as it might be swallowed
+			logger.error("Initial SessionFactory creation failed", he);
+			
+			throw new HibernateException(he);
+		}
+	}
 
-  public SessionFactory getSessionFactory() {
-    return this.sessionFactory;
-  }
+	/**
+	 * Get the singleton hibernate Session Factory
+	 * 
+	 * @return SessionFactory
+	 */
+	public SessionFactory getSessionFactory() {
+		return this.sessionFactory;
+	}
 
-  public boolean isClosed() {
-    return sessionFactory.isClosed();
-  }
+	public boolean isClosed() {
+		return sessionFactory.isClosed();
+	}
 
-  public Session openSession() {
-    return sessionFactory.openSession();
-  }
+	/**
+	 * Open a new session
+	 * 
+	 * @return Session
+	 */
+	public Session openSession() {
+		return sessionFactory.openSession();
+	}
 
-  /**
-   * Clears the session factory when the container is disposed.
-   */
-  @Override
-  public void dispose() {
-    close();
-  }
+	/**
+	 * Clears the session factory when the container is disposed.
+	 */
+	@Override
+	public void dispose() {
+		close();
+	}
 
-  private void close() {
-    if (sessionFactory != null && !isClosed()) {
-      sessionFactory.close();
-    }
-  }
+	/**
+	 * Closes the current SessionFactory and releases all resources 
+	 * (caches, connection pools, etc).
+	 */
+	private void close() {
+		if (sessionFactory != null && !isClosed())
+			sessionFactory.close();
+	}
 }
