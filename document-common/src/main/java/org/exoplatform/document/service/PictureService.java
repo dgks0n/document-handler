@@ -26,8 +26,6 @@ import org.exoplatform.document.exception.ServiceException;
  */
 public interface PictureService {
 
-	public static final String SERVICE_ID = "pictureService";
-
 	public Picture create(Picture picture) throws ServiceException;
 
 	public Picture createByURL(String URL) throws ServiceException;

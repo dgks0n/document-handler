@@ -14,16 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.dao;
+package org.exoplatform.document.repository.impl;
 
-import org.exoplatform.common.dao.HibernateManager;
+import org.exoplatform.common.dao.CrudRepositoryImpl;
+import org.exoplatform.common.dao.hibernate.HibernateJpaRepository;
 import org.exoplatform.document.entity.File;
+import org.exoplatform.document.repository.FileRepository;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version FileDao.java Nov 30, 2013
+ * @version FileRepositoryImpl.java Nov 30, 2013
  * 
  */
-public interface FileDao extends HibernateManager<File, String> {
+public class FileRepositoryImpl extends CrudRepositoryImpl<File, String> implements
+        FileRepository {
+
+    public FileRepositoryImpl(HibernateJpaRepository repository) {
+        super(repository);
+    }
 
 }

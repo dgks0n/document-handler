@@ -14,23 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.dao.impl;
+package org.exoplatform.document.repository;
 
-import org.exoplatform.common.dao.HibernateManagerImpl;
-import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
-import org.exoplatform.document.dao.PictureDao;
-import org.exoplatform.document.entity.Picture;
+import org.exoplatform.common.dao.CrudRepository;
+import org.exoplatform.document.entity.Thumbnail;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version PictureDaoImpl.java Nov 30, 2013
- * 
+ * @version ThumbnailRepository.java Nov 30, 2013
+ *
  */
-public class PictureDaoImpl extends HibernateManagerImpl<Picture, String>
-        implements PictureDao {
-
-    public PictureDaoImpl(HibernateTransactionManager transactionManager) {
-        super(transactionManager);
-    }
+public interface ThumbnailRepository extends CrudRepository<Thumbnail, String> {
 
 }

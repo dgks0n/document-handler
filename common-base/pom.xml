@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.exoplatform.common.dao</groupId>
 	<artifactId>common-base</artifactId>
-	<version>1.3.0</version>
+	<version>1.4.1</version>
 	<name>Document Handler :: Hibernate Generic DAO</name>
 	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
@@ -18,31 +18,31 @@
 			<artifactId>search-hibernate</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		
-    <!-- C3P0 -->
-    <dependency>
-      <groupId>c3p0</groupId>
-      <artifactId>c3p0</artifactId>
-      <version>0.9.1.2</version>
-    </dependency>
-    <dependency>
+
+		<!-- C3P0 -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
 			<version>4.2.0.CR1</version>
 		</dependency>
-  
-    <!-- MySQL Connector/JDBC -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.26</version>
-    </dependency>
-    <dependency>
-		  <groupId>org.hibernate</groupId>
-		  <artifactId>hibernate-ehcache</artifactId>
-		  <version>4.2.0.CR1</version>
+
+		<!-- MySQL Connector/JDBC -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.26</version>
 		</dependency>
-  </dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>4.2.0.CR1</version>
+		</dependency>
+	</dependencies>
 	<repositories>
 		<repository>
 			<id>sonatype-oss-repo</id>

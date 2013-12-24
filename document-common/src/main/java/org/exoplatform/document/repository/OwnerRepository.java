@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.dao;
+package org.exoplatform.document.repository;
 
-import org.exoplatform.common.dao.HibernateManager;
-import org.exoplatform.document.entity.Account;
+import org.exoplatform.common.dao.CrudRepository;
+import org.exoplatform.document.entity.Owner;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version AccountDao.java Nov 30, 2013
- * 
+ * @version OwnerRepository.java Nov 30, 2013
+ *
  */
-public interface AccountDao extends HibernateManager<Account, String> {
-
+public interface OwnerRepository extends CrudRepository<Owner, String> {
+  
 }

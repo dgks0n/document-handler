@@ -14,16 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.dao;
+package org.exoplatform.document.repository.impl;
 
-import org.exoplatform.common.dao.HibernateManager;
-import org.exoplatform.document.entity.Thumbnail;
+import org.exoplatform.common.dao.CrudRepositoryImpl;
+import org.exoplatform.common.dao.hibernate.HibernateJpaRepository;
+import org.exoplatform.document.entity.Account;
+import org.exoplatform.document.repository.AccountRepository;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version ThumbnailDao.java Nov 30, 2013
- *
+ * @version AccountRepositoryImpl.java Nov 30, 2013
+ * 
  */
-public interface ThumbnailDao extends HibernateManager<Thumbnail, String> {
+public class AccountRepositoryImpl extends CrudRepositoryImpl<Account, String>
+        implements AccountRepository {
+
+    public AccountRepositoryImpl(HibernateJpaRepository repository) {
+        super(repository);
+    }
 
 }

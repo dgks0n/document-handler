@@ -16,9 +16,9 @@
  */
 package org.exoplatform.document.service.impl;
 
-import org.exoplatform.document.dao.PictureDao;
 import org.exoplatform.document.entity.Picture;
 import org.exoplatform.document.exception.ServiceException;
+import org.exoplatform.document.repository.PictureRepository;
 import org.exoplatform.document.service.PictureService;
 import org.exoplatform.document.util.StringUtils;
 
@@ -29,10 +29,10 @@ import org.exoplatform.document.util.StringUtils;
  */
 public class PictureServiceImpl implements PictureService {
 
-    private PictureDao pictureDao;
+    private PictureRepository pictureRepository;
 
-    public PictureServiceImpl(PictureDao pictureDao) {
-        this.pictureDao = pictureDao;
+    public PictureServiceImpl(PictureRepository pictureRepository) {
+        this.pictureRepository = pictureRepository;
     }
 
     /*
@@ -48,7 +48,7 @@ public class PictureServiceImpl implements PictureService {
             throw new ServiceException("Picture's identifier is invalid");
         }
 
-        Picture result = pictureDao.save(picture);
+        Picture result = pictureRepository.save(picture);
         if (result == null) {
             throw new ServiceException("Could not insert " + picture.toString()
                     + " into \"Picture\" table");
@@ -72,7 +72,7 @@ public class PictureServiceImpl implements PictureService {
         // Picture picture = new Picture();
         // picture.setId("2304824kasdfa09as13");
         // picture.setUrl(URL);
-        // if (pictureDao.save(picture) == null) {
+        // if (pictureRepository.save(picture) == null) {
         // throw new ServiceException("Could not insert " + picture.toString() +
         // " into \"Picture\" table");
         // }
@@ -95,7 +95,7 @@ public class PictureServiceImpl implements PictureService {
         if (StringUtils.isEmpty(Id)) {
             throw new ServiceException("Picture's identify is null or empty");
         }
-        return pictureDao.find(Id);
+        return pictureRepository.find(Id);
     }
 
     /*

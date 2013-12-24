@@ -20,9 +20,9 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.List;
 
-import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
+import org.exoplatform.common.dao.hibernate.HibernateJpaRepository;
 import org.exoplatform.common.dao.search.SearchCriterion;
-import org.exoplatform.common.dao.util.HibernateTransactionUtil;
+import org.exoplatform.common.dao.util.RepositoryUtils;
 
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
@@ -41,66 +41,60 @@ import com.googlecode.genericdao.search.SearchResult;
  *            Created by The eXo Platform SAS
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  * 
- * @version HibernateManagerImpl.java Nov 6, 2013
+ * @version CrudRepositoryImpl.java Nov 6, 2013
  */
-public class HibernateManagerImpl<T, ID extends Serializable> implements
-        HibernateManager<T, ID> {
+public class CrudRepositoryImpl<T, ID extends Serializable> implements CrudRepository<T, ID> {
 
-    private final HibernateTransactionManager transactionManager;
-
-    private final Class<T> persistentClass;
+    private final HibernateJpaRepository repository;
+    private final Class<T> persistent;
 
     /**
      * Create new instance for hibernate transaction manager
      * 
-     * @param transactionManager
+     * @param repository
      */
-    public HibernateManagerImpl(HibernateTransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
-        this.persistentClass = (Class<T>) HibernateTransactionUtil
-                .getTypeArguments(HibernateManagerImpl.class, this.getClass()).get(0);
+    public CrudRepositoryImpl(HibernateJpaRepository repository) {
+        this.repository = repository;
+        this.persistent = (Class<T>) RepositoryUtils.getTypeArguments(CrudRepositoryImpl.class, this.getClass()).get(0);
     }
 
     @Override
     public T find(ID id) {
-        return transactionManager._getEntity(persistentClass, id);
+        return repository._getEntity(persistent, id);
     }
 
     @Override
     public T[] find(ID... ids) {
-        return transactionManager._getEntities(persistentClass, ids);
+        return repository._getEntities(persistent, ids);
     }
 
     @Override
     public T getReference(ID id) {
-        return transactionManager._loadEntity(persistentClass, id);
+        return repository._loadEntity(persistent, id);
     }
 
     @Override
     public T[] getReferences(ID... ids) {
-        return transactionManager._loadEntities(persistentClass, ids);
+        return repository._loadEntities(persistent, ids);
     }
 
     @Override
     public void persist(T... entities) {
-        transactionManager._persistEntities(entities);
+        repository._persistEntities(entities);
     }
 
     @Override
     public T save(T entity) {
-        if (entity == null || !persistentClass.isInstance(entity)) {
-            throw new IllegalArgumentException(
-                    "Object class does not match dao type.");
+        if (entity == null || !persistent.isInstance(entity)) {
+            throw new IllegalArgumentException("Object class does not match dao type.");
         }
 
-        return transactionManager._getEntity(persistentClass,
-                transactionManager._saveEntity(entity));
+        return repository._getEntity(persistent, repository._saveEntity(entity));
     }
 
     @Override
     public T[] save(T... entities) {
-        T[] savedEntities = (T[]) Array.newInstance(persistentClass,
-                entities.length);
+        T[] savedEntities = (T[]) Array.newInstance(persistent, entities.length);
         for (int j = 0; j < entities.length; j++) {
             savedEntities[j] = save(entities[j]);
         }
@@ -109,27 +103,27 @@ public class HibernateManagerImpl<T, ID extends Serializable> implements
 
     @Override
     public boolean remove(T entity) {
-        return transactionManager._deleteEntity(entity);
+        return repository._deleteEntity(entity);
     }
 
     @Override
     public void remove(T... entities) {
-        transactionManager._deleteEntities(entities);
+        repository._deleteEntities(entities);
     }
 
     @Override
     public boolean removeById(ID id) {
-        return transactionManager._deleteEntityById(persistentClass, id);
+        return repository._deleteEntityById(persistent, id);
     }
 
     @Override
     public void removeByIds(ID... ids) {
-        transactionManager._deleteEntityById(persistentClass, ids);
+        repository._deleteEntityById(persistent, ids);
     }
 
     @Override
     public List<T> findAll() {
-        return transactionManager._allEnties(persistentClass);
+        return repository._allEnties(persistent);
     }
 
     @Override
@@ -137,12 +131,12 @@ public class HibernateManagerImpl<T, ID extends Serializable> implements
         if (parameters == null) {
             return (List<RT>) findAll();
         }
-        return transactionManager._searchEntity(persistentClass, parameters);
+        return repository._searchEntity(persistent, parameters);
     }
 
     @Override
     public <RT> RT searchUnique(SearchCriterion parameters) {
-        return (RT) transactionManager._searchUniqueEntity(persistentClass,
+        return (RT) repository._searchUniqueEntity(persistent,
                 parameters);
     }
 
@@ -151,7 +145,7 @@ public class HibernateManagerImpl<T, ID extends Serializable> implements
         if (parameters == null) {
             parameters = (SearchCriterion) new Search();
         }
-        return transactionManager._countEntity(persistentClass, parameters);
+        return repository._countEntity(persistent, parameters);
     }
 
     @Override
@@ -162,34 +156,33 @@ public class HibernateManagerImpl<T, ID extends Serializable> implements
             result.setTotalCount(result.getResult().size());
             return result;
         }
-        return transactionManager._searchAndCountEntity(persistentClass,
-                parameters);
+        return repository._searchAndCountEntity(persistent, parameters);
     }
 
     @Override
     public boolean isAttached(T entity) {
-        return transactionManager._sessionContains(entity);
+        return repository._sessionContains(entity);
     }
 
     @Override
     @Deprecated
     public boolean isConnected(Object object) {
-        return transactionManager._sessionContains(object);
+        return repository._sessionContains(object);
     }
 
     @Override
     public void refresh(T... entities) {
-        transactionManager._refreshEntities(entities);
+        repository._refreshEntities(entities);
     }
 
     @Override
     public void flush() {
-        transactionManager._flush();
+        repository._flush();
     }
 
     @Override
     public T merge(T entity) {
-        return transactionManager._mergeEntity(entity);
+        return repository._mergeEntity(entity);
     }
 
 }

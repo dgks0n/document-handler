@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.common.session.config;
+package org.exoplatform.common.dao.config;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -33,11 +33,11 @@ import org.slf4j.LoggerFactory;
  * 
  * @author <a href="mailto:exo@exoplatform.com">eXoPlatform</a>
  * 
- * @version HibernateSessionFactory.java Dec 5, 2013
+ * @version RepositorySessionFactory.java Dec 5, 2013
  */
-public final class HibernateConfiguration implements Disposable {
+public final class RepositorySessionFactory implements Disposable {
 
-	private static final Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
+	private static final Logger logger = LoggerFactory.getLogger(RepositorySessionFactory.class);
 	
 	/** Session Factory {@link SessionFactory} */
 	private final SessionFactory sessionFactory;
@@ -51,7 +51,7 @@ public final class HibernateConfiguration implements Disposable {
 	 * @param configuration
 	 * @param serviceRegistryBuilder
 	 */
-	public HibernateConfiguration(Configuration configuration, ServiceRegistryBuilder serviceRegistryBuilder) {
+	public RepositorySessionFactory(Configuration configuration, ServiceRegistryBuilder serviceRegistryBuilder) {
 		logger.debug("Trying to initialize the SessionFactory creation instance from hibernate.cfg.xml config file");
 		
 		try {

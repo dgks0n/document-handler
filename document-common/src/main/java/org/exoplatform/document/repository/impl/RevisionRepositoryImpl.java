@@ -14,16 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.dao;
+package org.exoplatform.document.repository.impl;
 
-import org.exoplatform.common.dao.HibernateManager;
-import org.exoplatform.document.entity.Picture;
+import org.exoplatform.common.dao.CrudRepositoryImpl;
+import org.exoplatform.common.dao.hibernate.HibernateJpaRepository;
+import org.exoplatform.document.entity.Revision;
+import org.exoplatform.document.repository.RevisionRepository;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version PictureDao.java Nov 30, 2013
+ * @version RevisionRepositoryImpl.java Nov 30, 2013
  * 
  */
-public interface PictureDao extends HibernateManager<Picture, String> {
+public class RevisionRepositoryImpl extends CrudRepositoryImpl<Revision, String>
+        implements RevisionRepository {
+
+    public RevisionRepositoryImpl(HibernateJpaRepository repository) {
+        super(repository);
+    }
 
 }

@@ -33,10 +33,10 @@ import java.util.Map;
  * Utility methods for Hibernate Genereic DAO.
  * 
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version HibernateTransactionUtil.java Nov 6, 2013
+ * @version RepositoryUtils.java Nov 6, 2013
  * 
  */
-public class HibernateTransactionUtil {
+public class RepositoryUtils {
 
     /**
      * Get the actual type arguments a child class has used to extend a generic
@@ -50,26 +50,21 @@ public class HibernateTransactionUtil {
      *            the child class
      * @return a list of the raw classes for the actual type arguments.
      */
-    public static <T> List<Class<?>> getTypeArguments(Class<T> baseClass,
-            Class<? extends T> childClass) {
+    public static <T> List<Class<?>> getTypeArguments(Class<T> baseClass, Class<? extends T> childClass) {
         Map<Type, Type> resolvedTypes = new HashMap<Type, Type>();
         Type type = childClass;
         // start walking up the inheritance hierarchy until we hit baseClass
         while (!getClass(type).equals(baseClass)) {
             if (type instanceof Class) {
-                // there is no useful information for us in raw types, so just
-                // keep going.
+                // there is no useful information for us in raw types, so just keep going.
                 type = ((Class) type).getGenericSuperclass();
             } else {
                 ParameterizedType parameterizedType = (ParameterizedType) type;
                 Class<?> rawType = (Class) parameterizedType.getRawType();
-
-                Type[] actualTypeArguments = parameterizedType
-                        .getActualTypeArguments();
+                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
                 TypeVariable<?>[] typeParameters = rawType.getTypeParameters();
                 for (int i = 0; i < actualTypeArguments.length; i++) {
-                    resolvedTypes
-                            .put(typeParameters[i], actualTypeArguments[i]);
+                    resolvedTypes.put(typeParameters[i], actualTypeArguments[i]);
                 }
 
                 if (!rawType.equals(baseClass)) {
@@ -79,14 +74,12 @@ public class HibernateTransactionUtil {
         }
 
         // finally, for each actual type argument provided to baseClass,
-        // determine (if possible)
-        // the raw class for that type argument.
+        // determine (if possible) the raw class for that type argument.
         Type[] actualTypeArguments;
         if (type instanceof Class) {
             actualTypeArguments = ((Class) type).getTypeParameters();
         } else {
-            actualTypeArguments = ((ParameterizedType) type)
-                    .getActualTypeArguments();
+            actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
         }
         List<Class<?>> typeArgumentsAsClasses = new ArrayList<Class<?>>();
         // resolve types by chasing down type variables.
@@ -113,8 +106,7 @@ public class HibernateTransactionUtil {
         } else if (type instanceof ParameterizedType) {
             return getClass(((ParameterizedType) type).getRawType());
         } else if (type instanceof GenericArrayType) {
-            Type componentType = ((GenericArrayType) type)
-                    .getGenericComponentType();
+            Type componentType = ((GenericArrayType) type).getGenericComponentType();
             Class<?> componentClass = getClass(componentType);
             if (componentClass != null) {
                 return Array.newInstance(componentClass, 0).getClass();
@@ -131,16 +123,15 @@ public class HibernateTransactionUtil {
      * parameters. It is used for dispatching to specific DAOs that do not
      * implement the GenericDAO interface.
      */
-    public static Object callMethod(Object object, String methodName,
-            Object... args) throws NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException {
+    public static Object callMethod(Object object, String methodName, Object... args) throws NoSuchMethodException, 
+        IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         Class<?>[] paramTypes = new Class<?>[args.length];
         for (int i = 0; i < args.length; i++) {
             if (args[i] == null)
-                throw new NullPointerException(
-                        "No arguments may be null when using callMethod(Object, String, Object...) because every argument is needed in order to determine the parameter types. Use callMethod(Object, String, Class<?>[], Object...) instead and specify parameter types.");
-
+                throw new NullPointerException("No arguments may be null when using callMethod(Object, String, Object...) "
+                        + "because every argument is needed in order to determine the parameter types. "
+                        + "Use callMethod(Object, String, Class<?>[], Object...) instead and specify parameter types.");
+            
             paramTypes[i] = args[i].getClass();
         }
 
@@ -152,43 +143,34 @@ public class HibernateTransactionUtil {
      * parameters. It is used for dispatching to specific DAOs that do not
      * implement the GenericDAO interface.
      */
-    public static Object callMethod(Object object, String methodName,
-            Class<?>[] paramTypes, Object... args)
-            throws NoSuchMethodException, IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException {
+    public static Object callMethod(Object object, String methodName, Class<?>[] paramTypes, Object... args) throws NoSuchMethodException, 
+        IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         Method method = getMethod(object.getClass(), methodName, paramTypes);
         if (method == null)
-            throw new NoSuchMethodException("Method: " + methodName
-                    + " not found on Class: " + object.getClass());
+            throw new NoSuchMethodException("Method: " + methodName + " not found on Class: " + object.getClass());
 
         if (method.isVarArgs()) {
             // put variable arguments into array as last parameter
             Object[] allargs = new Object[method.getParameterTypes().length];
-            Object[] vargs = (Object[]) Array
-                    .newInstance(
-                            method.getParameterTypes()[method
-                                    .getParameterTypes().length - 1]
-                                    .getComponentType(),
-                            args.length - method.getParameterTypes().length + 1);
+            Object[] vargs = (Object[]) Array.newInstance(method.getParameterTypes()[method.getParameterTypes().length - 1]
+                    .getComponentType(), args.length - method.getParameterTypes().length + 1);
 
             for (int i = 0; i < method.getParameterTypes().length - 1; i++) {
                 allargs[i] = args[i];
             }
-            for (int i = 0; i < args.length - method.getParameterTypes().length
-                    + 1; i++) {
+            
+            for (int i = 0; i < args.length - method.getParameterTypes().length + 1; i++) {
                 vargs[i] = args[method.getParameterTypes().length - 1 + i];
             }
+            
             allargs[method.getParameterTypes().length - 1] = vargs;
-
             return method.invoke(object, allargs);
         } else {
-
             return method.invoke(object, args);
         }
     }
 
-    public static Method getMethod(Class<?> klass, String methodName,
-            Class<?>... paramTypes) {
+    public static Method getMethod(Class<?> klass, String methodName, Class<?>... paramTypes) {
         List<Method> candidates = new ArrayList<Method>();
 
         // NOTE: getMethods() includes inherited methods
@@ -201,26 +183,19 @@ public class HibernateTransactionUtil {
 
                     if (method.isVarArgs()) {
                         for (int i = 0; i < methodParamTypes.length - 1; i++) {
-                            if (paramTypes[i] != null
-                                    && !methodParamTypes[i]
-                                            .isAssignableFrom(paramTypes[i])) {
+                            if (paramTypes[i] != null && !methodParamTypes[i].isAssignableFrom(paramTypes[i])) {
                                 continue outer;
                             }
                         }
                         if (methodParamTypes.length == paramTypes.length + 1) {
-                            // no param is specified for the optional vararg
-                            // spot
+                            // no param is specified for the optional vararg spot
                         } else if (methodParamTypes.length == paramTypes.length
-                                && methodParamTypes[paramTypes.length - 1]
-                                        .isAssignableFrom(paramTypes[paramTypes.length - 1])) {
+                                && methodParamTypes[paramTypes.length - 1].isAssignableFrom(paramTypes[paramTypes.length - 1])) {
                             // an array is specified for the last param
                         } else {
-                            Class<?> varClass = methodParamTypes[methodParamTypes.length - 1]
-                                    .getComponentType();
+                            Class<?> varClass = methodParamTypes[methodParamTypes.length - 1].getComponentType();
                             for (int i = methodParamTypes.length - 1; i < paramTypes.length; i++) {
-                                if (paramTypes[i] != null
-                                        && !varClass
-                                                .isAssignableFrom(paramTypes[i])) {
+                                if (paramTypes[i] != null && !varClass.isAssignableFrom(paramTypes[i])) {
                                     continue outer;
                                 }
                             }
@@ -228,8 +203,7 @@ public class HibernateTransactionUtil {
                     } else {
                         for (int i = 0; i < methodParamTypes.length; i++) {
                             if (paramTypes[i] != null
-                                    && !methodParamTypes[i]
-                                            .isAssignableFrom(paramTypes[i])) {
+                                    && !methodParamTypes[i].isAssignableFrom(paramTypes[i])) {
                                 continue outer;
                             }
                         }
@@ -257,8 +231,7 @@ public class HibernateTransactionUtil {
                     // the exception is if an array is actually specified as the
                     // last parameter
                     if (m.getParameterTypes().length != paramTypes.length
-                            || !m.getParameterTypes()[paramTypes.length - 1]
-                                    .isAssignableFrom(paramTypes[paramTypes.length - 1]))
+                            || !m.getParameterTypes()[paramTypes.length - 1].isAssignableFrom(paramTypes[paramTypes.length - 1]))
                         itr.remove();
                 }
             }
@@ -274,11 +247,10 @@ public class HibernateTransactionUtil {
 
             for (int j = 1; j < candidates.size(); j++) {
                 Method b = candidates.get(j);
-
                 Class<?>[] aTypes = a.getParameterTypes();
                 Class<?>[] bTypes = b.getParameterTypes();
-
                 int aScore = 0, bScore = 0;
+                
                 // increment score if distance is greater for a given parameter
                 for (int i = 0; i < aTypes.length; i++) {
                     if (aTypes[i] != null) {

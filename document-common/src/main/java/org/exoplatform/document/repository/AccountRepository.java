@@ -14,29 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.common.dao.hibernate;
+package org.exoplatform.document.repository;
 
-import org.hibernate.Session;
+import org.exoplatform.common.dao.CrudRepository;
+import org.exoplatform.document.entity.Account;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version IHibernateTransactionManager.java Dec 7, 2013
+ * @version Repository.java Nov 30, 2013
  * 
  */
-public interface ITransactionManager {
+public interface AccountRepository extends CrudRepository<Account, String> {
 
-    /**
-     * Obtains the current session. The definition of what exactly "current"
-     * means controlled by the CurrentSessionContext impl configured for use.
-     * 
-     * @return The current session
-     */
-    public Session getSession();
-
-    /**
-     * Open a Session
-     * 
-     * @return The created session
-     */
-    public Session openSession();
 }

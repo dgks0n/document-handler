@@ -25,8 +25,8 @@ import java.util.Map;
 
 import javax.persistence.NonUniqueResultException;
 
+import org.exoplatform.common.dao.config.RepositorySessionFactory;
 import org.exoplatform.common.dao.search.SearchCriterion;
-import org.exoplatform.common.session.config.HibernateConfiguration;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -43,27 +43,25 @@ import com.googlecode.genericdao.search.hibernate.HibernateSearchProcessor;
  * This is the heart of Hibernate Generic DAO.
  * 
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version HibernateTransactionManager.java Nov 6, 2013
+ * @version HibernateJpaRepository.java Nov 6, 2013
  * 
  */
-public class HibernateTransactionManager implements ITransactionManager {
+public class HibernateJpaRepository implements Repository {
 
     private final HibernateSearchProcessor searchProcessor;
-
     private final HibernateMetadataUtil metadataUtil;
 
-    private final HibernateConfiguration configuration;
+    private final RepositorySessionFactory repositoryFactory;
 
-    public HibernateTransactionManager(HibernateConfiguration configuration) {
-        this.configuration = configuration;
-        this.metadataUtil = HibernateMetadataUtil
-                .getInstanceForSessionFactory(configuration.getSessionFactory());
-        this.searchProcessor = HibernateSearchProcessor
-                .getInstanceForSessionFactory(configuration.getSessionFactory());
+    public HibernateJpaRepository(RepositorySessionFactory repositoryFactory) {
+        this.repositoryFactory = repositoryFactory;
+        
+        this.metadataUtil = HibernateMetadataUtil.getInstanceForSessionFactory(repositoryFactory.getSessionFactory());
+        this.searchProcessor = HibernateSearchProcessor.getInstanceForSessionFactory(repositoryFactory.getSessionFactory());
     }
 
     public SessionFactory getSessionFactory() {
-        return configuration.getSessionFactory();
+        return repositoryFactory.getSessionFactory();
     }
 
     @Override
@@ -172,8 +170,7 @@ public class HibernateTransactionManager implements ITransactionManager {
      */
     public boolean _saveOrUpdateIsNewEntity(Object entity) {
         if (entity == null) {
-            throw new IllegalArgumentException(
-                    "attempt to saveOrUpdate with null entity");
+            throw new IllegalArgumentException("attempt to saveOrUpdate with null entity");
         }
 
         Serializable serializable = metadataUtil.getId(entity);
@@ -207,8 +204,7 @@ public class HibernateTransactionManager implements ITransactionManager {
         // it does not exist
         for (int i = 0; i < entities.length; i++) {
             if (entities[i] == null) {
-                throw new IllegalArgumentException(
-                        "attempt to saveOrUpdate with null entity");
+                throw new IllegalArgumentException("attempt to saveOrUpdate with null entity");
             }
             if (openSession().contains(entities[i])) {
                 exists[i] = true;
@@ -224,9 +220,7 @@ public class HibernateTransactionManager implements ITransactionManager {
         Map<Class<?>, List<Integer>> mayExist = new HashMap<Class<?>, List<Integer>>();
         for (int i = 0; i < entities.length; i++) {
             if (exists[i] == null) {
-                Class<?> entityClass = metadataUtil
-                        .getUnproxiedClass(entities[i]); // Get the real entity
-                                                         // class
+                Class<?> entityClass = metadataUtil.getUnproxiedClass(entities[i]); // Get the real entity class
                 List<Integer> list = mayExist.get(entityClass);
                 if (list == null) {
                     list = new ArrayList<Integer>();
@@ -352,8 +346,7 @@ public class HibernateTransactionManager implements ITransactionManager {
             if (id != null) {
                 Session session = openSession();
                 try {
-                    entity = session.get(
-                            metadataUtil.getUnproxiedClass(entity), id);
+                    entity = session.get(metadataUtil.getUnproxiedClass(entity), id);
                     if (entity != null) {
                         session.delete(entity);
                         session.flush();
@@ -485,8 +478,7 @@ public class HibernateTransactionManager implements ITransactionManager {
      */
     public <T> List<T> _allEnties(Class<T> type) {
         type = metadataUtil.getUnproxiedClass(type); // Get the real entityclass
-        return openSession().createCriteria(type)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+        return openSession().createCriteria(type).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
     }
 
     /**
@@ -580,9 +572,7 @@ public class HibernateTransactionManager implements ITransactionManager {
         }
         if (parameters.getSearchClass() != null
                 && !parameters.getSearchClass().equals(searchClass)) {
-            throw new IllegalArgumentException(
-                    "Search class does not match expected type: "
-                            + searchClass.getName());
+            throw new IllegalArgumentException("Search class does not match expected type: " + searchClass.getName());
         }
 
         return searchProcessor.search(openSession(), searchClass, parameters);
@@ -621,9 +611,7 @@ public class HibernateTransactionManager implements ITransactionManager {
         }
         if (parameters.getSearchClass() != null
                 && !parameters.getSearchClass().equals(searchClass)) {
-            throw new IllegalArgumentException(
-                    "Search class does not match expected type: "
-                            + searchClass.getName());
+            throw new IllegalArgumentException("Search class does not match expected type: " + searchClass.getName());
         }
 
         return searchProcessor.count(openSession(), searchClass, parameters);
@@ -633,10 +621,7 @@ public class HibernateTransactionManager implements ITransactionManager {
      * Returns the number of instances of this class in the datastore.
      */
     public int _countEntity(Class<?> type) {
-        List counts = openSession().createQuery(
-                "select count(_it_) from "
-                        + metadataUtil.get(type).getEntityName() + " _it_")
-                .list();
+        List counts = openSession().createQuery("select count(_it_) from " + metadataUtil.get(type).getEntityName() + " _it_").list();
         int sum = 0;
         for (Object count : counts) {
             sum += ((Long) count).intValue();
@@ -678,9 +663,7 @@ public class HibernateTransactionManager implements ITransactionManager {
         }
         if (parameters.getSearchClass() != null
                 && !parameters.getSearchClass().equals(searchClass)) {
-            throw new IllegalArgumentException(
-                    "Search class does not match expected type: "
-                            + searchClass.getName());
+            throw new IllegalArgumentException("Search class does not match expected type: " + searchClass.getName());
         }
 
         return searchProcessor.searchAndCount(openSession(), searchClass,
@@ -718,13 +701,10 @@ public class HibernateTransactionManager implements ITransactionManager {
         }
         if (parameters.getSearchClass() != null
                 && !parameters.getSearchClass().equals(searchClass)) {
-            throw new IllegalArgumentException(
-                    "Search class does not match expected type: "
-                            + searchClass.getName());
+            throw new IllegalArgumentException("Search class does not match expected type: " + searchClass.getName());
         }
 
-        return searchProcessor.searchUnique(openSession(), searchClass,
-                parameters);
+        return searchProcessor.searchUnique(openSession(), searchClass, parameters);
     }
 
     /**
@@ -768,9 +748,7 @@ public class HibernateTransactionManager implements ITransactionManager {
         type = metadataUtil.getUnproxiedClass(type); // Get the real entity
                                                      // class
 
-        Query query = openSession().createQuery(
-                "select id from " + metadataUtil.get(type).getEntityName()
-                        + " where id = :id");
+        Query query = openSession().createQuery("select id from " + metadataUtil.get(type).getEntityName() + " where id = :id");
         query.setParameter("id", id);
         return query.list().size() == 1;
     }
@@ -785,8 +763,7 @@ public class HibernateTransactionManager implements ITransactionManager {
         boolean[] ret = new boolean[ids.length];
         // we can't use "id in (:ids)" because some databases do not support
         // this for compound ids.
-        StringBuilder sb = new StringBuilder("select id from "
-                + metadataUtil.get(type).getEntityName() + " where");
+        StringBuilder sb = new StringBuilder("select id from " + metadataUtil.get(type).getEntityName() + " where");
         boolean first = true;
         for (int i = 0; i < ids.length; i++) {
             if (first) {

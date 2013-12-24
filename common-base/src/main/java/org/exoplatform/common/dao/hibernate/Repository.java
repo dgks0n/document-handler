@@ -14,23 +14,29 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.dao.impl;
+package org.exoplatform.common.dao.hibernate;
 
-import org.exoplatform.common.dao.HibernateManagerImpl;
-import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
-import org.exoplatform.document.dao.ThumbnailDao;
-import org.exoplatform.document.entity.Thumbnail;
+import org.hibernate.Session;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version ThumbnailDaoImpl.java Nov 30, 2013
+ * @version Repository.java Dec 7, 2013
  * 
  */
-public class ThumbnailDaoImpl extends HibernateManagerImpl<Thumbnail, String>
-        implements ThumbnailDao {
+public interface Repository {
 
-    public ThumbnailDaoImpl(HibernateTransactionManager transactionManager) {
-        super(transactionManager);
-    }
+    /**
+     * Obtains the current session. The definition of what exactly "current"
+     * means controlled by the CurrentSessionContext impl configured for use.
+     * 
+     * @return The current session
+     */
+    public Session getSession();
 
+    /**
+     * Open a Session
+     * 
+     * @return The created session
+     */
+    public Session openSession();
 }

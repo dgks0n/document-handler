@@ -14,16 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.document.dao;
+package org.exoplatform.document.repository.impl;
 
-import org.exoplatform.common.dao.HibernateManager;
-import org.exoplatform.document.entity.Owner;
+import org.exoplatform.common.dao.CrudRepositoryImpl;
+import org.exoplatform.common.dao.hibernate.HibernateJpaRepository;
+import org.exoplatform.document.entity.Label;
+import org.exoplatform.document.repository.LabelRepository;
 
 /**
  * @author <a href="mailto:sondn@exoplatform.com">Ngoc Son Dang</a>
- * @version OwnerDao.java Nov 30, 2013
- *
+ * @version LabelRepositoryImpl.java Nov 30, 2013
+ * 
  */
-public interface OwnerDao extends HibernateManager<Owner, String> {
-  
+public class LabelRepositoryImpl extends CrudRepositoryImpl<Label, String> implements
+        LabelRepository {
+
+    public LabelRepositoryImpl(HibernateJpaRepository repository) {
+        super(repository);
+    }
+
 }

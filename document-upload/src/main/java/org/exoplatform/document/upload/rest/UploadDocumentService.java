@@ -33,8 +33,7 @@ import net.arnx.jsonic.JSON;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
-import org.exoplatform.document.exception.ServiceException;
-import org.exoplatform.document.service.PictureService;
+import org.exoplatform.document.service.FileService;
 import org.exoplatform.document.upload.Document;
 import org.exoplatform.document.upload.handle.UploadMultipartHandler;
 import org.slf4j.Logger;
@@ -56,11 +55,11 @@ public class UploadDocumentService implements Serializable {
 
     private final UploadMultipartHandler uploadMultipartHandler;
 
-    private final FileS
+    private final FileService fileService;
 
-    public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler, PictureService pictureService) {
+    public UploadDocumentService(UploadMultipartHandler uploadMultipartHandler, FileService fileService) {
         this.uploadMultipartHandler = uploadMultipartHandler;
-        this.pictureService = pictureService;
+        this.fileService = fileService;
     }
 
     @POST
@@ -73,15 +72,11 @@ public class UploadDocumentService implements Serializable {
         try {
             documents = uploadMultipartHandler.parseHttpRequest(request);
             if (CollectionUtils.isNotEmpty(documents)) {
-                pictureService.createByURL(documents.get(0).getUrl());
                 return Response.ok(JSON.encode(documents.get(0))).build();
             }
             
             message = "IO exception has occurred while reading the properties file";
             responseText = "{\"error\":\"" + 2015 + "\",\"message\":\"" + message + "\"}";
-        } catch (ServiceException se) {
-            message = "Couldn't insert [url: \"" + documents.get(0).getUrl() + "\"] to database";
-            responseText = "{\"error\":\"" + 2016 + "\",\"message\":\"" + message + "\"}";
         } catch (SizeLimitExceededException slee) {
             responseText = "{\"error\":\"" + 2013 + "\",\"message\":\"" + slee.getMessage() + "\"}";
         } catch (FileUploadException fue) {

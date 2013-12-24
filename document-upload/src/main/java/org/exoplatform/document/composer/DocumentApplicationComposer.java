@@ -23,23 +23,23 @@ import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
 import javax.servlet.ServletContext;
 
 import org.everrest.pico.EverrestComposer;
-import org.exoplatform.common.dao.HibernateManagerImpl;
-import org.exoplatform.common.dao.hibernate.HibernateTransactionManager;
-import org.exoplatform.common.session.config.HibernateConfiguration;
-import org.exoplatform.document.dao.AccountDao;
-import org.exoplatform.document.dao.FileDao;
-import org.exoplatform.document.dao.LabelDao;
-import org.exoplatform.document.dao.OwnerDao;
-import org.exoplatform.document.dao.PictureDao;
-import org.exoplatform.document.dao.RevisionDao;
-import org.exoplatform.document.dao.ThumbnailDao;
-import org.exoplatform.document.dao.impl.AccountDaoImpl;
-import org.exoplatform.document.dao.impl.FileDaoImpl;
-import org.exoplatform.document.dao.impl.LabelDaoImpl;
-import org.exoplatform.document.dao.impl.OwnerDaoImpl;
-import org.exoplatform.document.dao.impl.PictureDaoImpl;
-import org.exoplatform.document.dao.impl.RevisionDaoImpl;
-import org.exoplatform.document.dao.impl.ThumbnailDaoImpl;
+import org.exoplatform.common.dao.CrudRepositoryImpl;
+import org.exoplatform.common.dao.config.RepositorySessionFactory;
+import org.exoplatform.common.dao.hibernate.HibernateJpaRepository;
+import org.exoplatform.document.repository.AccountRepository;
+import org.exoplatform.document.repository.FileRepository;
+import org.exoplatform.document.repository.LabelRepository;
+import org.exoplatform.document.repository.OwnerRepository;
+import org.exoplatform.document.repository.PictureRepository;
+import org.exoplatform.document.repository.RevisionRepository;
+import org.exoplatform.document.repository.ThumbnailRepository;
+import org.exoplatform.document.repository.impl.AccountRepositoryImpl;
+import org.exoplatform.document.repository.impl.FileRepositoryImpl;
+import org.exoplatform.document.repository.impl.LabelRepositoryImpl;
+import org.exoplatform.document.repository.impl.OwnerRepositoryImpl;
+import org.exoplatform.document.repository.impl.PictureRepositoryImpl;
+import org.exoplatform.document.repository.impl.RevisionRepositoryImpl;
+import org.exoplatform.document.repository.impl.ThumbnailRepositoryImpl;
 import org.exoplatform.document.service.PictureService;
 import org.exoplatform.document.service.impl.PictureServiceImpl;
 import org.exoplatform.document.upload.handle.UploadMultipartHandler;
@@ -59,17 +59,17 @@ public class DocumentApplicationComposer extends EverrestComposer {
     protected void doComposeApplication(MutablePicoContainer container, ServletContext servletContext) {
         container.addComponent(Configuration.class);
         container.addComponent(ServiceRegistryBuilder.class);
-        container.addComponent(HibernateConfiguration.class);
-        container.addComponent(HibernateTransactionManager.class);
-        container.addComponent(HibernateManagerImpl.class);
+        container.addComponent(RepositorySessionFactory.class);
+        container.addComponent(HibernateJpaRepository.class);
+        container.addComponent(CrudRepositoryImpl.class);
 
-        container.addComponent(AccountDao.class, AccountDaoImpl.class);
-        container.addComponent(ThumbnailDao.class, ThumbnailDaoImpl.class);
-        container.addComponent(RevisionDao.class, RevisionDaoImpl.class);
-        container.addComponent(PictureDao.class, PictureDaoImpl.class);
-        container.addComponent(OwnerDao.class, OwnerDaoImpl.class);
-        container.addComponent(LabelDao.class, LabelDaoImpl.class);
-        container.addComponent(FileDao.class, FileDaoImpl.class);
+        container.addComponent(AccountRepository.class, AccountRepositoryImpl.class);
+        container.addComponent(ThumbnailRepository.class, ThumbnailRepositoryImpl.class);
+        container.addComponent(RevisionRepository.class, RevisionRepositoryImpl.class);
+        container.addComponent(PictureRepository.class, PictureRepositoryImpl.class);
+        container.addComponent(OwnerRepository.class, OwnerRepositoryImpl.class);
+        container.addComponent(LabelRepository.class, LabelRepositoryImpl.class);
+        container.addComponent(FileRepository.class, FileRepositoryImpl.class);
 
         // Add services component
         container.addComponent(PictureService.class, PictureServiceImpl.class);
@@ -87,6 +87,6 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
     @Override
     protected void doComposeSession(MutablePicoContainer container) {
-
+        // TODO: Edit here
     }
 }

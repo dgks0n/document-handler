@@ -18,9 +18,9 @@ package org.exoplatform.document.service.impl;
 
 import java.util.List;
 
-import org.exoplatform.document.dao.FileDao;
 import org.exoplatform.document.entity.File;
 import org.exoplatform.document.exception.ServiceException;
+import org.exoplatform.document.repository.FileRepository;
 import org.exoplatform.document.service.FileService;
 
 /**
@@ -30,10 +30,10 @@ import org.exoplatform.document.service.FileService;
  */
 public class FileServiceImpl implements FileService {
 
-    private FileDao fileDao;
+    private FileRepository fileRepository;
     
-    public FileServiceImpl(FileDao fileDao) {
-        this.fileDao = fileDao;
+    public FileServiceImpl(FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
     }
     
     /* (non-Javadoc)
