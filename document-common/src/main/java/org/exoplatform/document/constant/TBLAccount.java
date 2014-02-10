@@ -29,6 +29,7 @@ public class TBLAccount {
 
     public static final String GIVE_NAME = "give_name";
     public static final String FAMILY_NAME = "family_name";
+    public static final String USER_NAME = "username";
     public static final String EMAIL_ADDRESS = "email_address";
     public static final String LINK = "link";
     public static final String GENDER = "gender";

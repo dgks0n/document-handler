@@ -38,8 +38,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * @version Account.java Nov 28, 2013
  */
 @Entity
-@Table(name = TBLAccount.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLAccount.TBL_NAME)
+@Table(name = TBLAccount.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = {TBLEntity.ID, TBLAccount.USER_NAME, TBLAccount.EMAIL_ADDRESS}) })
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLAccount.TBL_NAME)
 public class Account extends StringIdentity {
 
 	private static final long serialVersionUID = 5877345833306167010L;
@@ -49,6 +49,9 @@ public class Account extends StringIdentity {
 
 	@Column(name = TBLAccount.FAMILY_NAME, length = 100)
 	private String familyName;
+	
+	@Column(name = TBLAccount.USER_NAME, length = 100)
+	private String username;
 
 	@Column(name = TBLAccount.EMAIL_ADDRESS, nullable = false, length = 100)
 	private String emailAddress;
@@ -93,213 +96,213 @@ public class Account extends StringIdentity {
 		super();
 	}
 
-	/**
-	 * @return the giveName
-	 */
-	public String getGiveName() {
-		return giveName;
-	}
+    /**
+     * @return the giveName
+     */
+    public String getGiveName() {
+        return giveName;
+    }
 
-	/**
-	 * @param giveName
-	 *            the giveName to set
-	 */
-	public void setGiveName(String giveName) {
-		this.giveName = giveName;
-	}
+    /**
+     * @param giveName the giveName to set
+     */
+    public void setGiveName(String giveName) {
+        this.giveName = giveName;
+    }
 
-	/**
-	 * @return the familyName
-	 */
-	public String getFamilyName() {
-		return familyName;
-	}
+    /**
+     * @return the familyName
+     */
+    public String getFamilyName() {
+        return familyName;
+    }
 
-	/**
-	 * @param familyName
-	 *            the familyName to set
-	 */
-	public void setFamilyName(String familyName) {
-		this.familyName = familyName;
-	}
+    /**
+     * @param familyName the familyName to set
+     */
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
 
-	/**
-	 * @return the emailAddress
-	 */
-	public String getEmailAddress() {
-		return emailAddress;
-	}
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
 
-	/**
-	 * @param emailAddress
-	 *            the emailAddress to set
-	 */
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	/**
-	 * @return the link
-	 */
-	public String getLink() {
-		return link;
-	}
+    /**
+     * @return the emailAddress
+     */
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-	/**
-	 * @param link
-	 *            the link to set
-	 */
-	public void setLink(String link) {
-		this.link = link;
-	}
+    /**
+     * @param emailAddress the emailAddress to set
+     */
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
-	/**
-	 * @return the gender
-	 */
-	public String getGender() {
-		return gender;
-	}
+    /**
+     * @return the link
+     */
+    public String getLink() {
+        return link;
+    }
 
-	/**
-	 * @param gender
-	 *            the gender to set
-	 */
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    /**
+     * @param link the link to set
+     */
+    public void setLink(String link) {
+        this.link = link;
+    }
 
-	/**
-	 * @return the birthday
-	 */
-	public Calendar getBirthday() {
-		return birthday;
-	}
+    /**
+     * @return the gender
+     */
+    public String getGender() {
+        return gender;
+    }
 
-	/**
-	 * @param birthday
-	 *            the birthday to set
-	 */
-	public void setBirthday(Calendar birthday) {
-		this.birthday = birthday;
-	}
+    /**
+     * @param gender the gender to set
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	/**
-	 * @return the locale
-	 */
-	public String getLocale() {
-		return locale;
-	}
+    /**
+     * @return the birthday
+     */
+    public Calendar getBirthday() {
+        return birthday;
+    }
 
-	/**
-	 * @param locale
-	 *            the locale to set
-	 */
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
+    /**
+     * @param birthday the birthday to set
+     */
+    public void setBirthday(Calendar birthday) {
+        this.birthday = birthday;
+    }
 
-	/**
-	 * @return the verifiedEmail
-	 */
-	public boolean isVerifiedEmail() {
-		return verifiedEmail;
-	}
+    /**
+     * @return the locale
+     */
+    public String getLocale() {
+        return locale;
+    }
 
-	/**
-	 * @param verifiedEmail
-	 *            the verifiedEmail to set
-	 */
-	public void setVerifiedEmail(boolean verifiedEmail) {
-		this.verifiedEmail = verifiedEmail;
-	}
+    /**
+     * @param locale the locale to set
+     */
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * @return the verifiedEmail
+     */
+    public boolean isVerifiedEmail() {
+        return verifiedEmail;
+    }
 
-	/**
-	 * @param password
-	 *            the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * @param verifiedEmail the verifiedEmail to set
+     */
+    public void setVerifiedEmail(boolean verifiedEmail) {
+        this.verifiedEmail = verifiedEmail;
+    }
 
-	/**
-	 * @return the timeZone
-	 */
-	public String getTimeZone() {
-		return timeZone;
-	}
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	/**
-	 * @param timeZone
-	 *            the timeZone to set
-	 */
-	public void setTimeZone(String timeZone) {
-		this.timeZone = timeZone;
-	}
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * @return the timeZone
+     */
+    public String getTimeZone() {
+        return timeZone;
+    }
 
-	/**
-	 * @param description
-	 *            the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * @param timeZone the timeZone to set
+     */
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
 
-	/**
-	 * @return the language
-	 */
-	public String getLanguage() {
-		return language;
-	}
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @param language
-	 *            the language to set
-	 */
-	public void setLanguage(String language) {
-		this.language = language;
-	}
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * @return the createdDate
-	 */
-	public Calendar getCreatedDate() {
-		return createdDate;
-	}
+    /**
+     * @return the language
+     */
+    public String getLanguage() {
+        return language;
+    }
 
-	/**
-	 * @param createdDate
-	 *            the createdDate to set
-	 */
-	public void setCreatedDate(Calendar createdDate) {
-		this.createdDate = createdDate;
-	}
+    /**
+     * @param language the language to set
+     */
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
-	/**
-	 * @return the modifiedDate
-	 */
-	public Calendar getModifiedDate() {
-		return modifiedDate;
-	}
+    /**
+     * @return the createdDate
+     */
+    public Calendar getCreatedDate() {
+        return createdDate;
+    }
 
-	/**
-	 * @param modifiedDate
-	 *            the modifiedDate to set
-	 */
-	public void setModifiedDate(Calendar modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    /**
+     * @param createdDate the createdDate to set
+     */
+    public void setCreatedDate(Calendar createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    /**
+     * @return the modifiedDate
+     */
+    public Calendar getModifiedDate() {
+        return modifiedDate;
+    }
+
+    /**
+     * @param modifiedDate the modifiedDate to set
+     */
+    public void setModifiedDate(Calendar modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 }

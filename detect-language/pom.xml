@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -16,12 +17,17 @@
 		<dependency>
 			<groupId>org.exoplatform.document</groupId>
 			<artifactId>document-common</artifactId>
-			<version>1.0.0</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.exoplatform.document</groupId>
 			<artifactId>document-util</artifactId>
-			<version>1.0.0</version>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.arnx</groupId>
+			<artifactId>jsonic</artifactId>
+			<type>jar</type>
 		</dependency>
 	</dependencies>
 </project>

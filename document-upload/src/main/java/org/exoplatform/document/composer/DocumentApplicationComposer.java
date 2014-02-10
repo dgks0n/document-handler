@@ -23,6 +23,7 @@ import info.monitorenter.cpdetector.io.CodepageDetectorProxy;
 import javax.servlet.ServletContext;
 
 import org.everrest.pico.EverrestComposer;
+import org.exoplatform.common.dao.CrudRepository;
 import org.exoplatform.common.dao.CrudRepositoryImpl;
 import org.exoplatform.common.dao.config.RepositorySessionFactory;
 import org.exoplatform.common.dao.hibernate.HibernateJpaRepository;
@@ -40,7 +41,11 @@ import org.exoplatform.document.repository.impl.OwnerRepositoryImpl;
 import org.exoplatform.document.repository.impl.PictureRepositoryImpl;
 import org.exoplatform.document.repository.impl.RevisionRepositoryImpl;
 import org.exoplatform.document.repository.impl.ThumbnailRepositoryImpl;
+import org.exoplatform.document.service.AccountService;
+import org.exoplatform.document.service.OwnerService;
 import org.exoplatform.document.service.PictureService;
+import org.exoplatform.document.service.impl.AccountServiceImpl;
+import org.exoplatform.document.service.impl.OwnerServiceImpl;
 import org.exoplatform.document.service.impl.PictureServiceImpl;
 import org.exoplatform.document.upload.handle.UploadMultipartHandler;
 import org.exoplatform.document.upload.rest.UploadDocumentService;
@@ -61,7 +66,8 @@ public class DocumentApplicationComposer extends EverrestComposer {
         container.addComponent(ServiceRegistryBuilder.class);
         container.addComponent(RepositorySessionFactory.class);
         container.addComponent(HibernateJpaRepository.class);
-        container.addComponent(CrudRepositoryImpl.class);
+        
+        container.addComponent(CrudRepository.class, CrudRepositoryImpl.class);
 
         container.addComponent(AccountRepository.class, AccountRepositoryImpl.class);
         container.addComponent(ThumbnailRepository.class, ThumbnailRepositoryImpl.class);
@@ -73,6 +79,11 @@ public class DocumentApplicationComposer extends EverrestComposer {
 
         // Add services component
         container.addComponent(PictureService.class, PictureServiceImpl.class);
+        container.addComponent(OwnerService.class, OwnerServiceImpl.class);
+        container.addComponent(AccountService.class, AccountServiceImpl.class);
+        
+        container.addComponent(UploadMultipartHandler.class);
+        container.addComponent(UploadDocumentService.class);
     }
 
     @Override
@@ -80,9 +91,6 @@ public class DocumentApplicationComposer extends EverrestComposer {
         container.addComponent(CodepageDetectorProxy.class);
         container.addComponent(CharsetPrinter.class);
         container.addComponent(CodepageProcessor.class);
-        
-        container.addComponent(UploadMultipartHandler.class);
-        container.addComponent(UploadDocumentService.class);
     }
 
     @Override

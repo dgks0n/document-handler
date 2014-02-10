@@ -12,6 +12,7 @@
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">    
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
 <title>Document Handler</title>
 <%@include file="common/headerStyle.jsp" %>
 <%@include file="common/headerScript.jsp" %>

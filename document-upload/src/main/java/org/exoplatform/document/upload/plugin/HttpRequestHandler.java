@@ -30,18 +30,6 @@ import org.exoplatform.document.upload.Document;
  *
  */
 public interface HttpRequestHandler {
-
-	/**
-	 * Just handle one file upload in this handler, developer can extend to support multi-files upload
-	 * 
-	 * @param request
-	 * @return
-	 * @throws FileUploadException 
-	 * 
-	 * @deprecated Use {@link #parseHttpRequest(HttpServletRequest)} instead for
-	 */
-	@Deprecated
-	public List<Document> parseUploadMultipart(HttpServletRequest request) throws SizeLimitExceededException, FileUploadException;
 	
 	/**
 	 * Just handle one file upload in this handler, developer can extend to support multi-files upload 

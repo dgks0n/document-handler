@@ -1,3 +1,3 @@
-<link href="script/bootstrap/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="script/bootstrap-dialog/bootstrap-dialog.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 <link href="style/common.css" rel="stylesheet" type="text/css" />

@@ -33,7 +33,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = TBLPicture.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLPicture.TBL_NAME)
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLPicture.TBL_NAME)
 public class Picture extends StringIdentity {
 
 	private static final long serialVersionUID = -1190891511410189743L;

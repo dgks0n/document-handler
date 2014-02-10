@@ -44,7 +44,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = TBLOwner.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLOwner.TBL_NAME)
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLOwner.TBL_NAME)
 public class Owner extends StringIdentity implements IOwner {
 
 	private static final long serialVersionUID = 5870864171015175044L;

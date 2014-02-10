@@ -14,9 +14,14 @@
 	<url>https://github.com/dangokuson/document-handler</url>
 	<dependencies>
 		<dependency>
+			<groupId>org.picocontainer</groupId>
+			<artifactId>picocontainer</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
 			<groupId>cpdetector</groupId>
 			<artifactId>cpdetector</artifactId>
-			<version>1.0.10</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

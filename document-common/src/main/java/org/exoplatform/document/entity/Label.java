@@ -38,7 +38,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = TBLLabel.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLLabel.TBL_NAME)
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLLabel.TBL_NAME)
 public class Label extends StringIdentity {
 
 	private static final long serialVersionUID = 4457310329075840843L;

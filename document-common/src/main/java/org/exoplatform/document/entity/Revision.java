@@ -42,7 +42,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = TBLRevision.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLRevision.TBL_NAME)
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLRevision.TBL_NAME)
 public class Revision extends Document {
 
 	private static final long serialVersionUID = 6612421643350781170L;

@@ -4,16 +4,30 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<display-name>Document Handler :: Upload Document UI</display-name>
 
+    <listener>
+        <listener-class>org.picocontainer.web.PicoServletContainerListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.picocontainer.web.webwork2.WebWork2PicoServletContainerListener</listener-class>
+    </listener>
+<!--     <listener> -->
+<!--         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
+<!--     </listener> -->
+    
 	<context-param>
-		<!-- Ensure the context-param 'webapp-composer-class' is configured in the web.xml. -->
 		<param-name>webapp-composer-class</param-name>
 		<param-value>org.exoplatform.document.composer.DocumentApplicationComposer</param-value>
 	</context-param>
-	
-	<context-param>
-	 <param-name>contextConfigLocation</param-name>
-	 <param-value>classpath:applicationContext.xml</param-value>
-	</context-param>
+<!-- 	<context-param> -->
+<!-- 		<param-name>contextConfigLocation</param-name> -->
+<!-- 		<param-value> -->
+<!--             classpath*:spring-context.xml, -->
+<!--             classpath*:spring-security.xml -->
+<!-- 		</param-value> -->
+<!-- 		<param-value> -->
+<!--             classpath*:spring-context.xml -->
+<!--         </param-value> -->
+<!-- 	</context-param> -->
 
 	<filter>
 		<filter-name>EverrestPicoFilter</filter-name>
@@ -23,44 +37,64 @@
 		<filter-name>EverrestPicoFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	<listener>
-		<listener-class>org.picocontainer.web.PicoServletContainerListener</listener-class>
-	</listener>
-	
-	<listener>
-    <listener-class>org.picocontainer.web.webwork2.WebWork2PicoServletContainerListener</listener-class>
-  </listener>
 
-  <!-- Everrest Servlet -->
-	<servlet>
-		<servlet-name>EverrestServlet</servlet-name>
-		<servlet-class>org.everrest.core.servlet.EverrestServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>EverrestServlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
-	</servlet-mapping>
-	
-	<!-- Webwork -->
-	<servlet>
-    <servlet-name>ServletDispatcher</servlet-name>
-    <servlet-class>com.opensymphony.webwork.dispatcher.ServletDispatcher</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletDispatcher</servlet-name>
-    <url-pattern>*.htm</url-pattern>
-  </servlet-mapping>
+    <!-- Enables Spring Security -->
+<!-- 	<filter> -->
+<!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
+<!-- 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+<!-- 	<filter> -->
+<!--         <filter-name>encoding-filter</filter-name> -->
+<!--         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> -->
+<!--         <init-param> -->
+<!--             <param-name>encoding</param-name> -->
+<!--             <param-value>UTF-8</param-value> -->
+<!--         </init-param> -->
+<!--     </filter> -->
+<!--     <filter-mapping> -->
+<!--         <filter-name>encoding-filter</filter-name> -->
+<!--         <url-pattern>/*</url-pattern> -->
+<!--     </filter-mapping> -->
+    
+    <servlet>
+        <servlet-name>EverrestServlet</servlet-name>
+        <servlet-class>org.everrest.core.servlet.EverrestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EverrestServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
 
-	<!-- Parser Home Page URL Redirect -->
-	<servlet>
-		<servlet-name>home</servlet-name>
-		<jsp-file>/page/home.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>home</servlet-name>
-		<url-pattern>/home</url-pattern>
-	</servlet-mapping>
+    <servlet>
+        <servlet-name>ServletDispatcher</servlet-name>
+        <servlet-class>com.opensymphony.webwork.dispatcher.ServletDispatcher</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletDispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>home</servlet-name>
+        <jsp-file>/page/home.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>signin</servlet-name>
+        <jsp-file>/page/signin.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>signin</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

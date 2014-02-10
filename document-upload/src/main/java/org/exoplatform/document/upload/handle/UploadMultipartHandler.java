@@ -63,18 +63,7 @@ public class UploadMultipartHandler implements HttpRequestHandler, Serializable 
      * system or else if will be hold in memory.
      */
     protected static final int MEMORY_CACHE_SIZE = 4 * 1024;
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.exoplatform.document.upload.util.UploadMultipartPlugin#
-     * parseUploadMultipart(javax.servlet.http.HttpServletRequest)
-     */
-    @Override
-    public List<Document> parseUploadMultipart(HttpServletRequest request) throws SizeLimitExceededException, FileUploadException {
-        return parseHttpRequest(request);
-    }
-
+    
     /*
      * (non-Javadoc)
      * 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <security:global-method-security secured-annotations="enabled" jsr250-annotations="enabled" />
+    
+	<!-- HTTP basic authentication in Spring Security -->
+	<security:http pattern="/signin" security="none" />
+
+	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
+		<!-- Basic Authentication Filter : will use an existing Basic Auth header or require username / password (SERVER credential use case) -->
+        <security:http-basic />
+        
+		<security:intercept-url pattern="/**" access="ROLE_SERVER" />
+		<security:intercept-url pattern="/home" access="ROLE_USER,ROLE_ADMIN" />
+		
+		<!-- Override default login and logout pages -->
+		<security:form-login login-page="/signin" authentication-failure-url="/signin?error=true" default-target-url="/home" />
+		<security:logout logout-success-url="/signin" logout-url="/signout" delete-cookies="JSESSIONID" invalidate-session="true" />
+	</security:http>
+	
+	<!-- How to check the authentication token -->
+	<security:authentication-manager alias="authenticationManager">
+<!--         <security:authentication-provider user-service-ref="userDetailsService"> -->
+        <security:authentication-provider>
+            <!-- Technical Authentication provider configuration -->
+            <!-- (for server to server authentication not initiated from a user interaction) -->
+            <security:user-service>
+                <security:user name="administrator" password="administator" authorities="ROLE_ADMIN"/>
+                <security:user name="user" password="user" authorities="ROLE_USER"/>
+                <security:user name="root" password="admin" authorities="ROLE_SERVER"/>
+            </security:user-service>
+<!--             <security:password-encoder ref="passwordEncoder" /> -->
+        </security:authentication-provider>
+	</security:authentication-manager>
+
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
+	<bean id="userDetailsService" class="org.exoplatform.security.service.OAuthUserDetailsService" />
+</beans>

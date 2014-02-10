@@ -34,7 +34,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = TBLThumbnail.TBL_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = TBLEntity.ID) })
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLThumbnail.TBL_NAME)
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = TBLThumbnail.TBL_NAME)
 public class Thumbnail extends StringIdentity {
 
 	private static final long serialVersionUID = 5149103349382724837L;
