@@ -52,4 +52,69 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+        <profile>
+            <id>run-tomcat7</id>                
+            <build>              
+                <plugins>                                      
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.2</version>
+                        <configuration>
+                            <port>8080</port>
+                            <path>/document-handler</path>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>shutdown</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>shutdown</goal>
+                                </goals>
+                            </execution>
+                            
+                            <execution>
+                                <id>run</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin> 
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <id>copy-env-resources</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/main/resources</directory>                                 
+                                        </resource>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources</directory>                                 
+                                        </resource>
+                                        <resource>
+                                            <directory>${basedir}/src/main/licenses</directory>                                 
+                                        </resource>                                        
+                                    </resources>
+                                    <outputDirectory>${basedir}/target/classes</outputDirectory>
+                                </configuration>
+                            </execution>                                                    
+                        </executions>
+                    </plugin>                                                           
+                </plugins>
+            </build>         
+        </profile>                                                      
+    </profiles>
 </project>

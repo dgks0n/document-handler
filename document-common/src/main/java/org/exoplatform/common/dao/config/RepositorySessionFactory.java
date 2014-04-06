@@ -51,7 +51,7 @@ public final class RepositorySessionFactory {
 	 * @param serviceRegistryBuilder
 	 */
 	public RepositorySessionFactory(Configuration configuration, ServiceRegistryBuilder serviceRegistryBuilder) {
-		logger.debug("Trying to initialize the SessionFactory creation instance from hibernate.cfg.xml config file");
+		logger.info("Trying to initialize the SessionFactory creation instance from hibernate.cfg.xml config file");
 		
 		try {
 			this._configuration = configuration;

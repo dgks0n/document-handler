@@ -27,10 +27,10 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-            <groupId>org.exoplatform.document</groupId>
-            <artifactId>document-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+			<groupId>org.exoplatform.document</groupId>
+			<artifactId>document-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.exoplatform.document</groupId>
 			<artifactId>document-util</artifactId>
@@ -141,4 +141,16 @@
 			</build>
 		</profile>
 	</profiles>
+	<repositories>
+      <repository>
+         <id>repository.exoplatform.org</id>
+         <url>http://repository.exoplatform.org/public</url>
+      </repository>
+   </repositories>
+   <pluginRepositories>
+      <pluginRepository>
+         <id>repository.exoplatform.org</id>
+         <url>http://repository.exoplatform.org/public</url>
+      </pluginRepository>
+   </pluginRepositories>
 </project>
